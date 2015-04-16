@@ -1,0 +1,12 @@
+html, body{
+    margin:0;
+    padding:0;
+}
+
+#header{
+   padding:10px;
+   height:20px;
+   position:fixed;
+   width:100%;
+   background:#FF0;
+}
