@@ -4,9 +4,10 @@ html, body{
 }
 
 #header{
-   padding:10px;
-   height:20px;
-   position:fixed;
-   width:100%;
-   background:#FF0;
+	color: #0000ff;
+	padding:10px;
+	height:20px;
+	position:fixed;
+	width:100%;
+	background:#FF0;
 }
