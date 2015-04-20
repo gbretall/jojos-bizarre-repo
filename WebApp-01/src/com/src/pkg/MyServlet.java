@@ -9,56 +9,42 @@ import java.util.Properties;
 
 
 
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.naming.InitialContext;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import java.sql.*;
+
 
 ///**
 // * Servlet implementation class MyServlet
 // */
 @WebServlet("/MyServlet")
 public class MyServlet extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
-//       
-//    /**
-//     * @see HttpServlet#HttpServlet()
-//     */
-	
-
-	/** The name of the MySQL account to use (or empty for anonymous) */
-	private String userName = "testuser";
-
-	/** The password for the MySQL account (or empty for anonymous) */
-	private String password = "testpass";
-
-	/** The name of the computer running MySQL */
-	private final String serverName = "localhost";
-
-	/** The port of the MySQL server (default is 3306) */
-	private final int portNumber = 3306;
-
-	/**
-	 * The name of the database we are testing with (this default is installed
-	 * with MySQL)
-	 */
-	private final String dbName = "moviedb";
 
 	private Connection conn = null;
 	
-	public Connection getConnection() throws SQLException {
-		Connection conn = null;
-		Properties connectionProps = new Properties();
-		connectionProps.put("user", this.userName);
-		connectionProps.put("password", this.password);
-
-		conn = DriverManager.getConnection("jdbc:mysql://" + this.serverName
-				+ ":" + this.portNumber + "/" + this.dbName, connectionProps);
-
-		return conn;
+	public Connection getConnection() throws SQLException, NamingException {
+		Context initCtx = new InitialContext();
+        if (initCtx == null) System.out.println ("initCtx is NULL");
+	   
+      Context envCtx = (Context) initCtx.lookup("java:comp/env");
+       if (envCtx == null) System.out.println ("envCtx is NULL");
+		
+      // Look up our data source
+      DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+      
+      if (ds == null)
+		   System.out.println ("ds is null.");
+		return ds.getConnection();
 	}
 	
     public MyServlet() throws ClassNotFoundException {
@@ -67,9 +53,8 @@ public class MyServlet extends HttpServlet {
         Class.forName("com.mysql.jdbc.Driver");
     }
     
-    private boolean logInCheck(String username, String password) throws SQLException{
+    private boolean logInCheck(String username, String password) throws SQLException, NamingException{
     	conn = getConnection();
-    	
     	Statement loginSelect = conn.createStatement();
     	System.out.println(username);
     	System.out.println(password);
@@ -112,7 +97,10 @@ public class MyServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		
-	    }
+	    } catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	      
 //		  String title = "Using GET Method to Read Form Data";
 //	      String docType =
