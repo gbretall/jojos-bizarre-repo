@@ -74,7 +74,9 @@ public class MyServlet extends HttpServlet {
 		try {
 			if (logInCheck(request.getParameter("Username"),
 					request.getParameter("Password"))) {
-				out.println("logged in");
+				String site = new String("MainPage.html");
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", site);
 				conn.close();
 			} else {
 				// out.println("not logged in");
@@ -83,7 +85,6 @@ public class MyServlet extends HttpServlet {
 
 				// New location to be redirected
 				String site = new String("wrongPassword.html");
-
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", site);
 				conn.close();
