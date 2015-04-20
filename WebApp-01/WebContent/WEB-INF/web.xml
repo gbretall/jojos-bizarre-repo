@@ -9,23 +9,28 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
- <resource-ref>
-  <res-ref-name>
+  <resource-ref>
+    <res-ref-name>
     jdbc/TestDB
   </res-ref-name>
-  <res-type>
+    <res-type>
     javax.sql.DataSource
   </res-type>
-</resource-ref>
-
-  
+  </resource-ref>
   <servlet>
-   <servlet-name>MyServlet</servlet-name>
-   <servlet-class>com.src.pkg.MyServerlet</servlet-class>
+    <servlet-name>MyServlet</servlet-name>
+    <servlet-class>com.src.pkg.MyServerlet</servlet-class>
+  </servlet>
+  <servlet>
+      <servlet-name>SearchServlet</servlet-name>
+    <servlet-class>com.src.pkg.SearchServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  <servlet-name>MyServlet</servlet-name>
-  <url-pattern>/servlet/MyServlet</url-pattern>
+    <servlet-name>MyServlet</servlet-name>
+    <url-pattern>/servlet/MyServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchServlet</servlet-name>
+    <url-pattern>/servlet/SearchServlet</url-pattern>
   </servlet-mapping>
 </web-app>
