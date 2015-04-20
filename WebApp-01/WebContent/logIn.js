@@ -7,18 +7,18 @@ function testing(){
 
 $(document).ready(function(){
 
-	var printSomething = function(){
-		console.log("something");
-		testing();
-
-	};
-
-
-	$("#login-button").on('click', function(){
-		printSomething();
-        //console.log("in hit");
-    });
+//	var printSomething = function(){
+//		console.log("something");
+//		testing();
+//
+//	};
 
 
-	console.log("hit");
+//	$("#login-button").on('click', function(){
+//		printSomething();
+//        console.log("in hit");
+//    });
+
+
+//	alert("loaded!");
 });

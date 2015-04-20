@@ -7,9 +7,5 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Hello world</h1>
-<form action="MyServlet">
-	<input type="submit" value="Send" />
-</form>
 </body>
 </html>
