@@ -80,7 +80,7 @@ public class SearchServlet extends HttpServlet {
 				firstStatement = false;
 			}
 		}
-		/*
+	
 		if(request.getParameter("YearCheck")!=null)
 		{
 			if(firstStatement)
@@ -104,16 +104,17 @@ public class SearchServlet extends HttpServlet {
 			{
 				searchQuery += " AND M.director LIKE '%"+request.getParameter("Director") +"%'";
 			}
-		}*/
+		}
 		firstStatement = true;
 		searchQuery += "ORDER BY M.title limit 10 offset 0) MD "
 				+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM ON G.id=GIM.genre_id)  ON GIM.movie_id = MD.id) "
-				+ "JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars S ON SIM.star_id = S.id ) ON SIM.movie_id = MD.id";
+				+ "JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars S ON SIM.star_id = S.id ) ON SIM.movie_id = MD.id ";
 		if(request.getParameter("fNameCheck")!=null)
 		{
 			if(firstStatement)
 			{
-				searchQuery += "WHERE S.first_name LIKE '%"+request.getParameter("fName") +"%'";
+				searchQuery += " WHERE S.first_name LIKE '%"+request.getParameter("f_name") +"%'";
+				
 				firstStatement = false;
 			}
 		}
@@ -121,18 +122,15 @@ public class SearchServlet extends HttpServlet {
 		{
 			if(firstStatement)
 			{
-				searchQuery += "WHERE S.last_name LIKE '"+request.getParameter("lName") + "%')";
+				searchQuery += " WHERE S.last_name LIKE '"+request.getParameter("l_name") + "%'";
 				firstStatement = false;
 			}
 			else
 			{
-				searchQuery += " AND S.last_name LIKE '"+request.getParameter("lName") + "%')";
+				searchQuery += " AND S.last_name LIKE '"+request.getParameter("l_name") + "%'";
 			}
 		}
-		else if(!firstStatement)
-		{
-			searchQuery += ")";
-		}
+		
 		searchQuery += ";";
 		try
 		{
