@@ -70,9 +70,9 @@ public class SearchServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		boolean firstStatement = true;
-		String searchQuery = "SELECT M.id, M.title, M.year, M.director, M.banner_url, G.name, S.first_name, S.last_name "
+		String searchQuery = "SELECT MD.id, MD.title, MD.year, MD.director, MD.banner_url, G.name, S.first_name, S.last_name "
 				+ "FROM ((SELECT * FROM moviedb.movies M ";
-		if(request.getParameter("TitleCheck").equals("on"))
+		if(request.getParameter("TitleCheck")!=null)
 		{
 			if(firstStatement)
 			{
@@ -80,7 +80,8 @@ public class SearchServlet extends HttpServlet {
 				firstStatement = false;
 			}
 		}
-		if(request.getParameter("YearCheck").equals("on"))
+		/*
+		if(request.getParameter("YearCheck")!=null)
 		{
 			if(firstStatement)
 			{
@@ -92,7 +93,7 @@ public class SearchServlet extends HttpServlet {
 				searchQuery += " AND M.year LIKE '%"+request.getParameter("Year")+"%'";
 			}
 		}
-		if(request.getParameter("DirectorCheck").equals("on"))
+		if(request.getParameter("DirectorCheck")!=null)
 		{
 			if(firstStatement)
 			{
@@ -103,12 +104,12 @@ public class SearchServlet extends HttpServlet {
 			{
 				searchQuery += " AND M.director LIKE '%"+request.getParameter("Director") +"%'";
 			}
-		}
+		}*/
 		firstStatement = true;
-		searchQuery += "ORDER BY M.title limit 10 offset 0)"
-				+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM ON G.id=GIM.genre_id)  ON GIM.movie_id = M.id) "
-				+ "JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars S ON SIM.star_id = S.id ) ON SIM.movie_id = M.id";
-		if(request.getParameter("fNameCheck").equals("on"))
+		searchQuery += "ORDER BY M.title limit 10 offset 0) MD "
+				+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM ON G.id=GIM.genre_id)  ON GIM.movie_id = MD.id) "
+				+ "JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars S ON SIM.star_id = S.id ) ON SIM.movie_id = MD.id";
+		if(request.getParameter("fNameCheck")!=null)
 		{
 			if(firstStatement)
 			{
@@ -116,7 +117,7 @@ public class SearchServlet extends HttpServlet {
 				firstStatement = false;
 			}
 		}
-		if(request.getParameter("lNameCheck").equals("on"))
+		if(request.getParameter("lNameCheck")!=null)
 		{
 			if(firstStatement)
 			{
@@ -135,6 +136,7 @@ public class SearchServlet extends HttpServlet {
 		searchQuery += ";";
 		try
 		{
+			System.out.println(searchQuery);
 			ResultSet searchResults = performSearchQuery(searchQuery);
 		}
 		catch (NamingException | SQLException e) {
