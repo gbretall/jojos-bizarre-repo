@@ -24,12 +24,12 @@ public class SearchTableSort {
 	public void add(int id, String title,String year, String director, String banner_url,
 							String genre, int sid, String first_name, String last_name )
 	{
-		System.out.println("Add is called");
+		//System.out.println("Add is called");
 		//check if id is in the hash map
 		//if yes, then add genre and star info to movie
 		if (moviesTable.containsKey(id))
 		{
-			System.out.println("value was in hashmap");
+			//System.out.println("value was in hashmap");
 			MovieInfo mi = moviesTable.get(id);
 			mi.addStar(new StarsInfo(sid,first_name, last_name));
 			mi.addGenre(genre);
@@ -38,14 +38,14 @@ public class SearchTableSort {
 		else
 		//if not, then add the info to the index and create the movie object
 		{
-			System.out.println("not in set");
+			//System.out.println("not in set");
 			MovieInfo mi = new MovieInfo(id, title, banner_url, director, year);
-			System.out.println("MovieInfo: "+ id + " "+ title+ " "+ banner_url+ " "
-					+ director +" "+ year);
+			//System.out.println("MovieInfo: "+ id + " "+ title+ " "+ banner_url+ " "
+				//	+ director +" "+ year);
 			mi.addGenre(genre);
 			mi.addStar(new StarsInfo(sid,first_name, last_name));
 			moviesTable.put(id, mi);
-			this.addIndex(id, year, title);
+			addIndex(id, year, title);
 		}		
 	}
 	

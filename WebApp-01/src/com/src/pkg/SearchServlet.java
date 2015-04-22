@@ -1,13 +1,17 @@
 package com.src.pkg;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.naming.InitialContext;
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -94,6 +98,9 @@ public class SearchServlet extends HttpServlet {
     		return movies;
     	}
     }
+    
+
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -103,6 +110,7 @@ public class SearchServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		boolean firstStatement = true;
+		HttpSession session = request.getSession();
 		String searchQuery = "SELECT MD.id, MD.title, MD.year, MD.director, MD.banner_url, G.name, S.id, S.first_name, S.last_name "
 				+ "FROM ((SELECT * FROM moviedb.movies M ";
 		if(request.getParameter("TitleCheck")!=null)
@@ -169,7 +177,19 @@ public class SearchServlet extends HttpServlet {
 		{
 			System.out.println(searchQuery);
 			ResultSet searchResults = performSearchQuery(searchQuery);
-			createMoviesTable(searchResults);
+			SearchTableSort movies = createMoviesTable(searchResults);
+			session.setAttribute("movies", movies);
+			ServletContext context = this.getServletContext();
+			RequestDispatcher dispatcher = context.getRequestDispatcher("/MovieList");
+
+			// change your request and response accordingly
+
+			dispatcher.forward(request, response);
+			//getServletContext().getRequestDispatcher("MovieList").forward(request,response);
+			/*out.println(makeTopOfPage());
+			out.println(makeTable(movies));
+			out.println("</BODY></HTML>");*/
+			
 		}
 		catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
