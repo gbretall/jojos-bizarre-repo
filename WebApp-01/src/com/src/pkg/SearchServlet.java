@@ -61,6 +61,39 @@ public class SearchServlet extends HttpServlet {
 		ResultSet searchResult = dbSearch.executeQuery(query);
     	return searchResult;
     }
+    
+    private SearchTableSort createMoviesTable(ResultSet results) throws SQLException
+    {
+    	if(!results.isBeforeFirst())
+    	{
+    		System.out.println("No movies found by those parameters");
+    		return null;
+    	}
+    	else
+    	{
+    		SearchTableSort movies = new SearchTableSort();
+    		while(results.next())
+    		{
+    			movies.add(results.getInt(1), results.getString(2), results.getString(3), results.getString(4), results.getString(5), results.getString(6), results.getInt(7), results.getString(8), results.getString(9));
+    		}
+    		for(int i = 0; i < movies.searchIndex.size(); i++)
+    		{
+    			int index = Integer.valueOf(movies.searchIndex.get(i).get(0));
+    			System.out.println("line 82= " +index);
+    			System.out.print(movies.moviesTable.get(index).id + " ");
+    			for(StarsInfo si: movies.moviesTable.get(index).starsInFilm)
+    			{
+    				System.out.print(si.first_name + " " + si.last_name + " ");
+    			}
+    			for(String g: movies.moviesTable.get(index).genres)
+    			{
+    				System.out.print(g + " ");
+    			}
+    			System.out.println();
+    		}
+    		return movies;
+    	}
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -70,7 +103,7 @@ public class SearchServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		boolean firstStatement = true;
-		String searchQuery = "SELECT MD.id, MD.title, MD.year, MD.director, MD.banner_url, G.name, S.first_name, S.last_name "
+		String searchQuery = "SELECT MD.id, MD.title, MD.year, MD.director, MD.banner_url, G.name, S.id, S.first_name, S.last_name "
 				+ "FROM ((SELECT * FROM moviedb.movies M ";
 		if(request.getParameter("TitleCheck")!=null)
 		{
@@ -106,7 +139,7 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		firstStatement = true;
-		searchQuery += "ORDER BY M.title) MD "
+		searchQuery += "ORDER BY M.id) MD "
 				+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM ON G.id=GIM.genre_id)  ON GIM.movie_id = MD.id) "
 				+ "JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars S ON SIM.star_id = S.id ) ON SIM.movie_id = MD.id ";
 		if(request.getParameter("fNameCheck")!=null)
@@ -136,6 +169,7 @@ public class SearchServlet extends HttpServlet {
 		{
 			System.out.println(searchQuery);
 			ResultSet searchResults = performSearchQuery(searchQuery);
+			createMoviesTable(searchResults);
 		}
 		catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
