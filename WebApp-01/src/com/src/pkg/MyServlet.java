@@ -112,5 +112,6 @@ public class MyServlet extends HttpServlet {
 		// out.println("hello post");
 		doGet(request, response);
 	}
+
 	//
 }

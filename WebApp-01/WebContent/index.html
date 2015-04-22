@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCSW34RJKwYCYvrOm2R3ynwtUlkHWiv_0"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/common.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/util.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/stats.js"></script>
-    <script type="text/javascript" src = "logIn.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
 
     <link rel="stylesheet" type="text/css" href="topbarcss.css">
     <title>M.L.G. Videos</title>
@@ -17,24 +16,29 @@
 <body>
 	<div id='header'>
 		    M.L.G.Videos
-		    <button type="button" id = "main-button">Main</button>
+		   <!--  <form action="http://google.com" id = "main-button">
+    			<input type="submit" value="Go to Google">
+			</form> -->
+			<button type='button' id ='search-button'>Main</button>
 		    <button type="button" id ="search-button">Search</button>
 		    <button type="button" id = "browse-button">Browse</button>
 		    <button type="button" id = "cart-button">Cart</button>
 		    <button type="button" id = "checkout-button">Checkout</button>
 	</div>
-	<div class = 'login' >
-		<br/>
-		<form  id ="login-form" action = "MyServlet" method="post">
-			Username:<br>
-				<input type="text" name="Username">
-				<br>
-			Password:<br>
-			<input type="password" name="Password">
-		    <br/>
-		    <button type="submit" id = "login-button">Login</button> 
-		</form>
 	
-	</div>
+
+	<div class="container">
+
+      <form class="form-signin" action = "MyServlet" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only"></label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" name ="Username">
+        <label for="inputPassword" class="sr-only"></label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name = "Password">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div>
+
 </body>
 </html>
