@@ -9,10 +9,13 @@ html, body{
    background:#FF0;
 }
 
-#main-button{
-	float: right;
 
+
+#log-out-button{
+	float: right;
+	padding-right: 20px;
 }
+
 .login{
     margin-left: auto;
     margin-right: auto;
