@@ -106,7 +106,7 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		firstStatement = true;
-		searchQuery += "ORDER BY M.title limit 10 offset 0) MD "
+		searchQuery += "ORDER BY M.title) MD "
 				+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM ON G.id=GIM.genre_id)  ON GIM.movie_id = MD.id) "
 				+ "JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars S ON SIM.star_id = S.id ) ON SIM.movie_id = MD.id ";
 		if(request.getParameter("fNameCheck")!=null)
