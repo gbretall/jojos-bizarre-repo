@@ -2,17 +2,27 @@ package com.src.pkg;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+
+import com.src.pkg.ShoppingCart.moviesInCart;
 
 /**
  * Servlet implementation class ShoppingCart
@@ -20,6 +30,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/ShoppingCart")
 public class ShoppingCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Connection conn = null;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -29,13 +40,15 @@ public class ShoppingCart extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    private class moviesInCart{
+    public class moviesInCart{
 		private String movieTitle = "";
+		private String movieID = "";
 		private float price = 0;
 		private int quantity = 0;
 		
-    	public moviesInCart(String movieTitle, float price, int quantity){
+    	public moviesInCart(String movieTitle, String movieID, float price, int quantity){
     		this.setMovieTitle(movieTitle);
+    		this.setmovieID(movieID);
     		this.setPrice(price);
     		this.setQuantity(quantity);
     	}
@@ -59,9 +72,50 @@ public class ShoppingCart extends HttpServlet {
 		public void setQuantity(int quantity) {
 			this.quantity = quantity;
 		}
+
+
+		public String getmovieID() {
+			return movieID;
+		}
+
+
+		public void setmovieID(String movieID) {
+			this.movieID = movieID;
+		}
     	
     	
     }
+    
+    
+
+	public Connection getConnection() throws SQLException, NamingException {
+		Context initCtx = new InitialContext();
+		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+		if (envCtx == null)
+			System.out.println("envCtx is NULL");
+
+		// Look up our data source
+		DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+
+		if (ds == null)
+			System.out.println("ds is null.");
+		return ds.getConnection();
+	}
+	
+	private String getMovieTitle(String movieID) throws SQLException, NamingException{
+		conn = getConnection();
+		Statement movieTitleStatment = conn.createStatement();
+		System.out.println("getMovieTitle is called with id= "+ movieID);
+		ResultSet resultTitle = movieTitleStatment.executeQuery("SELECT m.title "
+				+ "FROM moviedb.movies m "
+				+ "where m.id = '"+movieID+"';");
+		while(resultTitle.next()){
+			return resultTitle.getString("title");
+		}
+		//return null;
+		return "No Movie Found";
+	}
+
     
     private float moneyTotal = 0;
 
@@ -72,22 +126,25 @@ public class ShoppingCart extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 	    HttpSession session = request.getSession();
-	    ArrayList previousItems = (ArrayList)session.getAttribute("previousItems");
-	    Set<String> movieId = (Set<String>)session.getAttribute("movieId");
+	    
+	    ArrayList<moviesInCart> previousItems = (ArrayList<moviesInCart>)session.getAttribute("previousItems");
+	    Set<String> movieIDSet = (Set<String>)session.getAttribute("movieIDSet");
+	    
+	    String movieID = request.getParameter("movieID");
+	    String adding = request.getParameter("adding");
 	    
 	    if (previousItems == null) {
 	      previousItems = new ArrayList();
 	      session.setAttribute("previousItems", previousItems);
 	    }
 	    
-	    if (movieId == null) {
-		      movieId = new HashSet<String>();
-		      session.setAttribute("movieId", movieId);
+	    if (movieIDSet == null) {
+	    	movieIDSet = new HashSet<String>();
+		      session.setAttribute("movieIDSet", movieIDSet);
 		}
 
-	    String newItem = request.getParameter("newItem");
-	    //moviesInCart newMovie = new moviesInCart(request.getParameter("movieId"), 15.99f, 0);
-	    moviesInCart newMovie = new moviesInCart("blank", 15.99f, 0);
+	    //moviesInCart newMovie = new moviesInCart(request.getParameter("movieID"), 15.99f, 0);
+	    moviesInCart newMovie = null;
 	    
 	    
 	    response.setContentType("text/html");
@@ -102,33 +159,77 @@ public class ShoppingCart extends HttpServlet {
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", site);
 	    }
-	    
-	    if(request.getParameter("moveId") != null && request.getParameter("adding") != null){
-	    	if(request.getParameter("adding").equals("true")){
+//	    System.out.println(request.getParameter("movieID"));
+	    if(movieID != null && adding != null){
+	    	if(adding.equals("true")){
 	    		
-	    		System.out.println("adding movie "+ request.getParameter("moveId"));
-//	    		previousItems.add(request.getParameter("moveId"));
+//	    		previousItems.add(request.getParameter("movieID"));
+	    		if (movieIDSet.add(movieID)){
+	    			//System.out.println(movieIDSet.add(movieID));
+	    			System.out.println(movieIDSet.size());
+						try {
+							//System.out.println("What is this: "+getMovieTitle(request.getParameter("movieID"))+ " "+request.getParameter("movieID").getClass());
+							newMovie = new moviesInCart(getMovieTitle(movieID), movieID , 15.99f, 1);
+							previousItems.add(newMovie);
+							    
+						} catch (SQLException | NamingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						for(String x: movieIDSet){
+							System.out.println(x);
+						}
+	    		}
+	    		else{
+	    			System.out.println("In Set");
+	    			for (moviesInCart c: previousItems){
+	    				if(c.getmovieID().equals(movieID)){
+	    					System.out.println("already here");
+	    					c.setQuantity(c.getQuantity()+1);
+	    				}
+	    			}
+	    			//System.out.println(movieIDSet.size());
+	    		}
 	    	}
 	    	
-	    	if(request.getParameter("adding").equals("false")){
-	    		System.out.println("deleting movie " + request.getParameter("moveId"));
-//	    		previousxItems.remove(request.getParameter("moveId"));
+	    	if(adding.equals("false")){
+	    		//System.out.println("delete item called");
+	    		int toDelete = -1;
+	    		System.out.println("deleting movie " + movieID);
+	    		for (moviesInCart c: previousItems){
+    				if(c.getmovieID().equals(movieID)){
+    					//System.out.println("already here");
+    					c.setQuantity(c.getQuantity()-1);
+    					if (c.getQuantity() <= 0){
+    						toDelete = previousItems.indexOf(c);
+    					}
+    				}
+    				
+    			}
+	    		if(toDelete >= 0){
+	    			System.out.println("delete item called");
+	    			previousItems.remove(toDelete);
+	    			}
 	    	}
 	    }
-		if (newItem != null)
-		{
-		    previousItems.add(newItem);
-		}
 
-	   // The following two statements show how this thread can access an
-	   // object created by a thread of the ShowSession servlet
-	   // Integer accessCount = (Integer)session.getAttribute("accessCount");
-	   // out.println("<p>accessCount = " + accessCount);
+	    
 	   out.println(makeTable(previousItems));
+	   
+	   
 	   NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
 	   
 	   out.println("<h1> Grand total: "+defaultFormat.format(getMoneyTotal())+"</h1>");
 	   out.println("</BODY></HTML>");
+	   if(conn != null){
+			try {
+					conn.close();
+				} 
+			catch (SQLException e) {
+					// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   }
 		
 	}
 
@@ -167,13 +268,14 @@ public class ShoppingCart extends HttpServlet {
 		return topOfPage;
 	}
 	
-	private String makeTable(ArrayList previousItems){
+	private String makeTable(ArrayList<moviesInCart> previousItems){
     	
     	float total = 0;
     	String stripedTable = "<table class='table table-hover'>"
 		  		+ "<thead>"
 		  		+ "<tr>"
 		  		+ "<th>Movie Title</th>"
+		  		+ "<th>Movie ID</th>"
 		  		+ "<th>Price</th>"
 		  		+ "<th>Quantity</th>"
 		  		+ "<th>add</th>"
@@ -185,20 +287,21 @@ public class ShoppingCart extends HttpServlet {
 	    	  stripedTable = "<h1>No items</h1>";
 	      } else {
 	        //out.println("<UL>");
-	        for(int i=0; i<previousItems.size(); i++) {
+	        for(moviesInCart c: previousItems) {
 	          //out.println("<LI>" + (String)previousItems.get(i));
-	        	total += 15.99f;
+	        	total += 15.99f * c.getQuantity();
 	        	stripedTable += "<tr>"
-	        			+ "<td>"+ "title"+"</td>"
-	        			+ "<td>"+ "$15.99"+"</td>"
-	        			+ "<td>"+ "quant"+"</td>"
+	        			+ "<td><a href ='SingleMoviePage?movieID="+ c.getmovieID() +"'>"+ c.getMovieTitle()+"</a></td>"
+	        			+ "<td>"+ c.getmovieID()+ "</td>"
+	        			+ "<td>"+ c.getPrice() +"</td>"
+	        			+ "<td>"+ c.getQuantity()+"</td>"
 	        			+ "<td>"+ "<form class='form-signin' action = 'ShoppingCart' method='get'>"
-	        					+ "<input name = 'moveId' type='hidden' value =" + ' ' + ">"
+	        					+ "<input name = 'movieID' type='hidden' value =" + c.getmovieID() + ">"
 	        					+ "<input name = 'adding' type='hidden' value = true>"
 	        					+ "<button class = 'btn' type = 'submit'>Add</button></form>"
 	        			+ "</td>"
 	        			+ "<td>"+ "<form class='form-signin' action = 'ShoppingCart' method='get'>"
-		    					+ "<input name = 'moveId' type='hidden' value =" + ' ' + ">"
+		    					+ "<input name = 'movieID' type='hidden' value =" + c.getmovieID()+ ">"
 		    					+ "<input name = 'adding' type='hidden' value = false>"
 		    					+ "<button class = 'btn' type = 'submit'>Subtract</button></form>"
     					+ "</td>"
