@@ -80,9 +80,9 @@ public class SearchServlet extends HttpServlet {
     		{
     			movies.add(results.getInt(1), results.getString(2), results.getString(3), results.getString(4), results.getString(5), results.getString(6), results.getInt(7), results.getString(8), results.getString(9));
     		}
-    		for(int i = 0; i < movies.searchIndex.size(); i++)
+    		for(int i = 0; i < movies.SearchIndex.size(); i++)
     		{
-    			int index = Integer.valueOf(movies.searchIndex.get(i).get(0));
+    			int index = Integer.valueOf(movies.SearchIndex.get(i).get(0));
     			System.out.println("line 82= " +index);
     			System.out.print(movies.moviesTable.get(index).id + " ");
     			for(StarsInfo si: movies.moviesTable.get(index).starsInFilm)
@@ -181,9 +181,8 @@ public class SearchServlet extends HttpServlet {
 			session.setAttribute("movies", movies);
 			ServletContext context = this.getServletContext();
 			RequestDispatcher dispatcher = context.getRequestDispatcher("/MovieList");
-
-			// change your request and response accordingly
-
+			session.setAttribute("titleReverse", true);
+			session.setAttribute("yearReverse", true);
 			dispatcher.forward(request, response);
 			//getServletContext().getRequestDispatcher("MovieList").forward(request,response);
 			/*out.println(makeTopOfPage());

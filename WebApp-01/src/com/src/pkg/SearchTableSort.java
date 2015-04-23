@@ -1,10 +1,11 @@
 package com.src.pkg;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
 
 public class SearchTableSort {
 	public HashMap<Integer, MovieInfo> moviesTable = new HashMap<Integer, MovieInfo>();
-	public ArrayList<ArrayList<String>> searchIndex = new ArrayList<ArrayList<String>>();
+	public ArrayList<searchIndex> SearchIndex = new ArrayList<searchIndex>();
 	
 	public SearchTableSort()
 	{
@@ -14,11 +15,7 @@ public class SearchTableSort {
 	
 	public void addIndex(int id, String year, String title)
 	{
-		ArrayList<String> toAdd = new ArrayList<String>();
-		toAdd.add(new Integer(id).toString());
-		toAdd.add(title);
-		toAdd.add(year);
-		searchIndex.add(toAdd);
+		SearchIndex.add(new searchIndex(new Integer(id).toString(), title, year));
 	}
 	
 	public void add(int id, String title,String year, String director, String banner_url,
@@ -48,6 +45,21 @@ public class SearchTableSort {
 			addIndex(id, year, title);
 		}		
 	}
+	
+	public void sortByYear(boolean reverse)
+	{
+		Collections.sort(SearchIndex, searchIndex.yearComparator);
+		if(reverse)
+			Collections.reverse(SearchIndex);
+	}
+	
+	public void sortByTitle(boolean reverse)
+	{
+		Collections.sort(SearchIndex, searchIndex.titleComparator);
+		if(reverse)
+			Collections.reverse(SearchIndex);
+	}
+	
 	
 
 }
