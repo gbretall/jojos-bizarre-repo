@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.naming.InitialContext;
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -46,18 +47,24 @@ public class MyServlet extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver");
 	}
 
-	private boolean logInCheck(String username, String password)
+	private String logInCheck(String username, String password)
 			throws SQLException, NamingException {
 		conn = getConnection();
 		Statement loginSelect = conn.createStatement();
 		System.out.println(username);
 		System.out.println(password);
-		ResultSet loginResult = loginSelect.executeQuery("SELECT * "
-				+ "FROM moviedb.customers c " + "where (c.email = '" + username
-				+ "'" + " and c.password = '" + password + "');");
+		ResultSet loginResult = loginSelect.executeQuery("SELECT C.id "
+				+ "FROM moviedb.customers C " + "where (C.email = '" + username
+				+ "'" + " and C.password = '" + password + "');");
 		// conn.close();
-		System.out.println(loginResult.isBeforeFirst());
-		return loginResult.isBeforeFirst();
+		//System.out.println(loginResult.isBeforeFirst());
+		if( loginResult.isBeforeFirst()){
+			while(loginResult.next()){
+				return loginResult.getString("id");
+			}
+			
+		}
+		return null;
 	}
 
 	//
@@ -67,13 +74,24 @@ public class MyServlet extends HttpServlet {
 	// */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		String userID = null;
+		try {
+			userID = logInCheck(request.getParameter("Username"),request.getParameter("Password"));
+		} catch (SQLException | NamingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 		try {
-			if (logInCheck(request.getParameter("Username"),
-					request.getParameter("Password"))) {
+			if ( userID != null) {
+				System.out.println(userID);
+				session.setAttribute("userID", userID);
 				String site = new String("MainPage.html");
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", site);
@@ -81,8 +99,6 @@ public class MyServlet extends HttpServlet {
 			} else {
 				// out.println("not logged in");
 				// Set response content type
-				response.setContentType("text/html");
-
 				// New location to be redirected
 				String site = new String("wrongPassword.html");
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -94,9 +110,6 @@ public class MyServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

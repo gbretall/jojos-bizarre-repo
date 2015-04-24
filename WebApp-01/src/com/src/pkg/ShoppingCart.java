@@ -102,19 +102,6 @@ public class ShoppingCart extends HttpServlet {
 		return ds.getConnection();
 	}
 	
-	private String getMovieTitle(String movieID) throws SQLException, NamingException{
-		conn = getConnection();
-		Statement movieTitleStatment = conn.createStatement();
-		System.out.println("getMovieTitle is called with id= "+ movieID);
-		ResultSet resultTitle = movieTitleStatment.executeQuery("SELECT m.title "
-				+ "FROM moviedb.movies m "
-				+ "where m.id = '"+movieID+"';");
-		while(resultTitle.next()){
-			return resultTitle.getString("title");
-		}
-		//return null;
-		return "No Movie Found";
-	}
 
     
     private float moneyTotal = 0;
@@ -124,6 +111,8 @@ public class ShoppingCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		 String checkoutButton = "";
 		
 	    HttpSession session = request.getSession();
 	    
@@ -217,9 +206,22 @@ public class ShoppingCart extends HttpServlet {
 	   out.println(makeTable(previousItems));
 	   
 	   
+	   //request.setAttribute("varName", "testing if passed");
+	   //getServletContext().getRequestDispatcher("/CheckOutCheck").forward(request,response);
+	   
+	   
 	   NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
 	   
+	   
+	   if (movieIDSet.size()> 0){
+		   checkoutButton = "<form class='form' id = 'log-out-button' action = 'CheckOutCheck' method='get'>"
+							+"<button class = 'btn' type = 'submit'>Checkout</button>"
+							+"</form>";
+	   }
+	   
 	   out.println("<h1> Grand total: "+defaultFormat.format(getMoneyTotal())+"</h1>");
+	   out.println(checkoutButton);
+	   
 	   out.println("</BODY></HTML>");
 	   if(conn != null){
 			try {
@@ -229,8 +231,7 @@ public class ShoppingCart extends HttpServlet {
 					// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	   }
-		
+	   }		
 	}
 
 	/**
@@ -238,6 +239,7 @@ public class ShoppingCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 	
 
@@ -311,6 +313,20 @@ public class ShoppingCart extends HttpServlet {
 	    setMoneyTotal(total);
     	return stripedTable +"</tbody></table>";
     }
+	
+	private String getMovieTitle(String movieID) throws SQLException, NamingException{
+		conn = getConnection();
+		Statement movieTitleStatment = conn.createStatement();
+		//System.out.println("getMovieTitle is called with id= "+ movieID);
+		ResultSet resultTitle = movieTitleStatment.executeQuery("SELECT m.title "
+				+ "FROM moviedb.movies m "
+				+ "where m.id = '"+movieID+"';");
+		while(resultTitle.next()){
+			return resultTitle.getString("title");
+		}
+		//return null;
+		return "No Movie Found";
+	}
 
 
 	public float getMoneyTotal() {

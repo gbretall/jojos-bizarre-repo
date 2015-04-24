@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- Custom styles for this template -->
+
+    <link rel="stylesheet" type="text/css" href="topbarcss.css">
+    <title>M.L.G. Videos</title>
+</head>
+<body>
+	<div id='header'>
+		    M.L.G.Videos
+		   <!--  <form action="http://google.com" id = "main-button">
+    			<input type="submit" value="Go to Google">
+			</form> -->
+			<button type='button' id ='search-button'>Main</button>
+		    <button type="button" id ="search-button">Search</button>
+		    <button type="button" id = "browse-button">Browse</button>
+		    <button type="button" id = "cart-button">Cart</button>
+		    <button type="button" id = "checkout-button">Checkout</button>
+	</div>
+	
+	<div class='container'>
+      <form class='form-signin' action = 'CheckOutCheck' method='post'>
+        <h2 class='form-signin-heading'>Please Check In</h2>
+        
+        <label for='inputEmail' class='sr-only'>First Name</label>
+        <input type='text' id='inputEmail' class='form-control' placeholder='John' required='' autofocus='' name ='firstName'>
+        
+        <label for='inputPassword' class='sr-only'>Last Name</label>
+        <input type='text' id='inputPassword' class='form-control' placeholder='Doe' required='' name = 'lastName'>
+        
+                
+        <label for='inputEmail' class='sr-only'>Credit Card Number</label>
+        <input type='text' id='inputEmail' class='form-control' placeholder='XXXX-XXXX' required='' autofocus='' name ='creditNumber'>
+        
+                
+        <label for='inputEmail' class='sr-only'>Exp. Date</label>
+        <input type='text' id='inputEmail' class='form-control' placeholder='yyyy-mm-dd' required='' autofocus='' name ='expiration'>
+        
+        <button class='btn btn-lg btn-primary btn-block' type='submit'>Sign in</button>
+      </form>
+
+    </div>
+
+
+
+</body>
+</html>
