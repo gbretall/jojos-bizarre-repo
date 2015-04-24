@@ -16,6 +16,10 @@ public class StarsInfo {
 	
 	public  StarsInfo(String starInfo)
 	{
+		parseStarInfo(starInfo);		
+	}
+	public void parseStarInfo(String starInfo)
+	{
 		System.out.println("##"+starInfo);
 		String[] tokens = starInfo.split(":|\\s");
 		System.out.println("->"+tokens[0]+tokens[1]+tokens[2]);
@@ -29,9 +33,7 @@ public class StarsInfo {
 			this.first_name="";
 			this.last_name= tokens[1];
 		}
-		this.id = Integer.parseInt(tokens[0]);
-		
-		
+		this.id = Integer.parseInt(tokens[0]);	
 	}
 	
 }

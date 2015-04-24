@@ -214,29 +214,44 @@ public class MovieList extends HttpServlet {
 					+ "<td><a href='SingleMoviePage?movieID="+currentMovie.id+"'>" + currentMovie.title + "</a></td>" + "<td>"
 					+ currentMovie.year + "</td>" + "<td>"
 					+ currentMovie.director + "</td>" + "<td>";
-			int position = 0;
-			for (StarsInfo s : currentMovie.starsInFilm) {
-				stripedTable+="<a href='SingleStarPage?movieID="+s.id+"'>";
-				if (position != currentMovie.starsInFilm.size() - 1)
-					stripedTable += s.first_name + " " + s.last_name +"</a>"+ ", ";
-				else
-					stripedTable += s.first_name + " " + s.last_name +"</a>";
-				
-				position++;
-			}
-			position = 0;
-			stripedTable += "</td>" + "<td>";
-			for (String g : currentMovie.genres) {
-				if (position != currentMovie.genres.size() - 1) {
-					stripedTable += g + ", ";
-				} else {
-					stripedTable += g;
-				}
-				position++;
-			}
+			stripedTable+=listStarsWithLinks(currentMovie.starsInFilm);
+			stripedTable+=listGenresWithLinks(currentMovie.genres);
 			stripedTable += "</td>" + "</tr>";
 		}
 		return stripedTable;
 	}
 
+	private  String listStarsWithLinks(HashSet<StarsInfo> starsInFilm )
+	{
+		String stripedTable = new String();
+		int position = 0;
+		for (StarsInfo s : starsInFilm) {
+			stripedTable+="<a href='SingleStarPage?movieID="+s.id+"'>";
+			if (position != starsInFilm.size() - 1)
+				stripedTable += s.first_name + " " + s.last_name +"</a>"+ ", ";
+			else
+				stripedTable += s.first_name + " " + s.last_name +"</a>";
+			
+			position++;
+		}
+		return stripedTable;
+	}
+	private String listGenresWithLinks(HashSet<String> genres)
+	{
+		String stripedTable = new String();
+		int position = 0;
+		stripedTable += "</td>" + "<td>";
+		for (String g : genres) {
+			stripedTable+="<a href='BrowseByGenre?CreateSpecificGenreList=true&GenreField="+g+"'>";
+			if (position != genres.size() - 1) {
+				stripedTable += g + ", ";
+			} else {
+				stripedTable += g;
+			}
+			stripedTable+="</a>";
+			position++;
+		}
+		return stripedTable;
+	}
+	
 }

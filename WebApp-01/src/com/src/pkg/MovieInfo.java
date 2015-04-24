@@ -20,6 +20,15 @@ public class MovieInfo
 		this.director = director;
 		this.year = year;
 	}
+
+	public MovieInfo()
+	{
+		
+	}
+	public MovieInfo(int id, String title, String banner_url, String director, String year, String genreInfoConcat, String starInfoConcat)
+	{
+		setMovieInfo(id, title, banner_url, director, year, genreInfoConcat, starInfoConcat);
+	}
 	
 	public boolean addStar(StarsInfo s)
 	{
@@ -47,6 +56,25 @@ public class MovieInfo
 		Collections.addAll(genres, 	genreStrings);
 		
 	}
-	
+	public void setMovieInfo(int id, String title, String banner_url, String director, String year, String genreInfoConcat, String starInfoConcat)
+	{
+		this.id = id;
+		this.title = title;
+		this.banner_url = banner_url;
+		this.director = director;
+		this.year = year;
+		parseGenreResults(genreInfoConcat);
+		parseStarsResults(starInfoConcat);
+	}
 
+	public void clearMovieInfo()
+	{
+		this.id = 0;
+		this.title = "";
+		this.banner_url = "";
+		this. director  = "";
+		this.year = "";
+		this.genres.clear();
+		this.starsInFilm.clear();
+	}
 }

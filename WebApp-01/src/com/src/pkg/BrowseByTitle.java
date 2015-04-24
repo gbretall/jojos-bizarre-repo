@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -92,9 +93,9 @@ public class BrowseByTitle extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		if(request.getParameter("CreateTitleList") != null)
 		{
-			String sqlQuery = "SELECT MT.id, MT.title, MT.year, MT.director, group_concat(distinct G.name), group_concat(DISTINCT S.first_name, ' ', S.last_name)"
+			String sqlQuery = "SELECT MT.id, MT.title, MT.director, MT.year, group_concat(distinct G.name), group_concat(DISTINCT S.id, ':', S.first_name, ' ', S.last_name)"
 					+ " FROM((SELECT * FROM moviedb.movies M ORDER BY M.id) MT "
-					+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM on G.id=GIM.genre_id) ON GIM.movie_id=MT.id)"
+					+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM on G.id=GIM.genre_id) ON GIM.movie_id = MT.id)"
 					+ " JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars s ON SIM.star_id = s.id) ON SIM.movie_id = MT.id "
 					+ " WHERE  MT.title LIKE '"
 					+ (String)request.getParameter("StartCharacter")
@@ -125,6 +126,7 @@ public class BrowseByTitle extends HttpServlet {
 	}
 
 	private String createMoviesByAlpha(ResultSet titles) throws SQLException {
+		MovieInfo mi = new MovieInfo();
 		String stripedTable = "<table class='table table-hover'>"
 		  		+ "<thead>"
 		  		+ "<tr>"
@@ -133,6 +135,7 @@ public class BrowseByTitle extends HttpServlet {
 				+ "<th>Year</th>"
 		  		+ "<th>Director</th>"
 		  		+ "<th>Stars</th>"
+		  		+ "<th>Genre</th>"
 		  		+ "</tr>"
 		  		+ "</thead>"
 		  		+"<tbody>";
@@ -143,11 +146,17 @@ public class BrowseByTitle extends HttpServlet {
 	      else
 	      {
 	    	  while(titles.next())
-	    		  stripedTable += "<tr><td>"+titles.getInt(1)+"</td>"
-	    				  + "<td>"+titles.getString(2)+"</td>"
-	    				  + "<td>"+titles.getString(3)+"</td>"
-	    				  + "<td>"+titles.getString(4)+"</td>"
-	    				  + "<td>"+titles.getString(6)+"</td>";
+	    	  {
+	    		  mi.setMovieInfo(titles.getInt(1), titles.getString(2), "", titles.getString(3),
+	    				  titles.getString(4), titles.getString(5), titles.getString(6));
+	    		  stripedTable += "<tr><td>"+mi.id+"</td>"
+	    				  + "<td>"+mi.title+"</td>"
+	    				  + "<td>"+mi.year+"</td>"
+	    				  + "<td>"+mi.director+"</td>";
+	    		  stripedTable+="<td>"+listStarsWithLinks(mi.starsInFilm)+"</td>";
+	    		  stripedTable+="<td>"+listGenresWithLinks(mi.genres)+"</td>";
+	    		  mi.clearMovieInfo();
+	    	  }
 	    	  stripedTable += "</tbody></table></BODY></HTML>";
 	      }
 	      return stripedTable;
@@ -159,5 +168,39 @@ public class BrowseByTitle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
+	private  String listStarsWithLinks(HashSet<StarsInfo> starsInFilm )
+	{
+		String stripedTable = new String();
+		int position = 0;
+		for (StarsInfo s : starsInFilm) {
+			stripedTable+="<a href='SingleStarPage?movieID="+s.id+"'>";
+			if (position != starsInFilm.size() - 1)
+				stripedTable += s.first_name + " " + s.last_name +"</a>"+ ", ";
+			else
+				stripedTable += s.first_name + " " + s.last_name +"</a>";
+			
+			position++;
+		}
+		return stripedTable;
+	}
+	private String listGenresWithLinks(HashSet<String> genres)
+	{
+		String stripedTable = new String();
+		int position = 0;
+		stripedTable += "</td>" + "<td>";
+		for (String g : genres) {
+			stripedTable+="<a href='BrowseByGenre?CreateSpecificGenreList=true&GenreField="+g+"'>";
+			if (position != genres.size() - 1) {
+				stripedTable += g + ", ";
+			} else {
+				stripedTable += g;
+			}
+			stripedTable+="</a>";
+			position++;
+		}
+		return stripedTable;
+	}
+	
 
 }
