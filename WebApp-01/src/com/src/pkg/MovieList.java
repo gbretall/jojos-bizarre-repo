@@ -221,37 +221,5 @@ public class MovieList extends HttpServlet {
 		return stripedTable;
 	}
 
-	private  String listStarsWithLinks(HashSet<StarsInfo> starsInFilm )
-	{
-		String stripedTable = new String();
-		int position = 0;
-		for (StarsInfo s : starsInFilm) {
-			stripedTable+="<a href='SingleStarPage?movieID="+s.id+"'>";
-			if (position != starsInFilm.size() - 1)
-				stripedTable += s.first_name + " " + s.last_name +"</a>"+ ", ";
-			else
-				stripedTable += s.first_name + " " + s.last_name +"</a>";
-			
-			position++;
-		}
-		return stripedTable;
-	}
-	private String listGenresWithLinks(HashSet<String> genres)
-	{
-		String stripedTable = new String();
-		int position = 0;
-		stripedTable += "</td>" + "<td>";
-		for (String g : genres) {
-			stripedTable+="<a href='BrowseByGenre?CreateSpecificGenreList=true&GenreField="+g+"'>";
-			if (position != genres.size() - 1) {
-				stripedTable += g + ", ";
-			} else {
-				stripedTable += g;
-			}
-			stripedTable+="</a>";
-			position++;
-		}
-		return stripedTable;
-	}
 	
 }
