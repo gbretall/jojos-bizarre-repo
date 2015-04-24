@@ -20,11 +20,27 @@ public class AddTopBar {
 			    +"<body>"
 				+"<div id='header'>"
 				+"M.L.G.Videos  "
-				+"<button type='button' id ='main-button'>Main</button>"
-				+"<button type='button' id ='search-button'>Search</button>"
-				+"<button type='button' id = 'browse-button'>Browse</button>"
-				+"<button type='button' id = 'cart-button'>Cart</button>"
-				+"<button type='button' id = 'checkout-button'>Checkout</button>"
+				+"<form class='form' id = 'main-button' action = 'MainPage.html' method='get'>"
+				+"<button type='submit' id ='main-button'>Main</button>"
+				+"</form>"
+				
+				+"<form class='form' id = 'search-button' action = 'search.html' method='get'>"
+				+"<button type='submit' id ='search-button'>Search</button>"
+				+"</form>"
+				
+				+"<form class='form' id = 'browse-button' action = 'Browse.html' method='get'>"
+				+"<button type='submit' id = 'browse-button'>Browse</button>"
+				+"</form>"
+				
+				+"<form class='form' id = 'cart-button' action = 'ShoppingCart' method='get'>"
+				+"<input name = 'logout' type='hidden'>"
+				+"<button type='submit' id = 'cart-button'>Cart</button>"
+				+"</form>"
+				
+				+"<form class='form' id = 'checkout-button' action = 'ShoppingCart' method='get'>"
+				+"<button type='submit' id = 'checkout-button'>Checkout</button>"
+				+"</form>"
+				
 				+"<form class='form' id = 'log-out-button' action = 'ShoppingCart' method='get'>"
 				+"<input name = 'logout' type='hidden' value ='true'>"
 				+"<button class = 'btn' type = 'submit'>Logout</button>"
