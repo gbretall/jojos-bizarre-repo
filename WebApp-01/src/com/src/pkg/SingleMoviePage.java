@@ -217,7 +217,7 @@ public class SingleMoviePage extends HttpServlet {
 
 	    response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
-	    out.println(makeTopOfPage());
+	    out.println(AddTopBar.makeTopOfPage());
 		
 		try {
 			conn = getConnection();

@@ -53,112 +53,14 @@ public class MovieList extends HttpServlet {
 			// out.println("<UL>");
 			switch (sortMode) {
 			case 1:
-				// for(int i=0; i<movies.SearchIndex.size(); i++)
-				// {
-				// MovieInfo currentMovie =
-				// movies.moviesTable.get(Integer.valueOf(movies.SearchIndex.get(i).get(0)));
-				// System.out.println(currentMovie);
-				// stripedTable += "<tr>"
-				// + "<td>" + Integer.toString(currentMovie.id) + "</td>"
-				// + "<td>" + currentMovie.title + "</td>"
-				// + "<td>" + currentMovie.year + "</td>"
-				// + "<td>"+ currentMovie.director + "</td>"
-				// +"<td>";
-				// int position = 0;
-				// for(StarsInfo s: currentMovie.starsInFilm)
-				// {
-				// if(position != currentMovie.starsInFilm.size()-1)
-				// stripedTable += s.first_name + " " + s.last_name + ", ";
-				// else
-				// stripedTable += s.first_name + " " + s.last_name;
-				// position++;
-				// }
-				// position = 0;
-				// stripedTable += "</td>"
-				// + "<td>";
-				// for(String g: currentMovie.genres)
-				// {
-				// if(position!=currentMovie.genres.size()-1)
-				// {
-				// stripedTable += g + ", ";
-				// }
-				// else
-				// {
-				// stripedTable += g;
-				// }
-				// position++;
-				// }
-				// stripedTable += "</td>"
-				// +"</tr>";
-				// }
 				stripedTable+=populateMovieTable(movies);
 				break;
 			case 2:
 				movies.sortByTitle(titleReverse);
-//				for (int i = 0; i < movies.SearchIndex.size(); i++) {
-//					MovieInfo currentMovie = movies.moviesTable.get(Integer
-//							.valueOf(movies.SearchIndex.get(i).get(0)));
-//					System.out.println(currentMovie);
-//					stripedTable += "<tr>" + "<td>"
-//							+ Integer.toString(currentMovie.id) + "</td>"
-//							+ "<td>" + currentMovie.title + "</td>" + "<td>"
-//							+ currentMovie.year + "</td>" + "<td>"
-//							+ currentMovie.director + "</td>" + "<td>";
-//					int position = 0;
-//					for (StarsInfo s : currentMovie.starsInFilm) {
-//						if (position != currentMovie.starsInFilm.size() - 1)
-//							stripedTable += s.first_name + " " + s.last_name
-//									+ ", ";
-//						else
-//							stripedTable += s.first_name + " " + s.last_name;
-//						position++;
-//					}
-//					position = 0;
-//					stripedTable += "</td>" + "<td>";
-//					for (String g : currentMovie.genres) {
-//						if (position != currentMovie.genres.size() - 1) {
-//							stripedTable += g + ", ";
-//						} else {
-//							stripedTable += g;
-//						}
-//						position++;
-//					}
-//					stripedTable += "</td>" + "</tr>";			
-//				}
 				stripedTable+=populateMovieTable(movies);
 				break;
 			default:
 				movies.sortByYear(yearReverse);
-//				for (int i = 0; i < movies.SearchIndex.size(); i++) {
-//					MovieInfo currentMovie = movies.moviesTable.get(Integer
-//							.valueOf(movies.SearchIndex.get(i).get(0)));
-//					System.out.println(currentMovie);
-//					stripedTable += "<tr>" + "<td>"
-//							+ Integer.toString(currentMovie.id) + "</td>"
-//							+ "<td>" + currentMovie.title + "</td>" + "<td>"
-//							+ currentMovie.year + "</td>" + "<td>"
-//							+ currentMovie.director + "</td>" + "<td>";
-//					int position = 0;
-//					for (StarsInfo s : currentMovie.starsInFilm) {
-//						if (position != currentMovie.starsInFilm.size() - 1)
-//							stripedTable += s.first_name + " " + s.last_name
-//									+ ", ";
-//						else
-//							stripedTable += s.first_name + " " + s.last_name;
-//						position++;
-//					}
-//					position = 0;
-//					stripedTable += "</td>" + "<td>";
-//					for (String g : currentMovie.genres) {
-//						if (position != currentMovie.genres.size() - 1) {
-//							stripedTable += g + ", ";
-//						} else {
-//							stripedTable += g;
-//						}
-//						position++;
-//					}
-//					stripedTable += "</td>" + "</tr>";
-//				}
 				stripedTable+=populateMovieTable(movies);
 				break;
 			}
@@ -211,7 +113,10 @@ public class MovieList extends HttpServlet {
 					.valueOf(movies.SearchIndex.get(i).get(0)));
 			System.out.println(currentMovie);
 			stripedTable += "<tr>" + "<td>" + Integer.toString(currentMovie.id)+ "</td>" 
-					+ "<td><a href='SingleMoviePage?movieID="+currentMovie.id+"'>" + currentMovie.title + "</a></td>" + "<td>"
+					+ "<td>"
+					+ textLinker.linkMovie(currentMovie.title, String.valueOf(currentMovie.id))
+					+ "</td>" 
+					+ "<td>"
 					+ currentMovie.year + "</td>" + "<td>"
 					+ currentMovie.director + "</td>" + "<td>";
 			stripedTable+=textLinker.linkStars(currentMovie.starsInFilm);

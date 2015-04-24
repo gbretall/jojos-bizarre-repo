@@ -150,7 +150,9 @@ public class BrowseByTitle extends HttpServlet {
 	    		  mi.setMovieInfo(titles.getInt(1), titles.getString(2), "", titles.getString(3),
 	    				  titles.getString(4), titles.getString(5), titles.getString(6));
 	    		  stripedTable += "<tr><td>"+mi.id+"</td>"
-	    				  + "<td>"+mi.title+"</td>"
+	    				  + "<td>"
+	    				  + textLinker.linkMovie(mi.title, String.valueOf(mi.id))
+	    				  +"</td>"
 	    				  + "<td>"+mi.year+"</td>"
 	    				  + "<td>"+mi.director+"</td>";
 	    		  stripedTable+="<td>"+textLinker.linkStars(mi.starsInFilm)+"</td>";
