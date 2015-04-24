@@ -50,7 +50,7 @@ private String makeTable(SearchTableSort movies, int sortMode, boolean titleReve
 		  		+ "</tr>"
 		  		+ "</thead>"
 		  		+"<tbody>";
-	      if (movies.moviesTable.size() == 0) {
+	      if (movies == null) {
 	    	  stripedTable = "<h1>No items</h1>";
 	      } else {
 	        //out.println("<UL>");

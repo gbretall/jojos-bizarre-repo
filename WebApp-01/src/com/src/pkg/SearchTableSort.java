@@ -19,31 +19,29 @@ public class SearchTableSort {
 	}
 	
 	public void add(int id, String title,String year, String director, String banner_url,
-							String genre, int sid, String first_name, String last_name )
+							String genreInfoConcat, String starInfoConcat )
 	{
 		//System.out.println("Add is called");
 		//check if id is in the hash map
 		//if yes, then add genre and star info to movie
+		MovieInfo mi; 
 		if (moviesTable.containsKey(id))
 		{
 			//System.out.println("value was in hashmap");
-			MovieInfo mi = moviesTable.get(id);
-			mi.addStar(new StarsInfo(sid,first_name, last_name));
-			mi.addGenre(genre);
-			moviesTable.put(id, mi);
+			mi= moviesTable.get(id);
 		}
 		else
 		//if not, then add the info to the index and create the movie object
 		{
 			//System.out.println("not in set");
-			MovieInfo mi = new MovieInfo(id, title, banner_url, director, year);
+			mi = new MovieInfo(id, title, banner_url, director, year);
 			//System.out.println("MovieInfo: "+ id + " "+ title+ " "+ banner_url+ " "
 				//	+ director +" "+ year);
-			mi.addGenre(genre);
-			mi.addStar(new StarsInfo(sid,first_name, last_name));
-			moviesTable.put(id, mi);
-			addIndex(id, year, title);
-		}		
+		}
+		mi.parseStarsResults(starInfoConcat);
+		mi.parseGenreResults(genreInfoConcat);
+		moviesTable.put(id, mi);
+		addIndex(id, year, title);
 	}
 	
 	public void sortByYear(boolean reverse)

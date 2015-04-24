@@ -78,7 +78,7 @@ public class SearchServlet extends HttpServlet {
     		SearchTableSort movies = new SearchTableSort();
     		while(results.next())
     		{
-    			movies.add(results.getInt(1), results.getString(2), results.getString(3), results.getString(4), results.getString(5), results.getString(6), results.getInt(7), results.getString(8), results.getString(9));
+    			movies.add(results.getInt(1), results.getString(2), results.getString(3), results.getString(4), results.getString(5), results.getString(6), results.getString(7));
     		}
     		for(int i = 0; i < movies.SearchIndex.size(); i++)
     		{
@@ -111,7 +111,7 @@ public class SearchServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		boolean firstStatement = true;
 		HttpSession session = request.getSession();
-		String searchQuery = "SELECT MD.id, MD.title, MD.year, MD.director, MD.banner_url, G.name, S.id, S.first_name, S.last_name "
+		String searchQuery = "SELECT MD.id, MD.title, MD.year, MD.director, MD.banner_url, GROUP_CONCAT(DISTINCT G.name), GROUP_CONCAT(DISTINCT S.id,':', S.first_name, ' ', S.last_name) "
 				+ "FROM ((SELECT * FROM moviedb.movies M ";
 		if(request.getParameter("TitleCheck")!=null)
 		{
@@ -172,7 +172,7 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		
-		searchQuery += ";";
+		searchQuery += " GROUP BY MD.id;";
 		try
 		{
 			System.out.println(searchQuery);

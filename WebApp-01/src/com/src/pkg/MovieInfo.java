@@ -1,4 +1,5 @@
 package com.src.pkg;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class MovieInfo 
@@ -30,7 +31,22 @@ public class MovieInfo
 		return genres.add(g);
 	}
 
-
+	public void parseStarsResults(String starInfoConcat)
+	{
+		System.out.println(starInfoConcat);
+		String[] stars = starInfoConcat.split(",");
+		for (int i = 0 ; i<stars.length; ++i)
+		{
+			starsInFilm.add(new StarsInfo(stars[i]));
+		}
+		
+	}
+	public void parseGenreResults(String genreInfoConcat)
+	{
+		String[] genreStrings = genreInfoConcat.split(",");
+		Collections.addAll(genres, 	genreStrings);
+		
+	}
 	
 
 }
