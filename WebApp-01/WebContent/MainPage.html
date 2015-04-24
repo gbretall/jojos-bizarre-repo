@@ -1,35 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCSW34RJKwYCYvrOm2R3ynwtUlkHWiv_0"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/common.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/util.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/stats.js"></script>
-    <script type="text/javascript" src = "logIn.js"></script>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="topbarcss.css">
-    <title>M.L.G. Videos</title>
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCSW34RJKwYCYvrOm2R3ynwtUlkHWiv_0"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/common.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/util.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/stats.js"></script>
+<script type="text/javascript" src="logIn.js"></script>
+
+<link rel="stylesheet" type="text/css" href="topbarcss.css">
+<title>M.L.G. Videos</title>
 </head>
 <body>
 	<div id='header'>
-		    M.L.G.Videos
-		    <button type="button" id = "main-button">Main</button>
-		    <button type="button" id ="search-button">Search</button>
-		    <button type="button" id = "browse-button">Browse</button>
-		    <button type="button" id = "cart-button">Cart</button>
-		    <button type="button" id = "checkout-button">Checkout</button>
+		M.L.G.Videos
+		<form class='form' id='main-button' action='MainPage.html'
+			method='get'>
+			<button type='submit' id='main-button'>Main</button>
+		</form>
+		<form class='form' id='search-button' action='search.html'
+			method='get'>
+			<button type='submit' id='search-button'>Search</button>
+		</form>
+		<form class='form' id='browse-button' action='Browse.html'
+			method='get'>
+			<button type='submit' id='browse-button'>Browse</button>
+		</form>
+		<form class='form' id='cart-button' action='ShoppingCart' method='get'>
+			<input name='logout' type='hidden'>
+			<button type='submit' id='cart-button'>Cart</button>
+		</form>
+		<form class='form' id='checkout-button' action='ShoppingCart'
+			method='get'>
+			<button type='submit' id='checkout-button'>Checkout</button>
+		</form>
+		<form class='form' id='log-out-button' action='ShoppingCart'
+			method='get'>
+			<input name='logout' type='hidden' value='true'>
+			<button class='btn' type='submit'>Logout</button>
+		</form>
 	</div>
-	<p><b>MAIN PAGE</b></p>
-	<div class = 'main' >
-		<br/>
-		<a href="Browse.html">Browse</a>
-		<br/>
-		<a href="search.html">Search</a>
-	
+	<p>
+		<b>MAIN PAGE</b>
+	</p>
+	<div class='main'>
+		<br /> <a href="Browse.html">Browse</a> <br /> <a href="search.html">Search</a>
+
 	</div>
 </body>
 </html>
+
+
+
+
+
