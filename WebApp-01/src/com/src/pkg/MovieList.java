@@ -23,6 +23,8 @@ import java.util.*;
 public class MovieList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String moviesTable;
+	private int resultsLimit = 10;
+	private int resultsPosition = 1;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -65,7 +67,35 @@ public class MovieList extends HttpServlet {
 				break;
 			}
 		}
-		return stripedTable + "</tbody></table></BODY></HTML>";
+		stripedTable += "</tbody></table>"
+				+ "Limit <a href='MovieList?limit=10&position="
+				+ resultsPosition
+				+ "'>10 </a>"
+				+ "<a href='MovieList?limit=20&position="
+				+ resultsPosition
+				+ "'>20 </a>"
+				+ "<a href='MovieList?limit=50&position="
+				+ resultsPosition
+				+ "'>50 </a>"
+				+ "<a href='MovieList?limit=100&position="
+				+ resultsPosition
+				+ "'>100</a>"
+				+ "<br>";
+		for(int i = 0; i < (movies.SearchIndex.size()/resultsLimit)+1; i++)
+		{
+			if(i == resultsPosition-1)
+			{
+				stripedTable += (i+1) + " ";
+			}
+			else
+			{
+				stripedTable += "<a href='MovieList?position="+(i+1)+"&limit="
+						+ resultsLimit
+						+ "'>"+(i+1)+" "+"</a>";
+			}
+		}
+				
+				return stripedTable + "</BODY></HTML>";
 	}
 
 	/**
@@ -78,6 +108,14 @@ public class MovieList extends HttpServlet {
 		HttpSession session = request.getSession();
 		SearchTableSort movies = (SearchTableSort) session
 				.getAttribute("movies");
+		if(request.getParameter("limit")!= null)
+		{
+			resultsLimit = Integer.parseInt(request.getParameter("limit"));
+		}
+		if(request.getParameter("position")!= null)
+		{
+			resultsPosition = Integer.parseInt(request.getParameter("position"));
+		}
 		PrintWriter out = response.getWriter();
 		int sortMode = 1;
 		if (request.getParameter("SortByTitle") != null) {
@@ -108,20 +146,45 @@ public class MovieList extends HttpServlet {
 
 	private String populateMovieTable( SearchTableSort movies) {
 		String stripedTable = new String();
-		for (int i = 0; i < movies.SearchIndex.size(); i++) {
-			MovieInfo currentMovie = movies.moviesTable.get(Integer
-					.valueOf(movies.SearchIndex.get(i).get(0)));
-			System.out.println(currentMovie);
-			stripedTable += "<tr>" + "<td>" + Integer.toString(currentMovie.id)+ "</td>" 
-					+ "<td>"
-					+ textLinker.linkMovie(currentMovie.title, String.valueOf(currentMovie.id))
-					+ "</td>" 
-					+ "<td>"
-					+ currentMovie.year + "</td>" + "<td>"
-					+ currentMovie.director + "</td>" + "<td>";
-			stripedTable+=textLinker.linkStars(currentMovie.starsInFilm);
-			stripedTable+=textLinker.linkGenres(currentMovie.genres);
-			stripedTable += "</td>" + "</tr>";
+		System.out.println((resultsPosition * resultsLimit) + " " + movies.SearchIndex.size());
+		if(movies.SearchIndex.size() > (resultsLimit*resultsPosition))
+		{
+			
+			for (int i = ((resultsPosition-1)*resultsLimit); i < (resultsLimit*resultsPosition); i++) 
+			{
+				//System.out.println(i);
+				MovieInfo currentMovie = movies.moviesTable.get(Integer
+						.valueOf(movies.SearchIndex.get(i).get(0)));
+				System.out.println(currentMovie);
+				stripedTable += "<tr>" + "<td>" + Integer.toString(currentMovie.id)+ "</td>" 
+						+ "<td>"
+						+ textLinker.linkMovie(currentMovie.title, String.valueOf(currentMovie.id))
+						+ "</td>" 
+						+ "<td>"
+						+ currentMovie.year + "</td>" + "<td>"
+						+ currentMovie.director + "</td>" + "<td>";
+				stripedTable+=textLinker.linkStars(currentMovie.starsInFilm);
+				stripedTable+=textLinker.linkGenres(currentMovie.genres);
+				stripedTable += "</td>" + "</tr>";
+			}
+		}
+		else
+		{
+			for (int i = (resultsLimit*(resultsPosition-1)); i < movies.SearchIndex.size(); i++) {
+				MovieInfo currentMovie = movies.moviesTable.get(Integer
+						.valueOf(movies.SearchIndex.get(i).get(0)));
+				//System.out.println(currentMovie);
+				stripedTable += "<tr>" + "<td>" + Integer.toString(currentMovie.id)+ "</td>" 
+						+ "<td>"
+						+ textLinker.linkMovie(currentMovie.title, String.valueOf(currentMovie.id))
+						+ "</td>" 
+						+ "<td>"
+						+ currentMovie.year + "</td>" + "<td>"
+						+ currentMovie.director + "</td>" + "<td>";
+				stripedTable+=textLinker.linkStars(currentMovie.starsInFilm);
+				stripedTable+=textLinker.linkGenres(currentMovie.genres);
+				stripedTable += "</td>" + "</tr>";
+			}
 		}
 		return stripedTable;
 	}
