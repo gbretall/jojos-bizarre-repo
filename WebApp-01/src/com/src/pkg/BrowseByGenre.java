@@ -92,7 +92,7 @@ public class BrowseByGenre extends HttpServlet {
 		if(request.getParameter("CreateSpecificGenreList") != null)
 		{
 			System.out.println((String)request.getParameter("GenreField"));
-			genresQuery = "SELECT MT.id, MT.title, MT.year, MT.director, group_concat(distinct G.name), group_concat(DISTINCT S.first_name, ' ', S.last_name)"
+			genresQuery = "SELECT MT.id, MT.title,  MT.director, MT.year,group_concat(distinct G.name), group_concat(DISTINCT S.id, ':', S.first_name, ' ', S.last_name)"
 					+ " FROM((SELECT * FROM moviedb.movies M ORDER BY M.id) MT "
 					+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM on G.id=GIM.genre_id) ON GIM.movie_id=MT.id)"
 					+ " JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars s ON SIM.star_id = s.id) ON SIM.movie_id = MT.id "
@@ -133,6 +133,7 @@ public class BrowseByGenre extends HttpServlet {
 
 	private String createMoviesInGenre(ResultSet genreList) throws SQLException 
 	{
+		MovieInfo mi = new MovieInfo();
 		String stripedTable = "<table class='table table-hover'>"
 		  		+ "<thead>"
 		  		+ "<tr>"
@@ -151,11 +152,16 @@ public class BrowseByGenre extends HttpServlet {
 	      else
 	      {
 	    	  while(genreList.next())
-	    		  stripedTable += "<tr><td>"+genreList.getInt(1)+"</td>"
-	    				  + "<td>"+genreList.getString(2)+"</td>"
-	    				  + "<td>"+genreList.getString(3)+"</td>"
-	    				  + "<td>"+genreList.getString(4)+"</td>"
-	    				  + "<td>"+genreList.getString(6)+"</td>";
+	    	  {
+	    		  mi.setMovieInfo(genreList.getInt(1), genreList.getString(2), "", genreList.getString(3),
+	    				  genreList.getString(4), genreList.getString(5), genreList.getString(6));
+	    		  stripedTable += "<tr><td>"+mi.id+"</td>"
+	    				  + "<td>"+mi.title+"</td>"
+	    				  + "<td>"+mi.year+"</td>"
+	    				  + "<td>"+mi.director+"</td>";
+	    		  stripedTable+="<td>"+textLinker.linkStars(mi.starsInFilm)+"</td>";
+	    		  mi.clearMovieInfo();
+	    	  }
 	    	  stripedTable += "</tbody></table></BODY></HTML>";
 	      }
 	      return stripedTable;

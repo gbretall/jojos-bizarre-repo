@@ -214,8 +214,8 @@ public class MovieList extends HttpServlet {
 					+ "<td><a href='SingleMoviePage?movieID="+currentMovie.id+"'>" + currentMovie.title + "</a></td>" + "<td>"
 					+ currentMovie.year + "</td>" + "<td>"
 					+ currentMovie.director + "</td>" + "<td>";
-			stripedTable+=listStarsWithLinks(currentMovie.starsInFilm);
-			stripedTable+=listGenresWithLinks(currentMovie.genres);
+			stripedTable+=textLinker.linkStars(currentMovie.starsInFilm);
+			stripedTable+=textLinker.linkGenres(currentMovie.genres);
 			stripedTable += "</td>" + "</tr>";
 		}
 		return stripedTable;

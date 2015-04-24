@@ -153,8 +153,8 @@ public class BrowseByTitle extends HttpServlet {
 	    				  + "<td>"+mi.title+"</td>"
 	    				  + "<td>"+mi.year+"</td>"
 	    				  + "<td>"+mi.director+"</td>";
-	    		  stripedTable+="<td>"+listStarsWithLinks(mi.starsInFilm)+"</td>";
-	    		  stripedTable+="<td>"+listGenresWithLinks(mi.genres)+"</td>";
+	    		  stripedTable+="<td>"+textLinker.linkStars(mi.starsInFilm)+"</td>";
+	    		  stripedTable+="<td>"+textLinker.linkGenres(mi.genres)+"</td>";
 	    		  mi.clearMovieInfo();
 	    	  }
 	    	  stripedTable += "</tbody></table></BODY></HTML>";
