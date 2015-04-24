@@ -121,31 +121,35 @@ public class SingleMoviePage extends HttpServlet {
     private Set<String> getSetOfGenres(String movieID) throws SQLException
     {
     	Statement genreSetQuery = conn.createStatement();
-    	String query = "SELECT GROUP_CONCAT(DISTINCT G.Name) as genres"
-    			+ "FROM moviedb.genres_in_movies GiM"
-    			+"inner join moviedb.genres G"
-    			+"on G.id = GiM.genre_id"
+    	String query = "SELECT GROUP_CONCAT(DISTINCT G.Name) as genres "
+    			+ "FROM moviedb.genres_in_movies GiM "
+    			+"inner join moviedb.genres G "
+    			+"on G.id = GiM.genre_id "
     			+"where movie_id = '"
     			+ movieID
     			+"' group by movie_id;";
     	ResultSet genreResult = genreSetQuery.executeQuery(query);
     	HashSet<String> genreSet = new HashSet<String>();
     	if(!genreResult.isBeforeFirst())
+    	{
+    		genreResult.close();
     		return null;
+    	}
     	while(genreResult.next())
     	{
     		genreSet.add(genreResult.getString(1));
     	}
+    	genreResult.close();
     	return genreSet;
     }
 	
 	private Set<String> getSetOfStars(String movieID) throws SQLException
 	{
 		Statement starSetQuery = conn.createStatement();
-		String query = "select GROUP_CONCAT(DISTINCT S.first_name, ' ', S.last_name) as stars" 
-				+"from ((moviedb.movies M"
-				+"inner join moviedb.stars_in_movies SiM"
-				+"on  M.id = SiM.movie_id) INNER JOIN moviedb.stars S ON SiM.star_id = S.id)" 
+		String query = "select GROUP_CONCAT(DISTINCT SiM.star_id, ':', S.first_name, ' ', S.last_name) as stars " 
+				+"from ((moviedb.movies M "
+				+"inner join moviedb.stars_in_movies SiM "
+				+"on  M.id = SiM.movie_id) INNER JOIN moviedb.stars S ON SiM.star_id = S.id) " 
 				+"where M.id = '"
 				+ movieID
 				+"' group by M.id;";
@@ -153,12 +157,18 @@ public class SingleMoviePage extends HttpServlet {
 		HashSet<String> starsInFilm = new HashSet<String>();
 		if(!starsResults.isBeforeFirst())
 		{
+			starsResults.close();
 			return null;
 		}
 		while(starsResults.next())
 		{
-			starsInFilm.add(starsResults.getString(1));
+			String starsList = starsResults.getString(1);
+			for(String star: starsList.split(","))
+			{
+				starsInFilm.add(star);
+			}
 		}
+		starsResults.close();
 		return starsInFilm;
 	}
 	
@@ -167,13 +177,19 @@ public class SingleMoviePage extends HttpServlet {
 		Statement movieQuery = conn.createStatement();
 		String query = "SELECT * FROM moviedb.movies WHERE id = "
 				+ movieID 
-				+ "';";
+				+ ";";
 		ResultSet movieInfo = movieQuery.executeQuery(query);
 		if(!movieInfo.isBeforeFirst())
+		{
+			movieInfo.close();
 			return null;
-		SingleMovie newMovie = new SingleMovie(new Integer(movieInfo.getInt(1)).toString(), movieInfo.getString(2), 
-				movieInfo.getString(3), movieInfo.getString(4), movieInfo.getString(5), movieInfo.getString(6), 
-				getSetOfStars(movieID), getSetOfGenres(movieID));
+		}
+		SingleMovie newMovie = null;
+		while(movieInfo.next())
+			newMovie = new SingleMovie(new Integer(movieInfo.getInt(1)).toString(), movieInfo.getString(2), 
+					movieInfo.getString(3), movieInfo.getString(4), movieInfo.getString(5), movieInfo.getString(6), 
+					getSetOfStars(movieID), getSetOfGenres(movieID));
+		movieInfo.close();
 		return newMovie;
 	}
     
@@ -257,7 +273,38 @@ public class SingleMoviePage extends HttpServlet {
 		+ "<tr><td>"
 		+ "<a href='"
 		+ movieOnThisPage.getTrailer_url()
-		+ "'>Trailer For This Film</a></td></tr></tbody></BODY></HTML>";
+		+ "'>Trailer For This Film</a></td>"
+		+ "<td>   Price: "
+		+ movieOnThisPage.getPrice()
+		+ "</td></tr>"
+		+ "<tr><td>Starring: ";
+		for(String star: movieOnThisPage.stars)
+		{
+			String[] starParts = star.split(":");
+			System.out.println(starParts[1]);
+			pageContent += "<a href='SingleStarPage?starID="
+					+ starParts[0]
+					+ "'>"
+					+ starParts[1]
+					+ " </a>";
+		}
+		pageContent += "</td></tr><tr><td>Genres: ";
+		for(String genre: movieOnThisPage.getGenre())
+		{
+			pageContent += "<a href='BrowseByGenre?CreateSpecificGenreList=true&GenreField="
+					+ genre
+					+ "'>"
+					+ genre
+					+ " </a>";
+		}
+		pageContent += "</td></tr>"
+				+ "<tr><form class='form-signin' action = 'ShoppingCart' method='get'>"
+				+ "<input name = 'adding' type='hidden' value = true>"
+				+ "<input name = 'movieID' type='hidden' value='"
+				+ movieOnThisPage.getMovie_id()
+				+ "'>"
+				+ "<td><button class = 'btn' type = 'submit'>Add To Cart</button></td></form>"
+				+ "</tr></tbody></table></BODY></HTML>";
 		return pageContent;
 	}
 
