@@ -10,7 +10,7 @@ public class textLinker {
 		String stripedTable = new String();
 		int position = 0;
 		for (StarsInfo s : starsInFilm) {
-			stripedTable+="<a href='SingleStarPage?movieID="+s.id+"'>";
+			stripedTable+="<a href='SingleStarPage?starID="+s.id+"'>";
 			if (position != starsInFilm.size() - 1)
 				stripedTable += s.first_name + " " + s.last_name +"</a>"+ ", ";
 			else
@@ -37,5 +37,8 @@ public class textLinker {
 		}
 		return stripedTable;
 	}
-
+	public static String linkMovie(String movieName, String id)
+	{
+		return "<a href='SingleMoviePage?movieID="+id+"'>"+movieName+"</a>";
+	}
 }
