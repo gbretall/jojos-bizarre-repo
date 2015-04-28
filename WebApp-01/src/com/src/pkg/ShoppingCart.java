@@ -112,7 +112,7 @@ public class ShoppingCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		 String checkoutButton = "";
+		String checkoutButton = "";
 		
 	    HttpSession session = request.getSession();
 	    
@@ -138,16 +138,8 @@ public class ShoppingCart extends HttpServlet {
 	    
 	    response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
-	    out.println(makeTopOfPage());
+	    out.println(AddTopBar.makeTopOfPage());
 	    
-	    if(request.getParameter("logout") != null)
-	    {  
-		    System.out.println(request.getParameter("logout"));
-		    session.invalidate();
-			String site = new String("index.html");
-			response.setStatus(response.SC_MOVED_TEMPORARILY);
-			response.setHeader("Location", site);
-	    }
 //	    System.out.println(request.getParameter("movieID"));
 	    if(movieID != null && adding != null){
 	    	if(adding.equals("true")){
@@ -155,7 +147,7 @@ public class ShoppingCart extends HttpServlet {
 //	    		previousItems.add(request.getParameter("movieID"));
 	    		if (movieIDSet.add(movieID)){
 	    			//System.out.println(movieIDSet.add(movieID));
-	    			System.out.println(movieIDSet.size());
+	    			//System.out.println(movieIDSet.size());
 						try {
 							//System.out.println("What is this: "+getMovieTitle(request.getParameter("movieID"))+ " "+request.getParameter("movieID").getClass());
 							newMovie = new moviesInCart(getMovieTitle(movieID), movieID , 15.99f, 1);
@@ -166,14 +158,14 @@ public class ShoppingCart extends HttpServlet {
 							e.printStackTrace();
 						}
 						for(String x: movieIDSet){
-							System.out.println(x);
+							//System.out.println(x);
 						}
 	    		}
 	    		else{
-	    			System.out.println("In Set");
+	    			//System.out.println("In Set");
 	    			for (moviesInCart c: previousItems){
 	    				if(c.getmovieID().equals(movieID)){
-	    					System.out.println("already here");
+	    					//System.out.println("already here");
 	    					c.setQuantity(c.getQuantity()+1);
 	    				}
 	    			}
@@ -184,7 +176,7 @@ public class ShoppingCart extends HttpServlet {
 	    	if(adding.equals("false")){
 	    		//System.out.println("delete item called");
 	    		int toDelete = -1;
-	    		System.out.println("deleting movie " + movieID);
+	    		//System.out.println("deleting movie " + movieID);
 	    		for (moviesInCart c: previousItems){
     				if(c.getmovieID().equals(movieID)){
     					//System.out.println("already here");
@@ -196,7 +188,7 @@ public class ShoppingCart extends HttpServlet {
     				
     			}
 	    		if(toDelete >= 0){
-	    			System.out.println("delete item called");
+	    			//System.out.println("delete item called");
 	    			previousItems.remove(toDelete);
 	    			}
 	    	}
@@ -204,17 +196,13 @@ public class ShoppingCart extends HttpServlet {
 
 	    
 	   out.println(makeTable(previousItems));
-	   
-	   
-	   //request.setAttribute("varName", "testing if passed");
-	   //getServletContext().getRequestDispatcher("/CheckOutCheck").forward(request,response);
-	   
+
 	   
 	   NumberFormat defaultFormat = NumberFormat.getCurrencyInstance();
 	   
 	   
-	   if (movieIDSet.size()> 0){
-		   checkoutButton = "<form class='form' id = 'log-out-button' action = 'CheckOutCheck' method='get'>"
+	   if (movieIDSet.size()> 0 && previousItems.size() > 0){
+		   checkoutButton = "<form class='form' id = 'check-out-button' action = 'CheckOutCheck' method='get'>"
 							+"<button class = 'btn' type = 'submit'>Checkout</button>"
 							+"</form>";
 	   }
@@ -242,33 +230,6 @@ public class ShoppingCart extends HttpServlet {
 		doGet(request, response);
 	}
 	
-
-	private String makeTopOfPage(){
-		String topOfPage= "<!DOCTYPE html>"
-				+"<html>"
-				+"<head lang='en'>"
-				    +"<meta charset='utf-8'>"
-				    +"<meta http-equiv='X-UA-Compatible' content='IE=edge'>"
-				    +"<meta name='viewport' content='width=device-width, initial-scale=1'>"
-				    + "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>"
-				    +"<link rel='stylesheet' type='text/css' href='topbarcss.css'>"
-				    +"<title>M.L.G. Videos</title>"
-				+"</head>"
-				+"<body>"
-					+"<div id='header'>"
-						    +"M.L.G.Videos  "
-						    +"<button type='button' id ='main-button'>Main</button>"
-						    +"<button type='button' id ='search-button'>Search</button>"
-						    +"<button type='button' id = 'browse-button'>Browse</button>"
-						    +"<button type='button' id = 'cart-button'>Cart</button>"
-						    +"<button type='button' id = 'checkout-button'>Checkout</button>"
-						    +"<form class='form' id = 'log-out-button' action = 'ShoppingCart' method='get'>"
-							+"<input name = 'logout' type='hidden' value ='true'>"
-							+"<button class = 'btn' type = 'submit'>Logout</button>"
-							+"</form>"
-					+"</div>";
-		return topOfPage;
-	}
 	
 	private String makeTable(ArrayList<moviesInCart> previousItems){
     	

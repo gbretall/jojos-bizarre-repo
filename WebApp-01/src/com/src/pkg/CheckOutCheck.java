@@ -103,6 +103,7 @@ public class CheckOutCheck extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		//String testParam = (String) request.getAttribute("varName");
 		String userID = (String)session.getAttribute("userID");
+		System.out.println(userID);
 		Set<String> movieIDSet = (Set<String>)session.getAttribute("movieIDSet");
 		
 		
@@ -110,14 +111,15 @@ public class CheckOutCheck extends HttpServlet {
 		if(movieIDSet ==null){
 			out.println("<h1>Ya nothing in your cart, ya dingus</h1>");
 		}
-		if (userID == null && false) {
+		if (userID == null) {
+			System.out.println("this if was hit in CheckOutCheck");
 			try {
 				conn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String site = new String("wrongPassword.html");
+			String site = new String("index.html");
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", site);
 		}
@@ -137,9 +139,10 @@ public class CheckOutCheck extends HttpServlet {
 					if(movieIDSet != null){
 					addToDatabase(movieIDSet, userID);
 					session.setAttribute("userID", userID);
-					String site = new String("index.html");
-					response.setStatus(response.SC_MOVED_TEMPORARILY);
-					response.setHeader("Location", site);
+					response.sendRedirect("/LogOutServlet?checkout=true");
+					//String site = new String("index.html");
+					//response.setStatus(response.SC_MOVED_TEMPORARILY);
+					//response.setHeader("Location", site);
 					}
 				}
 			} catch (SQLException e) {

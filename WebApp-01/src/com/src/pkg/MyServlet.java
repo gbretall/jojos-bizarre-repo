@@ -80,6 +80,7 @@ public class MyServlet extends HttpServlet {
 		String userID = null;
 		try {
 			userID = logInCheck(request.getParameter("Username"),request.getParameter("Password"));
+			System.out.println(userID);
 		} catch (SQLException | NamingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -90,7 +91,7 @@ public class MyServlet extends HttpServlet {
 
 		try {
 			if ( userID != null) {
-				System.out.println(userID);
+
 				session.setAttribute("userID", userID);
 				String site = new String("MainPage.html");
 				response.setStatus(response.SC_MOVED_TEMPORARILY);

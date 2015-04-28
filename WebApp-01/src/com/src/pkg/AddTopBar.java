@@ -32,8 +32,7 @@ public class AddTopBar {
 				+"<button type='submit' id = 'browse-button'>Browse</button>"
 				+"</form>"
 				
-				+"<form class='form' id = 'cart-button' action = 'ShoppingCart' method='get'>"
-				+"<input name = 'logout' type='hidden'>"
+				+"<form class='form' id = 'cart-button' action = 'ShoppingCart'>"
 				+"<button type='submit' id = 'cart-button'>Cart</button>"
 				+"</form>"
 				
@@ -41,7 +40,7 @@ public class AddTopBar {
 				+"<button type='submit' id = 'checkout-button'>Checkout</button>"
 				+"</form>"
 				
-				+"<form class='form' id = 'log-out-button' action = 'ShoppingCart' method='get'>"
+				+"<form class='form' id = 'log-out-button' action = 'LogOutServlet' method='get'>"
 				+"<input name = 'logout' type='hidden' value ='true'>"
 				+"<button class = 'btn' type = 'submit'>Logout</button>"
 				+"</form>"
