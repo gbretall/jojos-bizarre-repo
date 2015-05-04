@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 public class CheckOutCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private Connection conn = null;
+//	private Connection conn = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,36 +35,6 @@ public class CheckOutCheck extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    
-    
-    public boolean checkUserInfo(String firstName, String lastName,
-    		String creditNumber, String expiration) throws SQLException {
-    	String sql ="SELECT * "
-    			+ "FROM moviedb.creditcards CC"
-    			+ " where CC.first_name ='"+firstName+"'"
-    			+ "and CC.last_name = '"+lastName+"' "
-    			+ "and CC.id = '"+creditNumber+"' "
-    			+ "and CC.expiration = '"+expiration+"';";
-    	
-    	Statement getCardStatment = conn.createStatement();
-    	ResultSet resultCard = getCardStatment.executeQuery(sql);
-    	
-		return resultCard.isBeforeFirst();
-	}
-    
-    public void addToDatabase(Set<String> movieIDSet, String userID) throws SQLException{
-    	Statement getCardStatment = conn.createStatement();
-    	for (String movieIds: movieIDSet){
-        	String sql = "INSERT INTO moviedb.sales(customer_id, movie_id, sale_date) " +
-                    "VALUES ("
-                    + "'"+userID+"', "
-                    + "'"+movieIds+"', "
-                    + " date(now()))";	
-        	getCardStatment.executeUpdate(sql);
-    	}
-    	
-    }
-    
     
 	public Connection getConnection() throws SQLException, NamingException {
 		Context initCtx = new InitialContext();
@@ -79,18 +49,89 @@ public class CheckOutCheck extends HttpServlet {
 			System.out.println("ds is null.");
 		return ds.getConnection();
 	}
+    
+    public boolean checkUserInfo(String firstName, String lastName,
+    		String creditNumber, String expiration) throws SQLException, NamingException {
+    	
+    	boolean goodCheckInInfo = false;
+    	
+    	String sql ="SELECT * "
+    			+ "FROM moviedb.creditcards CC"
+    			+ " where CC.first_name ='"+firstName+"'"
+    			+ "and CC.last_name = '"+lastName+"' "
+    			+ "and CC.id = '"+creditNumber+"' "
+    			+ "and CC.expiration = '"+expiration+"';";
+    	
+    	
+    	Connection connection = getConnection();
+    	try {
+//    	Statement statement = connection.createStatement();
+    		Statement getCardStatment = connection.createStatement();
+
+    	try {
+	    	System.out.println("checkUserInfo called");
+
+	    	ResultSet resultCard = getCardStatment.executeQuery(sql);
+			System.out.println("checking checkout Info = "+ goodCheckInInfo);
+	    	goodCheckInInfo = resultCard.isBeforeFirst();
+	    	System.out.println("Checking checkout Info after check = "+ goodCheckInInfo);
+    	try {
+    	// Do stuff with the result set.
+    		
+    	} finally {
+    		resultCard.close();
+    	}
+    	} finally {
+    		getCardStatment.close();
+    	}
+    	} finally {
+    	connection.close();
+    	}
+    	
+    	return goodCheckInInfo;
+	}
+    
+    public void addToDatabase(Set<String> movieIDSet, String userID) throws SQLException, NamingException{
+    	
+    	Connection connection = getConnection();
+    	try {
+    		Statement getCardStatment = connection.createStatement();
+    		try {
+    	// Do stuff with the statement
+		    	System.out.println("adding to database");
+		    	for (String movieIds: movieIDSet){
+		        	String sql = "INSERT INTO moviedb.sales(customer_id, movie_id, sale_date) " +
+		                    "VALUES ("
+		                    + "'"+userID+"', "
+		                    + "'"+movieIds+"', "
+		                    + " date(now()))";	
+		        	getCardStatment.executeUpdate(sql);
+		    	}
+    	} finally {
+    		getCardStatment.close();
+    	}
+    	} finally {
+    	connection.close();
+    	}
+    	  	
+    }
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		try {
-			conn = getConnection();
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//System.out.println("conection is "+conn);
+//		try {
+//			if(conn == null){
+//				conn = getConnection();
+//				System.out.println("reConnected");
+//			}
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		HttpSession session = request.getSession();
 		
 	    response.setContentType("text/html");
@@ -108,17 +149,11 @@ public class CheckOutCheck extends HttpServlet {
 		
 		
 		
-		if(movieIDSet ==null){
+		if(movieIDSet == null){
 			out.println("<h1>Ya nothing in your cart, ya dingus</h1>");
 		}
 		if (userID == null) {
-			System.out.println("this if was hit in CheckOutCheck");
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			System.out.println("UserID is null");
 			String site = new String("index.html");
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", site);
@@ -129,40 +164,49 @@ public class CheckOutCheck extends HttpServlet {
 		if (creditNumber == null || expiration == null ||
 				firstName == null || lastName == null){
 			out.println(makeCheckOutPage());
-			//System.out.println("One of the values was null");
+			System.out.println("One of the values was null");
 		}
 		
 		else{
 			try {
+				System.out.println("This if statment is being called!");
 				if (checkUserInfo(firstName, lastName, creditNumber, expiration)){
 					System.out.println("login worked");
 					if(movieIDSet != null){
-					addToDatabase(movieIDSet, userID);
-					session.setAttribute("userID", userID);
-					response.sendRedirect("/LogOutServlet?checkout=true");
-					//String site = new String("index.html");
-					//response.setStatus(response.SC_MOVED_TEMPORARILY);
-					//response.setHeader("Location", site);
-					}
+						session.setAttribute("userID", userID);
+						addToDatabase(movieIDSet, userID);
+						response.sendRedirect("./LogOutServlet?checkout=true");
+						//String site = new String("index.html");
+						//response.setStatus(response.SC_MOVED_TEMPORARILY);
+						//response.setHeader("Location", site);
+						}
+				}
+				else{
+					out.println("<h3 style='color:red'>One field was wrong</h3>");
+					out.println(makeCheckOutPage());
+					System.out.println(creditNumber);
+					System.out.println(expiration);
+					System.out.println(firstName);
+					System.out.println(lastName);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			System.out.println(creditNumber);
-			System.out.println(expiration);
-			System.out.println(firstName);
-			System.out.println(lastName);
-		}
-
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
+			} catch (NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
+
+//		if (conn != null) {
+//			try {
+//				conn.close();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	    
 	}
 
@@ -191,7 +235,7 @@ public class CheckOutCheck extends HttpServlet {
         +"<label for='inputEmail' class='sr-only'>Exp. Date</label>"
         +"<input type='text' id='inputEmail' class='form-control' placeholder='yyyy-mm-dd' required='' autofocus='' name ='expiration'>"
         
-        +"<button class='btn btn-lg btn-primary btn-block' type='submit'>Sign in</button>"
+        +"<button class='btn btn-lg btn-primary btn-block' type='submit'>Check Out</button>"
       +"</form>"
     +"</div>";
 		return pageToGetCheckoutInfo;
