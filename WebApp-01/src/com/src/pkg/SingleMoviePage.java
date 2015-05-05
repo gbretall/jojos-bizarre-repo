@@ -136,9 +136,13 @@ public class SingleMoviePage extends HttpServlet {
     		return null;
     	}
     	while(genreResult.next())
-    	{
-    		genreSet.add(genreResult.getString(1));
-    	}
+		{
+			String genreList = genreResult.getString(1);
+			for(String star: genreList.split(","))
+			{
+				genreSet.add(star);
+			}
+		}
     	genreResult.close();
     	return genreSet;
     }

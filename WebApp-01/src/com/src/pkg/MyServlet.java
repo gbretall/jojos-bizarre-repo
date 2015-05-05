@@ -22,7 +22,6 @@ import java.sql.*;
 @WebServlet("/MyServlet")
 public class MyServlet extends HttpServlet {
 
-	private Connection conn = null;
 
 	public Connection getConnection() throws SQLException, NamingException {
 		Context initCtx = new InitialContext();
@@ -49,7 +48,7 @@ public class MyServlet extends HttpServlet {
 
 	private String logInCheck(String username, String password)
 			throws SQLException, NamingException {
-		conn = getConnection();
+		Connection conn = getConnection();
 		Statement loginSelect = conn.createStatement();
 		System.out.println(username);
 		System.out.println(password);
@@ -89,14 +88,12 @@ public class MyServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
-		try {
 			if ( userID != null) {
 
 				session.setAttribute("userID", userID);
 				String site = new String("MainPage.html");
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", site);
-				conn.close();
 			} else {
 				// out.println("not logged in");
 				// Set response content type
@@ -104,14 +101,9 @@ public class MyServlet extends HttpServlet {
 				String site = new String("wrongPassword.html");
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", site);
-				conn.close();
 			}
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
+		
 	}
 
 	//

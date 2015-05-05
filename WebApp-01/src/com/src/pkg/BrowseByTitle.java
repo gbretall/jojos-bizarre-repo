@@ -25,6 +25,9 @@ import javax.sql.DataSource;
 public class BrowseByTitle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Connection conn;
+	private int resultsPosition = 0;
+	private int resultsLimit = 10;
+	private String startChar = "";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -91,15 +94,30 @@ public class BrowseByTitle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		if(request.getParameter("CreateTitleList") != null)
+		if(request.getParameter("position")!= null)
 		{
-			String sqlQuery = "SELECT MT.id, MT.title, MT.director, MT.year, group_concat(distinct G.name), group_concat(DISTINCT S.id, ':', S.first_name, ' ', S.last_name)"
-					+ " FROM((SELECT * FROM moviedb.movies M ORDER BY M.id) MT "
+			resultsPosition = Integer.valueOf(request.getParameter("position"));
+		}
+		if(request.getParameter("limit")!= null)
+		{
+			resultsLimit = Integer.valueOf(request.getParameter("limit"));
+		}
+		if(request.getParameter("CreateTitleList") != null && request.getParameter("StartCharacter") != null)
+		{
+			startChar = (String)request.getParameter("StartCharacter");
+			String sqlQuery = "SELECT MT.id, MT.title, MT.director, MT.year, group_concat(distinct G.name), group_concat(DISTINCT S.id, ':', S.first_name, ' ', S.last_name) "
+					+ "FROM((SELECT * FROM moviedb.movies M ORDER BY M.id) MT "
 					+ "JOIN (moviedb.genres G JOIN moviedb.genres_in_movies GIM on G.id=GIM.genre_id) ON GIM.movie_id = MT.id)"
-					+ " JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars s ON SIM.star_id = s.id) ON SIM.movie_id = MT.id "
+					+ " JOIN (moviedb.stars_in_movies SIM JOIN moviedb.stars s ON SIM.star_id = s.id) ON SIM.movie_id = MT.id, "
+					+ "(select count(*) as Count from moviedb.movies m) as q "
 					+ " WHERE  MT.title LIKE '"
-					+ (String)request.getParameter("StartCharacter")
-					+ "%'group by MT.title;";
+					+ startChar
+					+ "%' group by MT.title "
+					+ " limit "
+					+ resultsLimit+1
+					+ " offset "
+					+ resultsPosition
+					+ ";";
 				try {
 					ResultSet titles = performSearchQuery(sqlQuery);
 					out.println(AddTopBar.makeTopOfPage());
@@ -127,6 +145,7 @@ public class BrowseByTitle extends HttpServlet {
 
 	private String createMoviesByAlpha(ResultSet titles) throws SQLException {
 		MovieInfo mi = new MovieInfo();
+		int countMovies = 0;
 		String stripedTable = "<table class='table table-hover'>"
 		  		+ "<thead>"
 		  		+ "<tr>"
@@ -147,19 +166,92 @@ public class BrowseByTitle extends HttpServlet {
 	      {
 	    	  while(titles.next())
 	    	  {
-	    		  mi.setMovieInfo(titles.getInt(1), titles.getString(2), "", titles.getString(3),
-	    				  titles.getString(4), titles.getString(5), titles.getString(6));
-	    		  stripedTable += "<tr><td>"+mi.id+"</td>"
-	    				  + "<td>"
-	    				  + textLinker.linkMovie(mi.title, String.valueOf(mi.id))
-	    				  +"</td>"
-	    				  + "<td>"+mi.year+"</td>"
-	    				  + "<td>"+mi.director+"</td>";
-	    		  stripedTable+="<td>"+textLinker.linkStars(mi.starsInFilm)+"</td>";
-	    		  stripedTable+="<td>"+textLinker.linkGenres(mi.genres)+"</td>";
-	    		  mi.clearMovieInfo();
+	    		  if(countMovies < resultsLimit)
+	    		  {
+		    		  mi.setMovieInfo(titles.getInt(1), titles.getString(2), "", titles.getString(3),
+		    				  titles.getString(4), titles.getString(5), titles.getString(6));
+		    		  stripedTable += "<tr><td>"+mi.id+"</td>"
+		    				  + "<td>"
+		    				  + textLinker.linkMovie(mi.title, String.valueOf(mi.id))
+		    				  +"</td>"
+		    				  + "<td>"+mi.year+"</td>"
+		    				  + "<td>"+mi.director+"</td>";
+		    		  stripedTable+="<td>"+textLinker.linkStars(mi.starsInFilm)+"</td>";
+		    		  stripedTable+="<td>"+textLinker.linkGenres(mi.genres)+"</td>";
+		    		  countMovies++;
+		    		  mi.clearMovieInfo();
+	    		  }
 	    	  }
-	    	  stripedTable += "</tbody></table></BODY></HTML>";
+	    	  stripedTable += "</tbody></table>"
+	    		+ "Limit <a href='BrowseByTitle?limit=10&position="
+	    		+ resultsPosition
+	    		+ "&StartCharacter="
+	    		+ startChar
+	    		+ "&CreateTitleList=true"
+	    		+ "'>10 </a>"
+	    		+ "<a href='BrowseByTitle?limit=20&position="
+	    		+ resultsPosition
+	    		+ "&StartCharacter="
+	    		+ startChar
+	    		+ "&CreateTitleList=true"
+	    		+ "'>20 </a>"
+	    		+ "<a href='BrowseByTitle?limit=50&position="
+	    		+ resultsPosition
+	    		+ "&StartCharacter="
+	    		+ startChar
+	    		+ "&CreateTitleList=true"
+	    		+ "'>50 </a>"
+	    		+ "<a href='BrowseByTitle?limit=100&position="
+	    		+ resultsPosition
+	    		+ "&StartCharacter="
+	    		+ startChar
+	    		+ "&CreateTitleList=true"
+	    		+ "'>100</a>"
+	    		+ "<br>";
+	    	  if(resultsPosition == 0)
+	    	  {
+	    		  stripedTable += "<a href='BrowseByTitle?limit="
+	  	    			+ resultsLimit
+	  	    			+ "&position="
+	  	    			+ (resultsPosition + resultsLimit)
+	  	    			+ "&StartCharacter="
+	  	    			+ startChar
+	  	    			+ "&CreateTitleList=true"
+	  	    			+ "'>Next</a>";  
+	    	  }
+	    	  else if(resultsLimit > countMovies)
+	    	  {
+	    		  stripedTable += "<a href='BrowseByTitle?limit="
+		  	    			+ resultsLimit
+		  	    			+ "&position="
+		  	    			+ (resultsPosition - resultsLimit)
+		  	    			+ "&StartCharacter="
+		  	    			+ startChar
+		  	    			+ "&CreateTitleList=true"
+		  	    			+ "'>Prev</a>"; 
+	    	  }
+	    	  else
+	    	  {
+	    		  stripedTable += "<a href='BrowseByTitle?limit="
+		  	    			+ resultsLimit
+		  	    			+ "&position="
+		  	    			+ (resultsPosition - resultsLimit)
+		  	    			+ "&StartCharacter="
+		  	    			+ startChar
+	    					+ "&CreateTitleList=true"
+		  	    			+ "'>Prev</a>\t"
+		  	    			+ "<a href='BrowseByTitle?limit="
+		  		  	    	+ resultsLimit
+		  		  	    	+ "&position="
+		  		  	    	+ (resultsPosition + resultsLimit)
+		  		  	    	+ "&StartCharacter="
+		  		  	    	+ startChar
+	    					+ "&CreateTitleList=true"
+		  		  	    	+ "'>Next</a>"; ; 
+	    	  }
+	    	
+	    		
+	    	stripedTable += "</BODY></HTML>";
 	      }
 	      return stripedTable;
 	}
@@ -171,7 +263,7 @@ public class BrowseByTitle extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private  String listStarsWithLinks(HashSet<StarsInfo> starsInFilm )
+	private String listStarsWithLinks(HashSet<StarsInfo> starsInFilm )
 	{
 		String stripedTable = new String();
 		int position = 0;
