@@ -1,3 +1,3 @@
 SELECT * 
 FROM moviedb.customers C
-WHERE C.email NOT  LIKE"%@%"
+WHERE C.email NOT LIKE "%@%";

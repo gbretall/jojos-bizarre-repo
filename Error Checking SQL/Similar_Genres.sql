@@ -1,6 +1,6 @@
-select	group_concat(G1.id), G1.name
-from	(moviedb.genres G1 
-	inner join moviedb.genres G2 
-    on G1.name like G2.name 
-		and G1.id != G2.id) 
-group by  G1.name;
+SELECT	GROUP_CONCAT(DISTINCT G1.id), G1.name
+FROM	(moviedb.genres G1 
+	INNER JOIN moviedb.genres G2 
+    ON G1.name LIKE G2.name 
+		AND G1.id != G2.id) 
+GROUP BY  G1.name;
