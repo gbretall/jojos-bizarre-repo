@@ -1,3 +1,3 @@
-select *
-from moviedb.movies M
-where M.year < 1890;
+SELECT M.id, M.title, M.year
+FROM moviedb.movies M
+WHERE M.year < 1890;

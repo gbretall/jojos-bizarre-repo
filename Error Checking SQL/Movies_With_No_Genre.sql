@@ -1,4 +1,4 @@
-select *
-from moviedb.movies M left join moviedb.genres_in_movies GIM
-on M.id = GIM.movie_id
-where GIM.genre_id is null
+SELECT M.id, M.title
+FROM moviedb.movies M LEFT JOIN moviedb.genres_in_movies GIM
+ON M.id = GIM.movie_id
+WHERE GIM.genre_id IS NULL
