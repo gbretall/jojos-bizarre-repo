@@ -33,27 +33,28 @@ public class AddMovieServlet extends HttpServlet {
     
     private String addMovieToDatabase(String title, String year,
 			String director, String banner_url, String trailer_url,
-			String first_name, String last_name, String photo_url, String genre) throws SQLException, NamingException{
-		String result = "";
-		String sqlQuery = "CALL add_movie("
+			String first_name, String last_name, String DOB, String photo_url, String genre) throws SQLException, NamingException{
+		String sqlQuery = "CALL add_movie('"
 				+ title
-				+ ", "
+				+ "', "
 				+ year
-				+ ", "
+				+ ", '"
 				+ director
-				+ ", "
+				+ "', '"
 				+ banner_url
-				+ ", "
+				+ "', '"
 				+ trailer_url
-				+ ", "
+				+ "', '"
 				+ first_name
-				+ ", "
+				+ "', '"
 				+ last_name
-				+ ", "
+				+ "', '"
+				+ DOB
+				+"', '"
 				+ photo_url
-				+ ", "
+				+ "', '"
 				+ genre
-				+");";
+				+"');";
 		try
 		{
 			Connection conn = AdminGetConnection.getConnection();
@@ -64,9 +65,15 @@ public class AddMovieServlet extends HttpServlet {
 		}
 		catch(SQLException e)
 		{
-			
+			return "<div><h2>Could not add movie to the database</h2>"
+					+ "<br><br>"
+					+ "<a href='AddMovieForm.html'>Return to Add Movie Page</a></div></body></html>";
 		}
-		return result;
+		return "<div><h2>"
+				+ title
+				+ " was successfully added to the database</h2>"
+				+ "<br><br>"
+				+ "<a href='AddMovieForm.html'>Return to Add Movie Page</a></div></body></html>";
 	}
 
 	/**
@@ -84,11 +91,13 @@ public class AddMovieServlet extends HttpServlet {
 		String trailer_url = request.getParameter("Movie Trailer URL");
 		String first_name = request.getParameter("Star First Name");
 		String last_name = request.getParameter("Star Last Name");
+		String DOB = request.getParameter("Star DOB");
 		String photo_url = request.getParameter("Star Photo URL");
 		String genre = request.getParameter("Movie Genre");
-		
+
+		out.println(adminTopBar.adminTopPage());
 		try {
-			out.println(addMovieToDatabase(title, year, director, banner_url, trailer_url, first_name, last_name, photo_url, genre));
+			out.println(addMovieToDatabase(title, year, director, banner_url, trailer_url, first_name, last_name, DOB, photo_url, genre));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,8 +105,6 @@ public class AddMovieServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		out.println(adminTopBar.adminTopPage());
 		
 	}
 
