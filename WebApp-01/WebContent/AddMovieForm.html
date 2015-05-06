@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+    <link rel="stylesheet" type="text/css" href="topbarcss.css">
+    <title>M.L.G. Videos</title>
+</head>
+<body>
+	<div id='header'>
+		M.L.G.Videos
+		<form class='form' id='main-button' action='MainPage.html'
+			method='get'>
+			<button type='submit' id='main-button'>Main</button>
+		</form>
+		<form class='form' id='search-button' action='search.html'
+			method='get'>
+			<button type='submit' id='search-button'>Search</button>
+		</form>
+		<form class='form' id='browse-button' action='Browse.html'
+			method='get'>
+			<button type='submit' id='browse-button'>Browse</button>
+		</form>
+		<form class='form' id='cart-button' action='ShoppingCart' method='get'>
+			<input name='logout' type='hidden'>
+			<button type='submit' id='cart-button'>Cart</button>
+		</form>
+		<form class='form' id='checkout-button' action='ShoppingCart'
+			method='get'>
+			<button type='submit' id='checkout-button'>Checkout</button>
+		</form>
+		<form action="adminLoginPage" id = "admin-login" method ="get">
+      		<button class="btn btn-lg btn-primary btn-block" type="submit">Admin Login</button>
+      	</form>
+	</div>
+
+	<div class="container">
+
+      <form class="form-addmovie" action = "AddMovieServlet" method="post">
+        <h2 class='form-addmovie-heading'>Please Enter the Information for the Movie</h2>
+        <label for='inputTitle' class='sr-only'></label>
+        <input type='text' id='inputTitle' class='form-control' placeholder='Movie Title' required='' autofocus='' name ='Movie Title'>
+        <br><br>
+        <label for='inputYear' class='sr-only'></label>
+        <input type='text' id='inputYear' class='form-control' placeholder='Movie Year' required='' name = 'Movie Year'>
+        <br><br>
+        <label for='inputDirector' class='sr-only'></label>
+        <input type='text' id='inputDirector' class='form-control' placeholder='Movie Director' required='' name = 'Movie Director'>
+        <br><br>
+        <label for='inputBannerUrl' class='sr-only'></label>
+        <input type='text' id='inputBannerUrl' class='form-control' placeholder='Movie Banner URL' required='' name = 'Movie Banner URL'>
+        <br><br>
+        <label for='inputTrailerUrl' class='sr-only'></label>
+        <input type='text' id='inputTrailerUrl' class='form-control' placeholder='Movie Trailer URL' required='' name = 'Movie Trailer URL'>
+        <br><br>
+        <label for='inputFirstName' class='sr-only'></label>
+        <input type='text' id='inputFirstName' class='form-control' placeholder='Star First Name' required='' name = 'Star First Name'>
+        <br><br>
+        <label for='inputLastName' class='sr-only'></label>
+        <input type='text' id='inputLastName' class='form-control' placeholder='Star Last Name' required='' name = 'Star Last Name'>
+        <br><br>
+        <label for='inputDOB' class='sr-only'></label>
+        <input type='text' id='inputDOB' class='form-control' placeholder='Star Date of Birth' required='' name = 'Star DOB'>
+        <br><br>
+        <label for='inputPhotoUrl' class='sr-only'></label>
+        <input type='text' id='inputPhotoUrl' class='form-control' placeholder='Star Photo URL' required='' name = 'Star Photo URL'>
+        <br><br>
+        <label for='inputGenre' class='sr-only'></label>
+        <input type='text' id='inputGenre' class='form-control' placeholder='Movie Genre' required='' name = 'Movie Genre'>
+        <br><br>
+        <button class='btn btn-lg btn-primary btn-block' id = 'addMovieButton' type='submit'>Add Movie</button>
+      </form>
+
+
+    </div>
+
+</body>
+</html>

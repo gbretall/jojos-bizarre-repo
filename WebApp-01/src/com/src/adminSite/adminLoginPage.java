@@ -93,15 +93,15 @@ public class adminLoginPage extends HttpServlet {
 		
 		String submittedEmail = request.getParameter("Username");
 		String submittedPassword = request.getParameter("Password");
-		String empolyeeEmail = null;
+		String employeeEmail = null;
 		
 		if( submittedEmail != null && submittedPassword != null){
 			System.out.println("From admin site: email: " + submittedEmail + " password: "+ submittedPassword);
 			System.out.println("button hit. I'll do things later");
-			empolyeeEmail = getEmployeeEmail(submittedEmail, submittedPassword);
-			System.out.println(empolyeeEmail);
+			employeeEmail = getEmployeeEmail(submittedEmail, submittedPassword);
+			System.out.println(employeeEmail);
 			
-			if(empolyeeEmail != null){
+			if(employeeEmail != null){
 				System.out.println("login is good");
 			}
 			else{
