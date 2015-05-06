@@ -26,7 +26,6 @@ public class AdminMovieErrorChecker extends HttpServlet {
      */
     public AdminMovieErrorChecker() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,13 +47,6 @@ public class AdminMovieErrorChecker extends HttpServlet {
 		
 	}
 	
-	private ResultSet getResultsOfQuery(String SQL) throws SQLException, NamingException
-	{
-		Connection	conn = AdminGetConnection.getConnection();
-		Statement	movieStatement	= conn.createStatement();
-		ResultSet	movieResult		= movieStatement.executeQuery(SQL);
-		return movieResult;
-	}
 	
 	private String getMovieErrors()
 	{
@@ -81,7 +73,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 				+" ON M.id = SIM.movie_id"
 				+" WHERE SIM.Movie_id IS NULL";
 		try{		
-			ResultSet	movieResult		= getResultsOfQuery(sql);
+			ResultSet	movieResult		= AdminGetConnection.getResultsOfQuery(sql);
 			
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
@@ -98,7 +90,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 					//put the shit into a result container
 					results.add(containerTemplate.createNewContainer(movieResult.getInt(1), data));
 				}
-				table+=generateTableFromResultContainers(results);
+				table+=AdminResultContainer.generateTableFromResultContainers(results);
 			}
 			else
 			{
@@ -123,7 +115,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 				+" ON M.id = GIM.movie_id"
 				+" WHERE GIM.genre_id IS NULL";
 		try{		
-			ResultSet	movieResult		= getResultsOfQuery(sql);
+			ResultSet	movieResult		= AdminGetConnection.getResultsOfQuery(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -139,7 +131,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 					//put the shit into a result container
 					results.add(containerTemplate.createNewContainer(movieResult.getInt(1), data));
 				}
-				table+=generateTableFromResultContainers(results);
+				table+=AdminResultContainer.generateTableFromResultContainers(results);
 			}
 			else
 			{
@@ -165,7 +157,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 				+" ON M1.title LIKE M2.title AND M1.year=M2.year AND M1.id != M2.id )" 
 				+" GROUP BY  M1.title;";
 		try{		
-			ResultSet	movieResult		= getResultsOfQuery(sql);
+			ResultSet	movieResult		= AdminGetConnection.getResultsOfQuery(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -182,7 +174,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 					//put the shit into a result container
 					results.add(containerTemplate.createNewContainer(movieResult.getString(1), data));
 				}
-				table+=generateTableFromResultContainers(results);
+				table+=AdminResultContainer.generateTableFromResultContainers(results);
 			}
 			else
 			{
@@ -207,7 +199,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 				+" FROM moviedb.movies M"
 				+" WHERE M.year < 1890;";
 		try{		
-			ResultSet	movieResult		= getResultsOfQuery(sql);
+			ResultSet	movieResult		= AdminGetConnection.getResultsOfQuery(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -224,7 +216,7 @@ public class AdminMovieErrorChecker extends HttpServlet {
 					//put the shit into a result container
 					results.add(containerTemplate.createNewContainer(movieResult.getInt(1), data));
 				}
-				table+=generateTableFromResultContainers(results);
+				table+=AdminResultContainer.generateTableFromResultContainers(results);
 			}
 			else
 			{
@@ -238,15 +230,6 @@ public class AdminMovieErrorChecker extends HttpServlet {
 		return table;
 	}
 	
-	private String generateTableFromResultContainers(ArrayList<AdminResultContainer> results)
-	{
-		String table = "<table class='table table-hover'>";
-		table+=results.get(0).titleRowHTML()+"<tbody>";
-		for (AdminResultContainer result:results)
-		{
-			table+=result.toRowHTML();
-		}		
-		return table+"</tbody></table>";
-	}
+	
 
 }

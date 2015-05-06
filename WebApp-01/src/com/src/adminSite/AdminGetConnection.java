@@ -31,6 +31,12 @@ public class AdminGetConnection {
 		return ds.getConnection();
 	}
 
-	
+	public static ResultSet getResultsOfQuery(String SQL) throws SQLException, NamingException
+	{
+		Connection	conn = AdminGetConnection.getConnection();
+		Statement	movieStatement	= conn.createStatement();
+		ResultSet	movieResult		= movieStatement.executeQuery(SQL);
+		return movieResult;
+	}
 
 }

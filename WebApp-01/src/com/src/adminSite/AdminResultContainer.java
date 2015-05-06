@@ -68,4 +68,14 @@ public class AdminResultContainer {
 		return row+"</tr>";
 	}
 
+	public static String generateTableFromResultContainers(ArrayList<AdminResultContainer> results)
+	{
+		String table = "<table class='table table-hover'>";
+		table+=results.get(0).titleRowHTML()+"<tbody>";
+		for (AdminResultContainer result:results)
+		{
+			table+=result.toRowHTML();
+		}		
+		return table+"</tbody></table>";
+	}
 }
