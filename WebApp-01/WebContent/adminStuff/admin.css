@@ -1,56 +1,12 @@
-html, body{
-    margin:0;
-    padding:10;
-}
-
 #header{
    padding:15px;
    width:100%;
-   background:#FF0;
+   background:#0000FF;
 }
 
-
-#admin-login{
-	/*float: right;*/
-	float: right;
-	padding-right: 20px;
+#admin-title{
+	color: #FFFFFF;	
 }
-
-#log-out-button{
-	float: right;
-	padding-right: 20px;
-}
-
-
-#main-button{
-	display: inline;
-}
-
-#search-button{
-	display: inline;
-}
-
-#browse-button{
-	display: inline;
-}
-
-#cart-button{
-	display: inline;
-}
-
-#checkout-button{
-	display: inline;
-}
-
-
-.login{
-    margin-left: auto;
-    margin-right: auto;
-    width: 10%;
-  
-}
-
-
 
 .form-signin {
   max-width: 330px;

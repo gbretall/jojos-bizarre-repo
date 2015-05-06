@@ -22,7 +22,12 @@ import java.sql.*;
 @WebServlet("/MyServlet")
 public class MyServlet extends HttpServlet {
 
-
+	public MyServlet() throws ClassNotFoundException {
+		super();
+		// TODO Auto-generated constructor stub
+		Class.forName("com.mysql.jdbc.Driver");
+	}
+	
 	public Connection getConnection() throws SQLException, NamingException {
 		Context initCtx = new InitialContext();
 		if (initCtx == null)
@@ -39,19 +44,15 @@ public class MyServlet extends HttpServlet {
 			System.out.println("ds is null.");
 		return ds.getConnection();
 	}
-
-	public MyServlet() throws ClassNotFoundException {
-		super();
-		// TODO Auto-generated constructor stub
-		Class.forName("com.mysql.jdbc.Driver");
-	}
-
+	
 	private String logInCheck(String username, String password)
 			throws SQLException, NamingException {
+		String userID = null;
+		
 		Connection conn = getConnection();
+
 		Statement loginSelect = conn.createStatement();
-		System.out.println(username);
-		System.out.println(password);
+
 		ResultSet loginResult = loginSelect.executeQuery("SELECT C.id "
 				+ "FROM moviedb.customers C " + "where (C.email = '" + username
 				+ "'" + " and C.password = '" + password + "');");
@@ -59,12 +60,14 @@ public class MyServlet extends HttpServlet {
 		//System.out.println(loginResult.isBeforeFirst());
 		if( loginResult.isBeforeFirst()){
 			while(loginResult.next()){
-				return loginResult.getString("id");
+				userID = loginResult.getString("id");
 			}
-			
+			loginResult.close();
 		}
-		return null;
-	}
+		loginSelect.close();
+		conn.close();
+		return userID;
+	}	
 
 	//
 	// /**
@@ -77,6 +80,7 @@ public class MyServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String userID = null;
+		
 		try {
 			userID = logInCheck(request.getParameter("Username"),request.getParameter("Password"));
 			System.out.println(userID);

@@ -36,23 +36,22 @@
 			method='get'>
 			<button type='submit' id='checkout-button'>Checkout</button>
 		</form>
-		<form class='form' id='log-out-button' action='LogOutServlet'
-			method='get'>
-			<input name='logout' type='hidden' value='true'>
-			<button class='btn' type='submit'>Logout</button>
-		</form>
+		<form action="adminLoginPage" id = "admin-login" method ="get">
+      		<button class="btn btn-lg btn-primary btn-block" type="submit">Admin Login</button>
+      	</form>
 	</div>
 
 	<div class="container">
 
       <form class="form-signin" action = "MyServlet" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only"></label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" name ="Username">
-        <label for="inputPassword" class="sr-only"></label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name = "Password">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <h2 class='form-signin-heading'>Please sign in</h2>
+        <label for='inputEmail' class='sr-only'></label>
+        <input type='email' id='inputEmail' class='form-control' placeholder='Email address' required='' autofocus='' name ='Username'>
+        <label for='inputPassword' class='sr-only'></label>
+        <input type='password' id='inputPassword' class='form-control' placeholder='Password' required='' name = 'Password'>
+        <button class='btn btn-lg btn-primary btn-block' id = 'signInButton' type='submit'>Sign in</button>
       </form>
+
 
     </div>
 
