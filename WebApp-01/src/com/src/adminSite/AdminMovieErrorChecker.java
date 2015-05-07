@@ -36,8 +36,6 @@ public class AdminMovieErrorChecker extends HttpServlet {
 	    PrintWriter out = response.getWriter();
 	    out.println(adminTopBar.adminTopPage());
 	    out.println(getMovieErrors());
-	    
-	    
 	}
 
 	/**
