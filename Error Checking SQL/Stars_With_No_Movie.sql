@@ -1,4 +1,4 @@
-select *
-from moviedb.stars S left join moviedb.stars_in_movies SIM
-on S.id = SIM.star_id
-where SIM.star_id is null
+SELECT S.id, S.first_name, S.last_name
+FROM moviedb.stars S LEFT JOIN moviedb.stars_in_movies SIM
+ON S.id = SIM.star_id
+WHERE SIM.star_id IS NULL
