@@ -1,51 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-
-    <link rel="stylesheet" type="text/css" href="topbarcss.css">
-    <title>M.L.G. Videos</title>
-</head>
-<body>
-	<div id='header'>
-		M.L.G.Videos
-		<form class='form' id='main-button' action='MainPage.html'
-			method='get'>
-			<button type='submit' id='main-button'>Main</button>
-		</form>
-		<form class='form' id='search-button' action='search.html'
-			method='get'>
-			<button type='submit' id='search-button'>Search</button>
-		</form>
-		<form class='form' id='browse-button' action='Browse.html'
-			method='get'>
-			<button type='submit' id='browse-button'>Browse</button>
-		</form>
-		<form class='form' id='cart-button' action='ShoppingCart' method='get'>
-			<input name='logout' type='hidden'>
-			<button type='submit' id='cart-button'>Cart</button>
-		</form>
-		<form class='form' id='checkout-button' action='ShoppingCart'
-			method='get'>
-			<button type='submit' id='checkout-button'>Checkout</button>
-		</form>
-		<form action="adminLoginPage" id = "admin-login" method ="get">
-      		<button class="btn btn-lg btn-primary btn-block" type="submit">Admin Login</button>
-      	</form>
-	</div>
+				<html>
+				<head lang='en'>
+				<meta charset='utf-8'>
+			    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+			    <meta name='viewport' content='width=device-width, initial-scale=1'>
+			    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+			    <link rel='stylesheet' type='text/css' href='adminStuff/admin.css'>
+			    <title >M.L.G. Videos admin page</title>
+			    </head>
+			    <body>
+				<div id='header'>
+				<p id = 'admin-title'>M.L.G.Videos Admin Page. ((Normies Not Welcome))</p> 
+				</div>
 
 	<div class="container">
 
       <form class="form-addmovie" action = "AddMovieServlet" method="post">
         <h2 class='form-addmovie-heading'>Please Enter the Information for the Movie</h2>
-        <label for='inputTitle' class='sr-only'></label>
+        <label for='inputTitle' class='sr-only'>Input Title</label>
         <input type='text' id='inputTitle' class='form-control' placeholder='Movie Title' required='' autofocus='' name ='Movie Title'>
         <br><br>
         <label for='inputYear' class='sr-only'></label>
@@ -77,8 +49,6 @@
         <br><br>
         <button class='btn btn-lg btn-primary btn-block' id = 'addMovieButton' type='submit'>Add Movie</button>
       </form>
-
-
     </div>
 
 </body>
