@@ -19,7 +19,36 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AdminStarErrorChecker")
 public class AdminStarErrorChecker extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static String STARS_NO_MOVIES ="" 
+			+"SELECT S.id, S.first_name, S.last_name"
+			+" FROM moviedb.stars S LEFT JOIN moviedb.stars_in_movies SIM"
+			+" ON S.id = SIM.star_id"
+			+" WHERE SIM.star_id IS NULL"
+			+" ORDER BY S.last_name, S.first_name;";
+	
+	private static String STARS_NO_FIRST_LAST =""
+			+"SELECT S.id, S.first_name, S.last_name"
+			+" FROM moviedb.stars S"
+			+" WHERE S.last_name = \"\" OR S.first_name = \"\""
+			+" ORDER BY S.last_name, S.first_name;";
+	
+	private static String STARS_DUPLICATES =""
+			+"SELECT	GROUP_CONCAT(DISTINCT S1.id SEPARATOR ', '), S1.first_name, S1.last_name, S1.DOB"
+			+" FROM	(moviedb.stars S1 INNER JOIN moviedb.stars S2"
+			+" ON S1.first_name LIKE S2.first_name" 
+			+" AND S1.last_name LIKE S2.last_name"
+			+" AND S1.id != S2.id"
+			+" AND S1.DOB = S2.DOB)"
+			+" GROUP BY  S1.first_name, S1.last_name, S1.DOB"
+			+" ORDER BY S1.last_name, S1.first_name;";
+	
+	private static String STARS_TOO_YOUNG ="SELECT S.id, S.first_name, S.last_name, S.DOB"
+			+" FROM moviedb.stars	S"
+			+" WHERE S.dob>curdate()"
+			+" ORDER BY S.last_name, S.last_name;";
+	
+	private static String NO_STARS_FOUND = "<table><th>No stars found</th></table>";
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -46,15 +75,18 @@ public class AdminStarErrorChecker extends HttpServlet {
 
 	private String getStarErrors()
 	{
+		ArrayList<String> titles = new ArrayList<String>();
+		titles.add("First Name");
+		titles.add("Last Name");
 		String tables = "";
 		tables	+= "<h2>Stars With No Movies</h2>";		
-		tables	+= getStarsNoMoviesTable();
+		tables	+= AdminErrorChecker.createTableFromQuery(titles, STARS_NO_MOVIES, NO_STARS_FOUND);
 		tables	+= "<h2>Stars With No First Name Or No Last Name</h2>";
-		tables	+= getStarsNoNamesTable();
+		tables	+= AdminErrorChecker.createTableFromQuery(titles, STARS_NO_FIRST_LAST, NO_STARS_FOUND);
 		tables	+= "<h2>Stars That Have Duplicates</h2>";
-		tables	+= getDuplicateStarsTable();
+		tables	+= AdminErrorChecker.createTableFromQuery(titles, STARS_DUPLICATES, NO_STARS_FOUND);
 		tables	+= "<h2>Stars Born After the Current Date</h2>";
-		tables	+= getTooYoungStars();
+		tables	+= AdminErrorChecker.createTableFromQuery(titles, STARS_TOO_YOUNG, NO_STARS_FOUND);
 		
 		return tables;
 	}
@@ -72,7 +104,8 @@ public class AdminStarErrorChecker extends HttpServlet {
 				+" WHERE SIM.star_id IS NULL"
 				+" ORDER BY S.last_name, S.first_name;";
 		try{		
-			ResultSet	starResult		= AdminGetConnection.getResultsOfQuery(sql);
+			AdminSQLQuerier connections = new AdminSQLQuerier();
+			ResultSet	starResult		= connections.query(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -90,12 +123,13 @@ public class AdminStarErrorChecker extends HttpServlet {
 					results.add(containerTemplate.createNewContainer(starResult.getInt(1), data));
 				}
 				table += AdminResultContainer.generateTableFromResultContainers(results);
+				
 			}
 			else
 			{
 				table += "<table><th>No movies found</th></table>";
 			}
-			
+			connections.close();	
 		}catch (SQLException | NamingException e) {
 			e.printStackTrace();
 		}
@@ -115,7 +149,8 @@ public class AdminStarErrorChecker extends HttpServlet {
 				+" ORDER BY S.last_name, S.first_name;";
  
 		try{		
-			ResultSet	starResult		= AdminGetConnection.getResultsOfQuery(sql);
+			AdminSQLQuerier connections = new AdminSQLQuerier();
+			ResultSet	starResult		= connections.query(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -133,12 +168,13 @@ public class AdminStarErrorChecker extends HttpServlet {
 					results.add(containerTemplate.createNewContainer(starResult.getInt(1), data));
 				}
 				table += AdminResultContainer.generateTableFromResultContainers(results);
+				
 			}
 			else
 			{
 				table += "<table><th>No stars found</th></table>";
 			}
-			
+			connections.close();
 		}catch (SQLException | NamingException e) {
 			e.printStackTrace();
 		}
@@ -163,7 +199,8 @@ public class AdminStarErrorChecker extends HttpServlet {
 					+" ORDER BY S1.last_name, S1.first_name;";
  
 		try{		
-			ResultSet	starResult		= AdminGetConnection.getResultsOfQuery(sql);
+			AdminSQLQuerier connections = new AdminSQLQuerier();
+			ResultSet	starResult		= connections.query(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -182,12 +219,13 @@ public class AdminStarErrorChecker extends HttpServlet {
 					results.add(containerTemplate.createNewContainer(starResult.getString(1), data));
 				}
 				table += AdminResultContainer.generateTableFromResultContainers(results);
+				
 			}
 			else
 			{
 				table += "<table><th>No stars found</th></table>";
 			}
-			
+			connections.close();
 		}catch (SQLException | NamingException e) {
 			e.printStackTrace();
 		}
@@ -209,7 +247,8 @@ public class AdminStarErrorChecker extends HttpServlet {
 
  
 		try{		
-			ResultSet	starResult		= AdminGetConnection.getResultsOfQuery(sql);
+			AdminSQLQuerier connections = new AdminSQLQuerier();
+			ResultSet	starResult		= connections.query(sql);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);
 			ArrayList<AdminResultContainer> results	= new ArrayList<AdminResultContainer>();
@@ -233,7 +272,7 @@ public class AdminStarErrorChecker extends HttpServlet {
 			{
 				table += "<table><th>No stars found</th></table>";
 			}
-			
+			connections.close();
 		}catch (SQLException | NamingException e) {
 			e.printStackTrace();
 		}
