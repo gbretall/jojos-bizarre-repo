@@ -102,6 +102,7 @@ public class adminLoginPage extends HttpServlet {
 			System.out.println(employeeEmail);
 			
 			if(employeeEmail != null){
+				response.sendRedirect("AdminMainPage.html");
 				System.out.println("login is good");
 			}
 			else{
