@@ -19,16 +19,16 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
- * Servlet implementation class grantPriveliges
+ * Servlet implementation class GrantPrivileges
  */
-@WebServlet("/grantPriveliges")
-public class grantPriveliges extends HttpServlet {
+@WebServlet("/GrantPrivileges")
+public class GrantPrivileges extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public grantPriveliges() {
+    public GrantPrivileges() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,14 +52,14 @@ public class grantPriveliges extends HttpServlet {
     				Statement tableNameStatement = conn.createStatement();
     				ResultSet tableResults = tableNameStatement.executeQuery("show tables;");
     				returnedResultSet = tableResults;
-    				tableResults.close();
-    				tableNameStatement.close();
-    				moviedbStatement.close();
+    				//tableResults.close();
+    				//tableNameStatement.close();
+    				//moviedbStatement.close();
     			}
     		}
-    		dbResults.close();
-    		dbNameStatement.close();
-    		conn.close();
+    		//dbResults.close();
+    		//dbNameStatement.close();
+    		//conn.close();
     	}
     	catch(SQLException e)
     	{
@@ -76,14 +76,13 @@ public class grantPriveliges extends HttpServlet {
     	String form = "<h1>USER: "
     			+ username
     			+ "</h1><br>"
-    			+ "<form action='grantPrivelige?success=true&username="
-    			+ username
-    			+ "' method='get'>"
-    			+ "<input type='checkbox' name='privType' value='select'>SELECT"
-    			+ "<input type='checkbox' name='privType' value='update'>UPDATE"
-    			+ "<input type='checkbox' name='privType' value='insert'>INSERT"
-    			+ "<input type='checkbox' name='privType' value='delete'>DELETE"
-    			+ "<input type='checkbox' name='privType' value='execute'>EXECUTE";
+    			+ "<form action='GrantPrivileges' method='get'>"
+    			+ "<input type='hidden' name='username' value='"+username+"'>"
+    			+ "<input type='checkbox' name='privType' value='SELECT'>SELECT"
+    			+ "<input type='checkbox' name='privType' value='UPDATE'>UPDATE"
+    			+ "<input type='checkbox' name='privType' value='INSERT'>INSERT"
+    			+ "<input type='checkbox' name='privType' value='DELETE'>DELETE"
+    			+ "<input type='checkbox' name='privType' value='EXECUTE'>EXECUTE";
     	ResultSet tableNames = getTableNames();
     	if(tableNames.isBeforeFirst())
     	{
@@ -98,12 +97,42 @@ public class grantPriveliges extends HttpServlet {
     					+ tableNames.getString(1)
     					+ "</td></tr>";
     		}
-    		form += "</tbody>"
-    				+ "<button class='btn btn-lg btn-primary btn-block' id = 'Grant Privileges' type='submit'>Submit</button>";
+    		form += "</tbody>";
     	}
-    	form += "";
+    	form += "<button class='btn btn-lg btn-primary btn-block' id = 'Grant Privileges' type='submit'>Submit</button>";
+    	tableNames.close();
     	return form;
     }
+    
+
+	private String performGrant(String[] privilegesToGrant, String[] relevantTables, String username) throws SQLException, NamingException 
+	{
+		//try
+		//{
+			Connection conn = AdminGetConnection.getConnection();
+			Statement grantStatement = conn.createStatement();
+			for(int i = 0; i < privilegesToGrant.length; i++)
+			{
+				if(privilegesToGrant[i].equals("EXECUTE"))
+				{
+					grantStatement.execute("GRANT EXECUTE ON moviedb.* TO '" + username + "'@'localhost';");
+				}
+				else
+				{
+					for(int j = 0; j < relevantTables.length; j++)
+					{
+						grantStatement.execute("GRANT "+privilegesToGrant[i]+" ON moviedb."+relevantTables[j]+
+								" TO '"+username+"'@'localhost';");
+					}
+				}
+			}
+		//}
+		/*catch(SQLException e)
+		{
+			return "An error occurred";
+		}*/
+		return "Privileges successfully granted";
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -118,18 +147,27 @@ public class grantPriveliges extends HttpServlet {
 		String[] relevantTables = request.getParameterValues("checkTableName");
 		if(privilegesToGrant != null && relevantTables != null)
 		{
-			for(String s: privilegesToGrant)
-			{
-				System.out.print(s + " ");
+			try {
+				//for(String t: relevantTables)
+					//System.out.println(t + " ");
+				out.println(performGrant(privilegesToGrant, relevantTables, username));
+			} catch (SQLException | NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			System.out.println("");
-			for(String s: relevantTables)
-			{
-				System.out.print(s + " ");
+		}
+		else
+		{
+			try {
+				out.println(createGrantForm(username));
+			} catch (SQLException | NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
