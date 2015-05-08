@@ -1,29 +1,40 @@
 
-<!DOCTYPE html> 
-<html> 
-<head lang='en'> 
-<meta charset='utf-8'> 
-<meta http-equiv='X-UA-Compatible' content='IE=edge'> 
-<meta name='viewport' content='width=device-width, initial-scale=1'> 
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'> 
-<link rel='stylesheet' type='text/css' href='adminStuff/admin.css'> 
-<title >M.L.G. Videos admin page</title> 
-</head> 
-<body> 
-<div id='header'> 
-<p id = 'admin-title'>M.L.G.Videos Admin Page. ((Normies Not Welcome))</p>  
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet'
+	href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+<link rel='stylesheet' type='text/css' href='adminStuff/admin.css'>
+<title>M.L.G. Videos admin page</title>
+</head>
+<body>
+	<div id='header'>
+		<p id='admin-title'>M.L.G.Videos Admin Page. ((Normies Not
+			Welcome))</p>
+		<form class='form' id='home-button' action='AdminMainPage.html'
+			method='get'>
+			<input name='logout' type='hidden' value='true'>
+			<button class='btn' type='submit'>Home</button>
+		</form>
+
 	</div>
 	<div class='container'>
 		<form class='form-signin' action='AdminCreateUser' method='post'>
 			<h2 class='form-signin-heading'>Please Enter User Info</h2>
-			
-			
-			<label for='inputUsername' class='sr-only'></label> 
-			<input type='Username' id='inputUsername' class='form-control' placeholder='Username' required='' autofocus='' name='Username'> 
-			
-			<label for='inputPassword' class='sr-only'></label> 
-			<input type='password' id='inputPassword' class='form-control' placeholder='Password' required='' name='Password'>
-			<button class='btn btn-lg btn-primary btn-block' id='signInButton' type='submit'>Create User</button>
+
+
+			<label for='inputUsername' class='sr-only'></label> <input
+				type='Username' id='inputUsername' class='form-control'
+				placeholder='Username' required='' autofocus='' name='Username'>
+
+			<label for='inputPassword' class='sr-only'></label> <input
+				type='password' id='inputPassword' class='form-control'
+				placeholder='Password' required='' name='Password'>
+			<button class='btn btn-lg btn-primary btn-block' id='signInButton'
+				type='submit'>Create User</button>
 		</form>
 	</div>
 

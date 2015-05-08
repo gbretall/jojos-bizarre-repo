@@ -38,28 +38,31 @@ public class AdminCreateUser extends HttpServlet {
 	    out.println(adminTopBar.adminTopPage());
 	    String password = request.getParameter("Password");
 	    String userName = request.getParameter("Username");
-	    if (userName.contains (" "))
-	    {
-	    	out.println("<h1>User Was not Made</h1>");
-	    	out.println("<h3>User names may not contain spaces.</h3>");
-	    	out.println("<a href=\"CreateUser.html\">Click Here to Try Again</a>");
-	    }
-	    else if (userExists(userName))
-	    {
-	    	out.println("<h1>User Was not Made</h1>");
-	    	out.println("<h3> The Username Given is Already Taken</h3>");
-	    	out.println("<a href=\"CreateUser.html\">Click Here to Try Again</a>");
-	    }
-	    else
-	    {
-	    	try {
-				createUser(userName, password);
-				out.println("<h1>User Was Made</h1>");
-				out.println("<a href=\"AdminDatabaseUsers\">Return to Users Page</a>");
-			} catch (SQLException | NamingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	    
+	    if(userName != null && password != null){
+		    if (userName.contains (" "))
+		    {
+		    	out.println("<h1>User Was not Made</h1>");
+		    	out.println("<h3>User names may not contain spaces.</h3>");
+		    	out.println("<a href=\"CreateUser.html\">Click Here to Try Again</a>");
+		    }
+		    else if (userExists(userName))
+		    {
+		    	out.println("<h1>User Was not Made</h1>");
+		    	out.println("<h3> The Username Given is Already Taken</h3>");
+		    	out.println("<a href=\"CreateUser.html\">Click Here to Try Again</a>");
+		    }
+		    else
+		    {
+		    	try {
+					createUser(userName, password);
+					out.println("<h1>User Was Made</h1>");
+					out.println("<a href='AdminMainPage.html'>Return to Main Page</a>");
+				} catch (SQLException | NamingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
 	    }
 		
 	}

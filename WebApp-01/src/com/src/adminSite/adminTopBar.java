@@ -19,7 +19,14 @@ public class adminTopBar {
 			    +"</head>"
 			    +"<body>"
 				+"<div id='header'>"
-				+"<p id = 'admin-title'>M.L.G.Videos Admin Page. ((Normies Not Welcome))</p> "
+				+"<p id = 'admin-title'>M.L.G.Videos Admin Page. ((Normies Not Welcome))"
+
+				+ "</p> "
+				+"<form class='form' id = 'home-button' action = 'AdminMainPage.html' method='get'>"
+				+"<input name = 'logout' type='hidden' value ='true'>"
+				+"<button class = 'btn' type = 'submit'>Home</button>"
+				+"</form>"
+				
 				+ "</div>";
 		return topPage;
 	}
