@@ -19,16 +19,16 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
- * Servlet implementation class GrantPrivileges
+ * Servlet implementation class RevokePrivileges
  */
-@WebServlet("/GrantPrivileges")
-public class GrantPrivileges extends HttpServlet {
+@WebServlet("/RevokePrivileges")
+public class RevokePrivileges extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GrantPrivileges() {
+    public RevokePrivileges() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -71,12 +71,12 @@ public class GrantPrivileges extends HttpServlet {
     	return returnedResultSet;
     }
     
-    private String createGrantForm(String username) throws SQLException, NamingException
+    private String createRevokeForm(String username) throws SQLException, NamingException
     {
     	String form = "<h1>USER: "
     			+ username
     			+ "</h1><br>"
-    			+ "<form action='GrantPrivileges' method='get'>"
+    			+ "<form action='RevokePrivileges' method='get'>"
     			+ "<input type='hidden' name='username' value='"+username+"'>"
     			+ "<input type='checkbox' name='privType' value='SELECT'>SELECT"
     			+ "<input type='checkbox' name='privType' value='UPDATE'>UPDATE"
@@ -99,39 +99,39 @@ public class GrantPrivileges extends HttpServlet {
     		}
     		form += "</tbody>";
     	}
-    	form += "<button class='btn btn-lg btn-primary btn-block' id = 'Grant Privileges' type='submit'>Submit</button>";
+    	form += "<button class='btn btn-lg btn-primary btn-block' id = 'Revoke Privileges' type='submit'>Submit</button>";
     	tableNames.close();
     	return form;
     }
     
 
-	private String performGrant(String[] privilegesToGrant, String[] relevantTables, String username) throws SQLException, NamingException 
+	private String performRevoke(String[] privilegesToRevoke, String[] relevantTables, String username) throws SQLException, NamingException 
 	{
 		try
 		{
 			Connection conn = AdminGetConnection.getConnection();
-			Statement grantStatement = conn.createStatement();
-			for(int i = 0; i < privilegesToGrant.length; i++)
+			Statement RevokeStatement = conn.createStatement();
+			for(int i = 0; i < privilegesToRevoke.length; i++)
 			{
-				if(privilegesToGrant[i].equals("EXECUTE"))
+				if(privilegesToRevoke[i].equals("EXECUTE"))
 				{
-					grantStatement.execute("GRANT EXECUTE ON moviedb.* TO '" + username + "'@'localhost';");
+					RevokeStatement.execute("REVOKE EXECUTE ON moviedb.* FROM '" + username + "'@'localhost';");
 				}
 				else
 				{
 					for(int j = 0; j < relevantTables.length; j++)
 					{
-						grantStatement.execute("GRANT "+privilegesToGrant[i]+" ON moviedb."+relevantTables[j]+
-								" TO '"+username+"'@'localhost';");
+						RevokeStatement.execute("REVOKE "+privilegesToRevoke[i]+" ON moviedb."+relevantTables[j]+
+								" FROM '"+username+"'@'localhost';");
 					}
 				}
 			}
 		}
 		catch(SQLException e)
 		{
-			return "An error occurred";
+		
 		}
-		return "Privileges successfully granted";
+		return "Privileges successfully revoked";
 	}
 
 	/**
@@ -143,14 +143,14 @@ public class GrantPrivileges extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println(adminTopBar.adminTopPage());
 		String username = request.getParameter("username");
-		String[] privilegesToGrant = request.getParameterValues("privType");
+		String[] privilegesToRevoke = request.getParameterValues("privType");
 		String[] relevantTables = request.getParameterValues("checkTableName");
-		if(privilegesToGrant != null && relevantTables != null)
+		if(privilegesToRevoke != null && relevantTables != null)
 		{
 			try {
 				//for(String t: relevantTables)
 					//System.out.println(t + " ");
-				out.println(performGrant(privilegesToGrant, relevantTables, username));
+				out.println(performRevoke(privilegesToRevoke, relevantTables, username));
 			} catch (SQLException | NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -159,7 +159,7 @@ public class GrantPrivileges extends HttpServlet {
 		else
 		{
 			try {
-				out.println(createGrantForm(username));
+				out.println(createRevokeForm(username));
 			} catch (SQLException | NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
