@@ -12,7 +12,7 @@ public class AdminErrorChecker {
 	{
 		String table = "";
 		try{		
-			AdminSQLQuerier connections = new AdminSQLQuerier();
+			AdminSQLHandler connections = new AdminSQLHandler();
 			ResultSet	starResult		= connections.query(SQLQuery);
 			
 			AdminResultContainer containerTemplate	= new AdminResultContainer(titles);

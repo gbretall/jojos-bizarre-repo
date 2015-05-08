@@ -73,9 +73,13 @@ public class AdminCreateUser extends HttpServlet {
     			+ "Select * from mysql.user U "
     			+ "where U.User = '"+userName+"' ";
     	
-    	try {			
-			ResultSet result = AdminGetConnection.getResultsOfQuery(sql);
-			return(result.isBeforeFirst());
+    	try {
+    		AdminSQLHandler connections = new AdminSQLHandler();
+			ResultSet result = connections.query(sql);
+			boolean userFound = result.isBeforeFirst();
+			connections.close();
+			return userFound;
+			
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,9 +91,11 @@ public class AdminCreateUser extends HttpServlet {
     	String sql = "CREATE USER '"+userName+"'@'localhost' IDENTIFIED BY '"+password+"';";
     	
 		try{
-			Connection	conn = AdminGetConnection.getConnection();
-			Statement	statement	= conn.createStatement();
-			return statement.execute(sql);
+			AdminSQLHandler connections = new AdminSQLHandler();
+			
+			boolean result =connections.execute(sql);
+			connections.close();
+			return result;
 		}
 		catch (SQLException | NamingException e) {
 			e.printStackTrace();

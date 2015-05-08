@@ -7,26 +7,41 @@ import java.sql.Statement;
 
 import javax.naming.NamingException;
 
-public class AdminSQLQuerier {
+public class AdminSQLHandler {
 	private Connection	conn;
 	private Statement	statement;
 	private ResultSet	result;
 		
-	public AdminSQLQuerier()
+	public AdminSQLHandler()
 	{
-	
+		result = null;
 	}
 	public ResultSet query(String SQL) throws SQLException, NamingException
 	{
-		conn		= AdminGetConnection.getConnection();
-		statement	= conn.createStatement();
+		openConnections();
 		result		= statement.executeQuery(SQL);
-		
 		return result;
 	}
+	
+	public boolean execute(String SQL) throws SQLException, NamingException
+	{
+		openConnections();
+		return statement.execute(SQL);
+		
+	}
+	
+	private void openConnections() throws SQLException, NamingException
+	{
+		conn		= AdminGetConnection.getConnection();
+		statement	= conn.createStatement();
+	}
+	
 	public void close() throws SQLException
 	{
+		if (result!=null)
+		{
 		result.close();
+		}
 		statement.close();
 		conn.close();
 	}

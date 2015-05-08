@@ -37,11 +37,11 @@ public class AdminDbUsers_Miles extends HttpServlet {
     
     public class dbUsers{
     	private String name = "";
-    	private String privlage = "";
+    	private String privilege = "";
     	
-    	public dbUsers(String name, String privlage){
+    	public dbUsers(String name, String privilege){
     		this.setName(name);
-    		this.setPrivlage(privlage);
+    		this.setPrivilege(privilege);
     	}
     	
 		public String getName() {
@@ -50,11 +50,11 @@ public class AdminDbUsers_Miles extends HttpServlet {
 		public void setName(String name) {
 			this.name = name;
 		}
-		public String getPrivlage() {
-			return privlage;
+		public String getPrivilege() {
+			return privilege;
 		}
-		public void setPrivlage(String privlage) {
-			this.privlage = privlage;
+		public void setPrivilege(String privlage) {
+			this.privilege = privlage;
 		}
     	
     }
@@ -80,7 +80,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
     	String tableHeader = "<thead>"
     			+ "<tr>"
     			+ "<th>Name</th>"
-    			+ "<th>Current Privlages</th>"
+    			+ "<th>Current Privileges</th>"
     			+ "<th>Grant</th>"
     			+ "<th>Revoke</th>"
     			+ "</tr>"
@@ -106,11 +106,11 @@ public class AdminDbUsers_Miles extends HttpServlet {
     		
     		returnTable += "<tr>"
     				+ "<td>"+ user.getName()+"</td>"
-    				+ "<td>"+ user.getPrivlage() +"</td>"
+    				+ "<td>"+ user.getPrivilege() +"</td>"
     				+ "<td>"+ grantButton +"</td>"
     				+ "<td>"+revokeButton+"</td>"
     				+ "</tr>";
-    		System.out.println(debugOffest+ user.getName() +"  "+ user.getPrivlage());
+    		System.out.println(debugOffest+ user.getName() +"  "+ user.getPrivilege());
     	}
     	System.out.print("\n");
     	
@@ -121,7 +121,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
     	arrayOfTables.add(returnTable);
     }
     
-	private ArrayList<String> privlageInfoTableArray(
+	private ArrayList<String> privilegeInfoTableArray(
 			ArrayList<String> tableNames, ArrayList<String> arrayOfTables) {
 
 		ArrayList<String> tablesToMake = new ArrayList<String>();
@@ -130,12 +130,12 @@ public class AdminDbUsers_Miles extends HttpServlet {
 				+ "from mysql.tables_priv " + "where Table_name = ";
 		String whereClause = "";
 
-		System.out.println("----- Printing from privlageInfoTableArray -----");
+		System.out.println("----- Printing from privilageInfoTableArray -----");
 		
 		try {
 			Connection conn = AdminGetConnection.getConnection();
 			for (String tableName : tableNames) {
-				System.out.println("privlages for: " + tableName + "\n");
+				System.out.println("privilages for: " + tableName + "\n");
 				
 				whereClause = "'" + tableName + "'" + ";";
 
@@ -158,7 +158,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 						System.out.print(currentUser.getName() + "   ");
 						System.out.print(resultTB.getString("Table_name")
 								+ "   ");
-						System.out.print(currentUser.getPrivlage() + "   ");
+						System.out.print(currentUser.getPrivilege() + "   ");
 						System.out.println("");
 						users.add(currentUser);
 					}
@@ -250,10 +250,10 @@ public class AdminDbUsers_Miles extends HttpServlet {
 
     private String tableOfUPUsers(){
     	  	
-    	ArrayList<String> nonPrivlagesUsers = usersWithoutPrivlages();
+    	ArrayList<String> nonPrivilegesUsers = usersWithoutPrivlages();
     	String returnTable = "";
     	
-    	if(nonPrivlagesUsers.size() > 0){
+    	if(nonPrivilegesUsers.size() > 0){
 	    	String pageHeader = "<div class = 'page-header'>"
 	    			+ "<h1>Non-Privlaged Users</h1>"
 	    			+ "</div>";
@@ -261,7 +261,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 	    	String tableHeader = "<thead>"
 	    			+ "<tr>"
 	    			+ "<th>Name</th>"
-	    			+ "<th>Grant Privlages</th>"
+	    			+ "<th>Grant Privileges</th>"
 	    			+ "</tr>"
 	    			+ "</thead>";
 	    	
@@ -270,7 +270,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 	    			+ "<table class = 'table table-bordered table-striped'>"
 	    			+ tableHeader; 
 	    	
-	    	for(String user: nonPrivlagesUsers){
+	    	for(String user: nonPrivilegesUsers){
 	        	String grantButton = "<form action = 'GrantPrivileges' method='get'>"
 	        			+ "<input type='hidden' name='username' value='"+ user+"'>"
 	        			+ "<button class='btn btn-lg btn-primary btn-block' id = 'signInButton' type='submit'>Grant</button>"
@@ -300,7 +300,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 
 	   
 	    ArrayList<String> tableNames = getMDBTableNames();
-	    ArrayList<String> tablesToMake = privlageInfoTableArray(tableNames, arrayOfTables); // arrayOfTables populated here
+	    ArrayList<String> tablesToMake = privilegeInfoTableArray(tableNames, arrayOfTables); // arrayOfTables populated here
 
 	    String pageHeader = "<div class = 'page-header'> <h1>"+"Current privilege"+"</h1></div>";
 	    out.println(pageHeader);
@@ -308,14 +308,14 @@ public class AdminDbUsers_Miles extends HttpServlet {
 	    	out.println(table);
 	    }
 	    
-	    String privlageCheck =tableOfUPUsers();
-	    if (!privlageCheck.equals("")){
+	    String privilegeCheck =tableOfUPUsers();
+	    if (!privilegeCheck.equals("")){
 	    	out.print("<br/>"
 	    			+ "<br/>"
 	    			+ "<br/>");
-		    String pageHeader2 = "<div class = 'page-header'> <h1>"+"Users without privlage"+"</h1></div>";
+		    String pageHeader2 = "<div class = 'page-header'> <h1>"+"Users without privilege"+"</h1></div>";
 		    out.println(pageHeader2);
-		    out.println(privlageCheck);
+		    out.println(privilegeCheck);
 	    }
 	    
 	    out.println("</html>"); 
