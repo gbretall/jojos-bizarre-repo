@@ -34,7 +34,9 @@ public class AddMovieServlet extends HttpServlet {
     private String addMovieToDatabase(String title, String year,
 			String director, String banner_url, String trailer_url,
 			String first_name, String last_name, String DOB, String photo_url, String genre) throws SQLException, NamingException{
-		String sqlQuery = "CALL add_movie('"
+		
+    	AdminSQLHandler connections = null;
+    	String sqlQuery = "CALL add_movie('"
 				+ title
 				+ "', "
 				+ year
@@ -57,18 +59,17 @@ public class AddMovieServlet extends HttpServlet {
 				+"');";
 		try
 		{
-			Connection conn = AdminGetConnection.getConnection();
-			
-			Statement addMovieStatement = conn.createStatement();
-			
-			ResultSet addMovieResult = addMovieStatement.executeQuery(sqlQuery);
+			connections = new AdminSQLHandler();
+			connections.query(sqlQuery);
 		}
 		catch(SQLException e)
 		{
+			if (connections!= null){connections.close();}
 			return "<div><h2>Could not add movie to the database</h2>"
 					+ "<br><br>"
 					+ "<a href='AddMovieForm.html'>Return to Add Movie Page</a></div></body></html>";
 		}
+		if(connections!=null){connections.close();}
 		return "<div><h2>"
 				+ title
 				+ " was successfully added to the database</h2>"
