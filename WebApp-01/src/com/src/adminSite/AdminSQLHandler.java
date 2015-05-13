@@ -36,13 +36,20 @@ public class AdminSQLHandler {
 		statement	= conn.createStatement();
 	}
 	
-	public void close() throws SQLException
+	public void close() 
 	{
-		if (result!=null)
-		{
-		result.close();
+		try{
+			if (result!=null)
+			{
+					result.close();
+			}
+			statement.close();
+			conn.close();
 		}
-		statement.close();
-		conn.close();
+		catch(SQLException e)
+		{
+			System.out.println("An error occurred when closing the connections");
+		}
+		
 	}
 }
