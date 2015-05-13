@@ -12,26 +12,37 @@
 <body>
 	<div id='header'>
 		<p id='admin-title'>M.L.G.Videos Admin Page. ((Normies Not
-			Welcome))</p> 
-		<form class='form' id='home-button' action='AdminMainPage.html'
-			method='get'>
-			<input name='logout' type='hidden' value='true'>
-			<button class='btn' type='submit'>Home</button>
-		</form>
+			Welcome))</p>
 	</div>
 	<div class='container'>
+	
+	<div class = 'page-header container'>
+	<h2>Add Movie</h2>
+	</div>	
 		<form method='link' action='AddMovieForm.html'>
-			<input type='submit' value='Add New Movie'>
+			<input type='submit' class = 'btn' value='Add New Movie'>
 		</form>
+
+			<div class = 'page-header container'>
+	<h2>Check data for errors</h2>
+	</div>	
 		<form method='link' action='ErrorCheck.html'>
-			<input type='submit' value='Error Check'>
+			<input type='submit'  class = 'btn' value='Error Check'>
 		</form>
+		
+		
+					<div class = 'page-header container'>
+	<h2>Check data for errors</h2>
+	<p1>Please only use if you have DB admin privilege. No bullying please.</p1>
+	</div>	
 		<form method='link' action='AdminDbUsers_Miles'>
-			<input type='submit' value='View All Users'>
+			<input type='submit'  class = 'btn admin-button' value='View All Users'>
 		</form>
 		<form method='link' action='CreateUser.html'>
-			<input type='submit' value='Add New User'>
+			<input type='submit'  class = 'btn admin-button' value='Add New User'>
 		</form>
+		
+		
 	</div>
 </body>
 </html>
