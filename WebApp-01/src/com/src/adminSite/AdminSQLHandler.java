@@ -15,6 +15,8 @@ public class AdminSQLHandler {
 	public AdminSQLHandler()
 	{
 		result = null;
+		statement = null;
+		conn = null;
 	}
 	public ResultSet query(String SQL) throws SQLException, NamingException
 	{
@@ -32,19 +34,17 @@ public class AdminSQLHandler {
 	
 	private void openConnections() throws SQLException, NamingException
 	{
+		close();
 		conn		= AdminGetConnection.getConnection();
 		statement	= conn.createStatement();
 	}
 	
 	public void close() 
 	{
-		try{
-			if (result!=null)
-			{
-					result.close();
-			}
-			statement.close();
-			conn.close();
+	try{
+			if (result	 !=null){result.close();}
+			if (statement!=null){statement.close();}
+			if (conn	 !=null){conn.close();}
 		}
 		catch(SQLException e)
 		{
