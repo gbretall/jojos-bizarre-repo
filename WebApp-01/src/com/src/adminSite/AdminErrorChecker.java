@@ -37,12 +37,12 @@ public class AdminErrorChecker {
 				//print the error message
 				table += noneFound;
 			}
-			//standard flow closes the connections after it is done with it
-			connections.close();
 		}catch (SQLException | NamingException e) {
-			// we still need to close the connectinos even if they throw an exception
-			if (connections!= null){connections.close();}
 			e.printStackTrace();
+		}
+		finally
+		{
+			if (connections!= null){connections.close();}
 		}
 		
 		return table;

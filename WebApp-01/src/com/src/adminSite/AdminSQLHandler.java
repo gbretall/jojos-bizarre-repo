@@ -43,8 +43,12 @@ public class AdminSQLHandler {
 	{
 	try{
 			if (result	 !=null){result.close();}
+			result	 = null;
 			if (statement!=null){statement.close();}
+			statement= null;
 			if (conn	 !=null){conn.close();}
+			conn	 = null;
+			
 		}
 		catch(SQLException e)
 		{
