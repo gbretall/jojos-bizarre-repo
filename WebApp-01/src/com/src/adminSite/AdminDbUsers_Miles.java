@@ -121,7 +121,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
     	arrayOfTables.add(returnTable);
     }
     
-	private ArrayList<String> privlageInfoTableArray(
+	private ArrayList<String> privilegeInfoTableArray(
 			ArrayList<String> tableNames, ArrayList<String> arrayOfTables) {
 
 		ArrayList<String> tablesToMake = new ArrayList<String>();
@@ -300,7 +300,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 
 	   
 	    ArrayList<String> tableNames = getMDBTableNames();
-	    ArrayList<String> tablesToMake = privlageInfoTableArray(tableNames, arrayOfTables); // arrayOfTables populated here
+	    ArrayList<String> tablesToMake = privilegeInfoTableArray(tableNames, arrayOfTables); // arrayOfTables populated here
 
 	    String pageHeader = "<div class = 'page-header'> <h1>"+"Current privilege"+"</h1></div>";
 	    out.println(pageHeader);
@@ -313,7 +313,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 	    	out.print("<br/>"
 	    			+ "<br/>"
 	    			+ "<br/>");
-		    String pageHeader2 = "<div class = 'page-header'> <h1>"+"Users without privlage"+"</h1></div>";
+		    String pageHeader2 = "<div class = 'page-header col-md-12'> <h1>"+"Users without privilege"+"</h1></div>";
 		    out.println(pageHeader2);
 		    out.println(privlageCheck);
 	    }
