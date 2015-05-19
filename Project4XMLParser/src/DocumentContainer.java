@@ -15,6 +15,8 @@ public class DocumentContainer
 	private TagNode number;
 	private TagNode series;
 	private TagNode editor;
+	private TagNode booktitle;
+	
 	private ArrayList<TagNode> authors;
 	private ArrayList<TagNode> citations;
 	private ArrayList<TagNode> crossrefs;
@@ -35,33 +37,40 @@ public class DocumentContainer
 		number		= new TagNode();
 		series		= new TagNode();
 		editor		= new TagNode();
+		booktitle	= new TagNode();
+		
 		authors		= new ArrayList<TagNode>();
 		citations	= new ArrayList<TagNode>();
 		crossrefs	= new ArrayList<TagNode>();
+		
+		authors.add		(new TagNode());
+		citations.add	(new TagNode());
+		crossrefs.add	(new TagNode());
 	}
 
 	
 	public DocumentContainer(TagNode ee, TagNode url, TagNode year,
 			TagNode isbn, TagNode genre, TagNode title, TagNode pages,
 			TagNode cdrom, TagNode volume, TagNode number, TagNode series,
-			TagNode editor, ArrayList<TagNode> authors,
+			TagNode editor,TagNode booktitle, ArrayList<TagNode> authors,
 			ArrayList<TagNode> citations, ArrayList<TagNode> crossrefs) {
 		
-		this.ee = ee;
-		this.url = url;
-		this.year = year;
-		this.isbn = isbn;
-		this.genre = genre;
-		this.title = title;
-		this.pages = pages;
-		this.cdrom = cdrom;
-		this.volume = volume;
-		this.number = number;
-		this.series = series;
-		this.editor = editor;
-		this.authors = authors;
-		this.citations = citations;
-		this.crossrefs = crossrefs;
+		this.ee			= ee;
+		this.url		= url;
+		this.year		= year;
+		this.isbn		= isbn;
+		this.genre		= genre;
+		this.title		= title;
+		this.pages		= pages;
+		this.cdrom		= cdrom;
+		this.volume		= volume;
+		this.number		= number;
+		this.series		= series;
+		this.editor		= editor;
+		this.booktitle	= booktitle;
+		this.authors	= authors;
+		this.citations	= citations;
+		this.crossrefs	= crossrefs;
 	}
 
 
@@ -90,7 +99,7 @@ public class DocumentContainer
 		
 		return new DocumentContainer(ee.copy(), url.copy(), year.copy(), isbn.copy(), 
 				genre.copy(), title.copy(), pages.copy(), cdrom.copy(), volume.copy(), 
-				number.copy(), series.copy(), editor.copy(), copyArrayList(authors), copyArrayList(citations), copyArrayList(crossrefs));
+				number.copy(), series.copy(), editor.copy(),booktitle.copy(), copyArrayList(authors), copyArrayList(citations), copyArrayList(crossrefs));
 	}
 	
 	private void clearArrayList(ArrayList<TagNode> nodes)
@@ -294,8 +303,22 @@ public class DocumentContainer
 	}
 	
 	
+	/**
+	 * @return the booktitle
+	 */
+	public TagNode getBooktitle() {
+		return booktitle;
+	}
 
-	
+
+	/**
+	 * @param booktitle the booktitle to set
+	 */
+	public void setBooktitle(TagNode booktitle) {
+		this.booktitle = booktitle;
+	}
+
+
 	public void detectEe()
 	{
 		ee.detectAttribute();
@@ -344,6 +367,11 @@ public class DocumentContainer
 	{
 		editor.detectAttribute();
 	}
+	public void detectBooktitle()
+	{
+		booktitle.detectAttribute();
+	}
+	
 	public static ArrayList<TagNode> copyArrayList(ArrayList<TagNode> list)
 	{
 		ArrayList<TagNode> copy  = new ArrayList<TagNode>();

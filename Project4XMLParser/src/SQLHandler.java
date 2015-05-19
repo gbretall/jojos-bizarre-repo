@@ -33,7 +33,6 @@ public class SQLHandler {
 		openConnections();
 		statement = conn.prepareStatement(SQL);
 		return statement.execute(SQL);
-
 	}
 
 	private void openConnections() throws SQLException, NamingException {
