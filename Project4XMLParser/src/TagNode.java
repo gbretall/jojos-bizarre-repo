@@ -1,24 +1,36 @@
 
 public class TagNode 
 {
-	private boolean flag;
+	private boolean attributeDetected;
+	private boolean contentSet;
 	private String content;
 	
 	public TagNode()
 	{
-		flag = false;
-		content = null;
+		attributeDetected = false;
+		contentSet		  = false;
+		content			  = "";
 	}
 	
-	public TagNode(boolean flag, String content)
+	public TagNode(boolean contentSet, boolean attrDetected, String content)
 	{
-		this.flag = flag;
+		attributeDetected = attrDetected;
+		this.contentSet = contentSet;
 		this.content = content;
 	}
 	
-	public boolean getFlag()
+	public TagNode copy()
 	{
-		return flag;
+		return new TagNode(this.contentSet, this.attributeDetected, this.content);
+	}
+	public boolean contentSet()
+	{
+		return contentSet;
+	}
+	
+	public boolean attributeDetected()
+	{
+		return attributeDetected;
 	}
 	
 	public String getContent()
@@ -26,19 +38,21 @@ public class TagNode
 		return content;
 	}
 	
-	public void setFlagTrue()
-	{
-		flag = true;
-	}
-	
 	public void clear()
 	{
-		flag = false;
-		content = "";
+		contentSet		  = false;
+		attributeDetected = false;
+		content			  = "";
 	}
 	
-	public void setContent(String newContent)
+	public void detectAttribute()
 	{
+		attributeDetected = true;
+	}
+	
+	public void set(String newContent)
+	{
+		contentSet = true;
 		content = newContent;
 	}
 
