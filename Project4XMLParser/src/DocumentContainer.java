@@ -292,6 +292,58 @@ public class DocumentContainer
 	public void setEditor(String editor) {
 		this.editor.set(editor);
 	}
+	
+	
+
+	
+	public void detectEe()
+	{
+		ee.detectAttribute();
+	}
+	public void detectUrl()
+	{
+		url.detectAttribute();
+	}
+	public void detectIsbn()
+	{
+		isbn.detectAttribute();
+	}
+	public void detectYear()
+	{
+		year.detectAttribute();
+	}
+	public void detectGenre()
+	{
+		genre.detectAttribute();
+	}
+	public void detectTitle()
+	{
+		title.detectAttribute();
+	}
+	public void detectPages()
+	{
+		pages.detectAttribute();
+	}
+	public void detectCdrom()
+	{
+		cdrom.detectAttribute();
+	}
+	public void detectVolume()
+	{
+		volume.detectAttribute();
+	}
+	public void detectNumber()
+	{
+		number.detectAttribute();
+	}
+	public void detectSeries()
+	{
+		series.detectAttribute();
+	}
+	public void detectEditor()
+	{
+		editor.detectAttribute();
+	}
 	public static ArrayList<TagNode> copyArrayList(ArrayList<TagNode> list)
 	{
 		ArrayList<TagNode> copy  = new ArrayList<TagNode>();

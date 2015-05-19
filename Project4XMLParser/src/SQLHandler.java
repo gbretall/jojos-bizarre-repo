@@ -2,16 +2,18 @@
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
+
 public class SQLHandler {
 	private Connection conn;
-	private Statement statement;
+	private PreparedStatement statement;
 	private ResultSet result;
 
 	public SQLHandler() {
@@ -22,12 +24,14 @@ public class SQLHandler {
 
 	public ResultSet query(String SQL) throws SQLException, NamingException {
 		openConnections();
+		statement = conn.prepareStatement(SQL);
 		result = statement.executeQuery(SQL);
 		return result;
 	}
 
 	public boolean execute(String SQL) throws SQLException, NamingException {
 		openConnections();
+		statement = conn.prepareStatement(SQL);
 		return statement.execute(SQL);
 
 	}
@@ -35,7 +39,7 @@ public class SQLHandler {
 	private void openConnections() throws SQLException, NamingException {
 		close();
 		conn = getConnection();
-		statement = conn.createStatement();
+	
 	}
 
 	public void close() 

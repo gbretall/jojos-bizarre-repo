@@ -23,6 +23,7 @@ public class TagNode
 	{
 		return new TagNode(this.contentSet, this.attributeDetected, this.content);
 	}
+	
 	public boolean contentSet()
 	{
 		return contentSet;
@@ -52,8 +53,9 @@ public class TagNode
 	
 	public void set(String newContent)
 	{
-		contentSet = true;
-		content = newContent;
+		contentSet	= true;
+		content		= newContent;
+		attributeDetected = false;
 	}
 
 }
