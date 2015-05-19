@@ -135,7 +135,7 @@ public class AdminDbUsers_Miles extends HttpServlet {
 		try {
 			Connection conn = AdminGetConnection.getConnection();
 			for (String tableName : tableNames) {
-				System.out.println("privlages for: " + tableName + "\n");
+				System.out.println("privileges for: " + tableName + "\n");
 				
 				whereClause = "'" + tableName + "'" + ";";
 
