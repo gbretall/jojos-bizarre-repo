@@ -7,7 +7,7 @@ public class TagNode
 	public TagNode()
 	{
 		flag = false;
-		content = "";
+		content = null;
 	}
 	
 	public TagNode(boolean flag, String content)
