@@ -7,6 +7,8 @@ public class DocumentContainer
 	private TagNode url;
 	private TagNode year;
 	private TagNode isbn;
+	private TagNode note;
+	private TagNode month;
 	private TagNode genre;
 	private TagNode	title;
 	private TagNode pages;
@@ -15,6 +17,10 @@ public class DocumentContainer
 	private TagNode number;
 	private TagNode series;
 	private TagNode editor;
+	private TagNode school;
+	private TagNode address;
+	private TagNode chapter;
+	private TagNode publisher;
 	private TagNode booktitle;
 	
 	private ArrayList<TagNode> authors;
@@ -29,6 +35,7 @@ public class DocumentContainer
 		url			= new TagNode();
 		year		= new TagNode();
 		isbn		= new TagNode();
+		month		= new TagNode();
 		genre		= new TagNode();
 		title		= new TagNode();
 		pages		= new TagNode();
@@ -37,6 +44,10 @@ public class DocumentContainer
 		number		= new TagNode();
 		series		= new TagNode();
 		editor		= new TagNode();
+		school		= new TagNode();
+		address		= new TagNode();
+		chapter		= new TagNode();
+		publisher	= new TagNode();
 		booktitle	= new TagNode();
 		
 		authors		= new ArrayList<TagNode>();
@@ -49,16 +60,20 @@ public class DocumentContainer
 	}
 
 	
-	public DocumentContainer(TagNode ee, TagNode url, TagNode year,
-			TagNode isbn, TagNode genre, TagNode title, TagNode pages,
-			TagNode cdrom, TagNode volume, TagNode number, TagNode series,
-			TagNode editor,TagNode booktitle, ArrayList<TagNode> authors,
-			ArrayList<TagNode> citations, ArrayList<TagNode> crossrefs) {
+	public DocumentContainer(
+			TagNode ee,		TagNode url,	TagNode year,	TagNode isbn,
+			TagNode note,	TagNode month,	TagNode genre,	TagNode title,	
+			TagNode pages,	TagNode cdrom,	TagNode volume,	TagNode number,	
+			TagNode series,	TagNode editor,	TagNode school, TagNode address,
+			TagNode chapter,TagNode publisher,	TagNode booktitle,	
+			ArrayList<TagNode> authors,	ArrayList<TagNode> citations, ArrayList<TagNode> crossrefs) {
 		
 		this.ee			= ee;
 		this.url		= url;
 		this.year		= year;
 		this.isbn		= isbn;
+		this.note		= note;
+		this.month		= month;
 		this.genre		= genre;
 		this.title		= title;
 		this.pages		= pages;
@@ -67,6 +82,10 @@ public class DocumentContainer
 		this.number		= number;
 		this.series		= series;
 		this.editor		= editor;
+		this.school		= school;
+		this.address	= address;
+		this.chapter	= chapter;
+		this.publisher	= publisher;
 		this.booktitle	= booktitle;
 		this.authors	= authors;
 		this.citations	= citations;
@@ -80,14 +99,21 @@ public class DocumentContainer
 		url.clear();
 		year.clear();
 		isbn.clear();
+		note.clear();
+		month.clear();
 		genre.clear();	
-		cdrom.clear();
 		title.clear();
 		pages.clear();
+		cdrom.clear();
 		volume.clear();
 		number.clear();		
 		series.clear();
 		editor.clear();
+		school.clear();
+		address.clear();
+		chapter.clear();
+		publisher.clear();
+		booktitle.clear();
 		
 		clearArrayList(citations);
 		clearArrayList(crossrefs);
@@ -95,11 +121,12 @@ public class DocumentContainer
 	}
 	
 	public DocumentContainer copy()
-	{
-		
+	{		
 		return new DocumentContainer(ee.copy(), url.copy(), year.copy(), isbn.copy(), 
-				genre.copy(), title.copy(), pages.copy(), cdrom.copy(), volume.copy(), 
-				number.copy(), series.copy(), editor.copy(),booktitle.copy(), copyArrayList(authors), copyArrayList(citations), copyArrayList(crossrefs));
+				note.copy(), month.copy(), genre.copy(), title.copy(), pages.copy(), cdrom.copy(), 
+				volume.copy(), number.copy(), series.copy(), editor.copy(), 
+				school.copy(), address.copy(), chapter.copy(), publisher.copy(), 
+				booktitle.copy(), copyArrayList(authors), copyArrayList(citations), copyArrayList(crossrefs));
 	}
 	
 	private void clearArrayList(ArrayList<TagNode> nodes)
@@ -108,6 +135,86 @@ public class DocumentContainer
 		{
 			node.clear();
 		}
+	}
+
+
+	/**
+	 * @return the note
+	 */
+	public TagNode getNote() {
+		return note;
+	}
+
+
+	/**
+	 * @param note the note to set
+	 */
+	public void setNote(String note) {
+		this.note.set(note);
+	}
+
+
+	/**
+	 * @return the month
+	 */
+	public TagNode getMonth() {
+		return month;
+	}
+
+
+	/**
+	 * @param month the month to set
+	 */
+	public void setMonth(String month) {
+		this.month .set(month);
+	}
+
+
+	/**
+	 * @return the school
+	 */
+	public TagNode getSchool() {
+		return school;
+	}
+
+
+	/**
+	 * @param school the school to set
+	 */
+	public void setSchool(String school) {
+		this.school.set(school);
+	}
+
+
+	/**
+	 * @return the address
+	 */
+	public TagNode getAddress() {
+		return address;
+	}
+
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address.set(address);
+	}
+
+
+	/**
+	 * @return the chapter
+	 */
+	public TagNode getChapter() {
+		return chapter;
+	}
+
+
+	/**
+	 * @param chapter the chapter to set
+	 */
+	public void setChapter(String chapter) {
+		this.chapter.set(chapter);;
 	}
 
 
@@ -367,9 +474,29 @@ public class DocumentContainer
 	{
 		editor.detectAttribute();
 	}
-	public void detectBooktitle()
+	public void detectAddress()
 	{
-		booktitle.detectAttribute();
+		address.detectAttribute();
+	}
+	public void detectMonth()
+	{
+		month.detectAttribute();
+	}
+	public void detectNote()
+	{
+		note.detectAttribute();
+	}
+	public void detectSchool()
+	{
+		school.detectAttribute();
+	}
+	public void detectChapter()
+	{
+		chapter.detectAttribute();
+	}
+	public void detectPublisher()
+	{
+		publisher.detectAttribute();
 	}
 	
 	public static ArrayList<TagNode> copyArrayList(ArrayList<TagNode> list)
