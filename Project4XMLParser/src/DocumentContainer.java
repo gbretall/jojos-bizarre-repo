@@ -19,13 +19,14 @@ public class DocumentContainer
 	private TagNode editor;
 	private TagNode school;
 	private TagNode address;
+	private TagNode journal;
 	private TagNode chapter;
 	private TagNode publisher;
 	private TagNode booktitle;
 	
-	private ArrayList<TagNode> authors;
-	private ArrayList<TagNode> citations;
-	private ArrayList<TagNode> crossrefs;
+	private NodeCollection authors;
+	private NodeCollection citations;
+	private NodeCollection crossrefs;
 	
 	
 	
@@ -46,17 +47,16 @@ public class DocumentContainer
 		editor		= new TagNode();
 		school		= new TagNode();
 		address		= new TagNode();
+		journal		= new TagNode();
 		chapter		= new TagNode();
 		publisher	= new TagNode();
 		booktitle	= new TagNode();
 		
-		authors		= new ArrayList<TagNode>();
-		citations	= new ArrayList<TagNode>();
-		crossrefs	= new ArrayList<TagNode>();
+		authors		= new NodeCollection();
+		citations	= new NodeCollection();
+		crossrefs	= new NodeCollection();
 		
-		authors.add		(new TagNode());
-		citations.add	(new TagNode());
-		crossrefs.add	(new TagNode());
+		
 	}
 
 	
@@ -65,8 +65,8 @@ public class DocumentContainer
 			TagNode note,	TagNode month,	TagNode genre,	TagNode title,	
 			TagNode pages,	TagNode cdrom,	TagNode volume,	TagNode number,	
 			TagNode series,	TagNode editor,	TagNode school, TagNode address,
-			TagNode chapter,TagNode publisher,	TagNode booktitle,	
-			ArrayList<TagNode> authors,	ArrayList<TagNode> citations, ArrayList<TagNode> crossrefs) {
+			TagNode journal,TagNode chapter,TagNode publisher,	TagNode booktitle,	
+			NodeCollection authors,	NodeCollection citations, NodeCollection crossrefs) {
 		
 		this.ee			= ee;
 		this.url		= url;
@@ -84,6 +84,7 @@ public class DocumentContainer
 		this.editor		= editor;
 		this.school		= school;
 		this.address	= address;
+		this.journal	= journal;
 		this.chapter	= chapter;
 		this.publisher	= publisher;
 		this.booktitle	= booktitle;
@@ -115,9 +116,9 @@ public class DocumentContainer
 		publisher.clear();
 		booktitle.clear();
 		
-		clearArrayList(citations);
-		clearArrayList(crossrefs);
-		clearArrayList(authors);
+		citations.clear();
+		crossrefs.clear();
+		authors.clear();
 	}
 	
 	public DocumentContainer copy()
@@ -125,17 +126,11 @@ public class DocumentContainer
 		return new DocumentContainer(ee.copy(), url.copy(), year.copy(), isbn.copy(), 
 				note.copy(), month.copy(), genre.copy(), title.copy(), pages.copy(), cdrom.copy(), 
 				volume.copy(), number.copy(), series.copy(), editor.copy(), 
-				school.copy(), address.copy(), chapter.copy(), publisher.copy(), 
-				booktitle.copy(), copyArrayList(authors), copyArrayList(citations), copyArrayList(crossrefs));
+				school.copy(), address.copy(), journal.copy(), chapter.copy(), publisher.copy(), 
+				booktitle.copy(), authors.copy(), citations.copy(), crossrefs.copy());
 	}
 	
-	private void clearArrayList(ArrayList<TagNode> nodes)
-	{
-		for (TagNode node:nodes)
-		{
-			node.clear();
-		}
-	}
+	
 
 
 	/**
@@ -426,6 +421,70 @@ public class DocumentContainer
 	}
 
 
+	/**
+	 * @return the journal
+	 */
+	public TagNode getJournal() {
+		return journal;
+	}
+
+
+	/**
+	 * @param journal the journal to set
+	 */
+	public void setJournal(String journal) {
+		this.journal.set(journal);
+	}
+
+
+	/**
+	 * @return the authors
+	 */
+	public NodeCollection getAuthors() {
+		return authors;
+	}
+
+
+	/**
+	 * @param authors the authors to set
+	 */
+	public void setAuthor(String author) {
+		this.authors.set(author);
+	}
+
+
+	/**
+	 * @return the citations
+	 */
+	public NodeCollection getCitations() {
+		return citations;
+	}
+
+
+	/**
+	 * @param citations the citations to set
+	 */
+	public void setCitation(String citation) {
+		this.citations.set(citation);
+	}
+
+
+	/**
+	 * @return the crossrefs
+	 */
+	public NodeCollection getCrossrefs() {
+		return crossrefs;
+	}
+
+
+	/**
+	 * @param crossrefs the crossrefs to set
+	 */
+	public void setCrossref(String crossref) {
+		this.crossrefs.set(crossref);
+	}
+
+
 	public void detectEe()
 	{
 		ee.detectAttribute();
@@ -498,15 +557,26 @@ public class DocumentContainer
 	{
 		publisher.detectAttribute();
 	}
-	
-	public static ArrayList<TagNode> copyArrayList(ArrayList<TagNode> list)
+	public void detectBooktitle()
 	{
-		ArrayList<TagNode> copy  = new ArrayList<TagNode>();
-		for (TagNode tn: list)
-		{
-			copy.add(tn.copy());
-		}
-		return copy;
+		booktitle.detectAttribute();
 	}
+	public void detectCitation()
+	{
+		citations.detectAttribute();
+	}
+	public void detectCrossref()
+	{
+		crossrefs.detectAttribute();
+	}
+	public void detectAuthor()
+	{
+		authors.detectAttribute();
+	}
+	public void detectJournal()
+	{
+		journal.detectAttribute();
+	}
+	
 	
 }
