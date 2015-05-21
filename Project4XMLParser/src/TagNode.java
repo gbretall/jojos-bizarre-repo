@@ -36,6 +36,11 @@ public class TagNode extends Node
 		attributeDetected = true;
 	}
 	
+	public void finishAtribute()
+	{
+		attributeDetected = false;
+	}
+	
 	public void set(String newContent)
 	{
 		super.set(newContent);

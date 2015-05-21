@@ -627,7 +627,7 @@ public class DocumentContainer
 		if (this.getChapter().contentSet())		{document+=outputStr("Chapter",		this.getChapter().getContent());	}
 		if (this.getCitations().contentSet())	{document+=outputStr("Citations",	this.getCitations().toString());	}
 		if (this.getCrossrefs().contentSet())	{document+=outputStr("Crossrefs",	this.getCrossrefs().toString());	}
-		if (this.getEditor().contentSet())		{document+=outputStr("Ediotor",		this.getEditor().getContent());		}
+		if (this.getEditor().contentSet())		{document+=outputStr("Editor",		this.getEditor().getContent());		}
 		if (this.getEe().contentSet())			{document+=outputStr("EE",			this.getEe().getContent());			}
 		if (this.getIsbn().contentSet())		{document+=outputStr("ISBN",		this.getIsbn().getContent());		}
 		if (this.getJournal().contentSet())		{document+=outputStr("Journal",		this.getJournal().getContent());	}
