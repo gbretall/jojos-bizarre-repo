@@ -74,4 +74,14 @@ public class NodeCollection {
 		}
 		return content;
 	}
+	public String toString()
+	{
+		String value = new String();
+		
+		for (Node n : collection)
+		{
+			value+=n.getContent()+" ";
+		}
+		return value;
+	}
 }

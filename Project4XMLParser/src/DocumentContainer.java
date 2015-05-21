@@ -620,104 +620,116 @@ public class DocumentContainer
 		String document = new String();
 		if (this.getGenre().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Genre", this.getGenre().getContent());
 		}
 		if (this.getAddress().contentSet())
 		{
-			document+="Address:"+this.getAddress().getContent()+"\n";
+			document+=outputStr("Address", this.getAddress().getContent());
 		}
 		if (this.getAuthors().contentSet())
 		{
-			document+="Authors"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Authors", this.getAuthors().toString());
 		}
-		if (this.getGenre().contentSet())
+		if (this.getBooktitle().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Booktitle", this.getBooktitle().getContent());
 		}
-		
-		if (this.getGenre().contentSet())
+		if (this.getCdrom().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("CDROM", this.getCdrom().getContent());
 		}
-		
-		if (this.getGenre().contentSet())
+		if (this.getChapter().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Chapter", this.getChapter().getContent());
 		}
-		
-		if (this.getGenre().contentSet())
+		if (this.getCitations().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Citations",this.getCitations().toString());
 		}
-		
-		if (this.getGenre().contentSet())
+		if (this.getCrossrefs().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Crossrefs", this.getCrossrefs().toString());
 		}
-		
-		if (this.getGenre().contentSet())
+		if (this.getEditor().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Ediotor", this.getEditor().getContent());
 		}
-		
-		if (this.getGenre().contentSet())
+		if (this.getEe().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("EE", this.getEe().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getIsbn().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("ISBN", this.getIsbn().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getJournal().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Journal", this.getJournal().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getMonth().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Month", this.getMonth().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getNote().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Note", this.getNote().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getNumber().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Number", this.getNumber().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getPages().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Pages", this.getPages().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getPublisher().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Publisher", this.getPublisher().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getSchool().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("School", this.getSchool().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getSeries().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Series", this.getSeries().getContent());
 		}
 		
-		if (this.getGenre().contentSet())
+		if (this.getTitle().contentSet())
 		{
-			document+="Genre:"+this.getGenre().getContent()+"\n";
+			document+=outputStr("Title", this.getTitle().getContent());
 		}
 		
+		if (this.getUrl().contentSet())
+		{
+			document+=outputStr("URL", this.getUrl().getContent());
+		}
 		
+		if (this.getVolume().contentSet())
+		{
+			document+=outputStr("Volume", this.getVolume().getContent());
+		}
 		
-		
+		if (this.getYear().contentSet())
+		{
+			document+=outputStr("Year", this.getYear().getContent());
+		}
+				
 		return document;
 	}
+	
+	private String outputStr(String title, String content)
+	{
+		return (title+":\t"+this.getGenre().getContent()+"\n");
+	}
+	
 }
