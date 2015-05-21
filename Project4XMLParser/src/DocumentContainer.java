@@ -34,6 +34,7 @@ public class DocumentContainer
 		url			= new TagNode();
 		year		= new TagNode();
 		isbn		= new TagNode();
+		note		= new TagNode();
 		month		= new TagNode();
 		genre		= new TagNode();
 		title		= new TagNode();
@@ -618,111 +619,29 @@ public class DocumentContainer
 	public String toString()
 	{
 		String document = new String();
-		if (this.getGenre().contentSet())
-		{
-			document+=outputStr("Genre", this.getGenre().getContent());
-		}
-		if (this.getAddress().contentSet())
-		{
-			document+=outputStr("Address", this.getAddress().getContent());
-		}
-		if (this.getAuthors().contentSet())
-		{
-			document+=outputStr("Authors", this.getAuthors().toString());
-		}
-		if (this.getBooktitle().contentSet())
-		{
-			document+=outputStr("Booktitle", this.getBooktitle().getContent());
-		}
-		if (this.getCdrom().contentSet())
-		{
-			document+=outputStr("CDROM", this.getCdrom().getContent());
-		}
-		if (this.getChapter().contentSet())
-		{
-			document+=outputStr("Chapter", this.getChapter().getContent());
-		}
-		if (this.getCitations().contentSet())
-		{
-			document+=outputStr("Citations",this.getCitations().toString());
-		}
-		if (this.getCrossrefs().contentSet())
-		{
-			document+=outputStr("Crossrefs", this.getCrossrefs().toString());
-		}
-		if (this.getEditor().contentSet())
-		{
-			document+=outputStr("Ediotor", this.getEditor().getContent());
-		}
-		if (this.getEe().contentSet())
-		{
-			document+=outputStr("EE", this.getEe().getContent());
-		}
-		
-		if (this.getIsbn().contentSet())
-		{
-			document+=outputStr("ISBN", this.getIsbn().getContent());
-		}
-		
-		if (this.getJournal().contentSet())
-		{
-			document+=outputStr("Journal", this.getJournal().getContent());
-		}
-		
-		if (this.getMonth().contentSet())
-		{
-			document+=outputStr("Month", this.getMonth().getContent());
-		}
-		
-		if (this.getNote().contentSet())
-		{
-			document+=outputStr("Note", this.getNote().getContent());
-		}
-		
-		if (this.getNumber().contentSet())
-		{
-			document+=outputStr("Number", this.getNumber().getContent());
-		}
-		
-		if (this.getPages().contentSet())
-		{
-			document+=outputStr("Pages", this.getPages().getContent());
-		}
-		
-		if (this.getPublisher().contentSet())
-		{
-			document+=outputStr("Publisher", this.getPublisher().getContent());
-		}
-		
-		if (this.getSchool().contentSet())
-		{
-			document+=outputStr("School", this.getSchool().getContent());
-		}
-		
-		if (this.getSeries().contentSet())
-		{
-			document+=outputStr("Series", this.getSeries().getContent());
-		}
-		
-		if (this.getTitle().contentSet())
-		{
-			document+=outputStr("Title", this.getTitle().getContent());
-		}
-		
-		if (this.getUrl().contentSet())
-		{
-			document+=outputStr("URL", this.getUrl().getContent());
-		}
-		
-		if (this.getVolume().contentSet())
-		{
-			document+=outputStr("Volume", this.getVolume().getContent());
-		}
-		
-		if (this.getYear().contentSet())
-		{
-			document+=outputStr("Year", this.getYear().getContent());
-		}
+		if (this.getGenre().contentSet())		{document+=outputStr("Genre",		this.getGenre().getContent());		}
+		if (this.getAddress().contentSet())		{document+=outputStr("Address", 	this.getAddress().getContent());	}
+		if (this.getAuthors().contentSet())		{document+=outputStr("Authors", 	this.getAuthors().toString());		}
+		if (this.getBooktitle().contentSet())	{document+=outputStr("Booktitle",	this.getBooktitle().getContent());	}
+		if (this.getCdrom().contentSet())		{document+=outputStr("CDROM",		this.getCdrom().getContent());		}
+		if (this.getChapter().contentSet())		{document+=outputStr("Chapter",		this.getChapter().getContent());	}
+		if (this.getCitations().contentSet())	{document+=outputStr("Citations",	this.getCitations().toString());	}
+		if (this.getCrossrefs().contentSet())	{document+=outputStr("Crossrefs",	this.getCrossrefs().toString());	}
+		if (this.getEditor().contentSet())		{document+=outputStr("Ediotor",		this.getEditor().getContent());		}
+		if (this.getEe().contentSet())			{document+=outputStr("EE",			this.getEe().getContent());			}
+		if (this.getIsbn().contentSet())		{document+=outputStr("ISBN",		this.getIsbn().getContent());		}
+		if (this.getJournal().contentSet())		{document+=outputStr("Journal",		this.getJournal().getContent());	}
+		if (this.getMonth().contentSet())		{document+=outputStr("Month",		this.getMonth().getContent());		}
+		if (this.getNote().contentSet())		{document+=outputStr("Note",		this.getNote().getContent());		}
+		if (this.getNumber().contentSet())		{document+=outputStr("Number",		this.getNumber().getContent());		}
+		if (this.getPages().contentSet())		{document+=outputStr("Pages",		this.getPages().getContent());		}
+		if (this.getPublisher().contentSet())	{document+=outputStr("Publisher",	this.getPublisher().getContent());	}
+		if (this.getSchool().contentSet())		{document+=outputStr("School",		this.getSchool().getContent());		}
+		if (this.getSeries().contentSet())		{document+=outputStr("Series",		this.getSeries().getContent());		}
+		if (this.getTitle().contentSet())		{document+=outputStr("Title",		this.getTitle().getContent());		}
+		if (this.getUrl().contentSet())			{document+=outputStr("URL",			this.getUrl().getContent());		}
+		if (this.getVolume().contentSet())		{document+=outputStr("Volume",		this.getVolume().getContent());		}
+		if (this.getYear().contentSet())		{document+=outputStr("Year",		this.getYear().getContent());		}
 				
 		return document;
 	}

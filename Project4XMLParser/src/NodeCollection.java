@@ -74,6 +74,7 @@ public class NodeCollection {
 		}
 		return content;
 	}
+	
 	public String toString()
 	{
 		String value = new String();
