@@ -17,7 +17,7 @@ public class TagNode extends Node
 	
 	public TagNode copy()
 	{
-		return new TagNode(this.attributeDetected, this.content);
+		return new TagNode(this.attributeDetected, this.getContent());
 	}
 	
 	public boolean attributeDetected()
@@ -27,7 +27,6 @@ public class TagNode extends Node
 	
 	public void clear()
 	{
-		
 		attributeDetected = false;
 		super.clear();
 	}
@@ -40,7 +39,6 @@ public class TagNode extends Node
 	public void set(String newContent)
 	{
 		super.set(newContent);
-		attributeDetected = false;
 	}
 
 }

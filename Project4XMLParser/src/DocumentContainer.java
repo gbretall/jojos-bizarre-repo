@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 
 public class DocumentContainer 
 {
@@ -58,7 +56,33 @@ public class DocumentContainer
 		
 		
 	}
+	public DocumentContainer(DocumentContainer doc)
+	{
+		this.ee			= doc.ee;
+		this.url		= doc.url;
+		this.year		= doc.year;
+		this.isbn		= doc.isbn;
+		this.note		= doc.note;
+		this.month		= doc.month;
+		this.genre		= doc.genre;
+		this.title		= doc.title;
+		this.pages		= doc.pages;
+		this.cdrom		= doc.cdrom;
+		this.volume		= doc.volume;
+		this.number		= doc.number;
+		this.series		= doc.series;
+		this.editor		= doc.editor;
+		this.school		= doc.school;
+		this.address	= doc.address;
+		this.journal	= doc.journal;
+		this.chapter	= doc.chapter;
+		this.publisher	= doc.publisher;
+		this.booktitle	= doc.booktitle;
+		this.authors	= doc.authors.copy();
+		this.citations	= doc.citations.copy();
+		this.crossrefs	= doc.crossrefs.copy();
 
+	}
 	
 	public DocumentContainer(
 			TagNode ee,		TagNode url,	TagNode year,	TagNode isbn,

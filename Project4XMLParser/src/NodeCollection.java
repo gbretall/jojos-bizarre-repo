@@ -4,22 +4,24 @@ import java.util.ArrayList;
 public class NodeCollection {
 	private ArrayList<Node> collection;
 	private boolean attributeDetected;
+	private int offset;
 	
 	public NodeCollection()
 	{
 		attributeDetected	= false;
-		collection		= new ArrayList<Node>();
+		collection			= new ArrayList<Node>();
+		collection.add(new Node());
+		offset				=0;
 	}
 	
 	public NodeCollection(boolean attributeSet, ArrayList<Node> collection)
 	{
 		this.attributeDetected	= attributeSet;
 		this.collection 	= collection;
+		offset				= collection.size()-1;
 	}
 	
-	public NodeCollection copy(){
-		return new NodeCollection (this.attributeDetected, copyArrayList(this.collection));		
-	}
+	public NodeCollection copy()	{return new NodeCollection (this.attributeDetected, copyArrayList(this.collection));}
 	
 	public void clear()
 	{
@@ -45,19 +47,25 @@ public class NodeCollection {
 		}
 	}
 	
-	public void detectAttribute()
-	{
-		this.attributeDetected = true;
-	}
+	public void detectAttribute()		{this.attributeDetected = true;}
 
-	public boolean attributeDetected()
+	public boolean attributeDetected()	{return attributeDetected;}
+	
+	public void set(String content)		{this.collection.get(offset).set(content);}
+	
+	public void endElement() 
 	{
-		return attributeDetected;
+		offset++;
+		collection.add(new Node());
 	}
 	
-	public void set(String content)
+	public ArrayList<String> getContent()
 	{
-		this.collection.add(new Node(content));
+		ArrayList<String> content = new ArrayList<String>();
+		for (Node N : this.collection)
+		{
+			content.add(N.getContent());
+		}
+		return content;
 	}
-	
 }

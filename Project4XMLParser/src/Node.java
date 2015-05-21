@@ -1,5 +1,5 @@
 public class Node {
-	protected String content;
+	private StringBuilder content;
 
 	public Node()
 	{
@@ -8,8 +8,14 @@ public class Node {
 	
 	public Node(String content) 
 	{
-		this.content = content;
+		this.content = new StringBuilder(content);
 	}
+	
+	public Node(StringBuilder SB)
+	{
+		this.content = new StringBuilder(SB);
+	}
+	
 	public Node copy()
 	{
 		return new Node(this.content);
@@ -22,12 +28,14 @@ public class Node {
 	
 	public void set(String content)
 	{
-		this.content = content;
+		if (this.content==null)	{this.content = new StringBuilder();}
+		
+		this.content.append(content);
 	}
 	
 	public String getContent()
 	{
-		return content;
+		return content.toString();
 	}
 	
 	protected void clear()
