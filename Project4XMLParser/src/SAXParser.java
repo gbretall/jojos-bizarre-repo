@@ -2,13 +2,46 @@
  
  
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
 import org.xml.sax.helpers.DefaultHandler;
  
 public class SAXParser extends DefaultHandler 
 {
 	DocumentContainer currentDocument = new DocumentContainer();
+	
+	private void parseDocument() {
+			
+			//get a factory
+			SAXParserFactory spf = SAXParserFactory.newInstance();
+			try 
+			{
+				spf.setValidating(true);
+				spf.setNamespaceAware(true);
+				
+				//get a new instance of parser
+				javax.xml.parsers.SAXParser sp = spf.newSAXParser();
+				
+				//parse the file and also register this class for call backs
+				sp.parse("final-data.xml", this);
+				
+			}catch(SAXException se) {
+				se.printStackTrace();
+			}catch(ParserConfigurationException pce) {
+				pce.printStackTrace();
+			}catch (IOException ie) {
+				ie.printStackTrace();
+			}
+		}
 	
 	@Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
@@ -142,18 +175,243 @@ public class SAXParser extends DefaultHandler
 		
     }
  
+    @Override
+    public void characters(char ch[], int start, int length) throws SAXException 
+    {
+    	if(currentDocument.getAuthors().attributeDetected())
+    	{
+    		//System.out.println("aut"+new String(ch, start, length));
+    		currentDocument.setAuthor(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getEditor().attributeDetected())
+    	{
+    		//System.out.println("editor"+new String(ch, start,length));
+    		currentDocument.setEditor(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getTitle().attributeDetected())
+    	{
+    		currentDocument.setTitle(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getBooktitle().attributeDetected())
+    	{
+    		currentDocument.setBooktitle(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getPages().attributeDetected())
+    	{
+    		currentDocument.setPages(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getAddress().attributeDetected())
+    	{
+    		currentDocument.setAddress(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getYear().attributeDetected())
+    	{
+    		currentDocument.setYear(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getJournal().attributeDetected())
+    	{
+    		currentDocument.setJournal(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getVolume().attributeDetected())
+    	{
+    		currentDocument.setVolume(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getNumber().attributeDetected())
+    	{
+    		currentDocument.setNumber(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getMonth().attributeDetected())
+    	{
+    		currentDocument.setMonth(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getUrl().attributeDetected())
+    	{
+    		currentDocument.setUrl(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getEe().attributeDetected())
+    	{
+    		currentDocument.setEe(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getCdrom().attributeDetected())
+    	{
+    		currentDocument.setCdrom(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getCitations().attributeDetected())
+    	{
+    		currentDocument.setCitation(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getPublisher().attributeDetected())
+    	{
+    		currentDocument.setPublisher(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getNote().attributeDetected())
+    	{
+    		currentDocument.setNote(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getCrossrefs().attributeDetected())
+    	{
+    		currentDocument.setCrossref(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getIsbn().attributeDetected())
+    	{
+    		currentDocument.setIsbn(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getSeries().attributeDetected())
+    	{
+    		currentDocument.setSeries(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getSchool().attributeDetected())
+    	{
+    		currentDocument.setSchool(new String(ch, start, length));
+    	}
+    	else if(currentDocument.getChapter().attributeDetected())
+    	{
+    		currentDocument.setChapter(new String(ch, start, length));
+    	}
+
+    	
+    }
  
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException 
     {
+    	// These are the tags relating to the document's genre
+		
+    			if(qName.equalsIgnoreCase("article"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("inproceedings"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("proceedings"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("book"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("incollection"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("phdthesis"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("mastersthesis"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("www"))
+    			{
+    				System.out.println(currentDocument.toString());
+    				currentDocument.clear();
+    			}
+    			else if(qName.equalsIgnoreCase("author"))
+    			{
+    				currentDocument.getAuthors().endElement();
+    			}
+    			else if(qName.equalsIgnoreCase("cite"))
+    			{
+    				currentDocument.getCitations().endElement();
+    			}
+    			else if(qName.equalsIgnoreCase("crossref"))
+    			{
+    				currentDocument.getCrossrefs().endElement();
+    			}
+    			else if(qName.equalsIgnoreCase("editor"))
+    			{
+    				currentDocument.getEditor().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("title"))
+    			{
+    				currentDocument.getTitle().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("booktitle"))
+    			{
+    				currentDocument.getBooktitle().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("pages"))
+    			{
+    				currentDocument.getPages().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("year"))
+    			{
+    				currentDocument.getYear().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("address"))
+    			{
+    				currentDocument.getAddress().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("journal"))
+    			{
+    				currentDocument.getJournal().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("volume"))
+    			{
+    				currentDocument.getVolume().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("number"))
+    			{
+    				currentDocument.getNumber().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("month"))
+    			{
+    				currentDocument.getMonth().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("url"))
+    			{
+    				currentDocument.getUrl().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("ee"))
+    			{
+    				currentDocument.getEe().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("cdrom"))
+    			{
+    				currentDocument.getCdrom().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("publisher"))
+    			{
+    				currentDocument.getPublisher().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("note"))
+    			{
+    				currentDocument.getNote().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("isbn"))
+    			{
+    				currentDocument.getIsbn().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("series"))
+    			{
+    				currentDocument.getSeries().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("school"))
+    			{
+    				currentDocument.getSchool().finishAtribute();
+    			}
+    			else if(qName.equalsIgnoreCase("chapter"))
+    			{
+    				currentDocument.getChapter().finishAtribute();
+    			}
         
     }
- 
- 
-    @Override
-    public void characters(char ch[], int start, int length) throws SAXException 
+    
+    public static void main(String[] args)
     {
- 
+    	SAXParser sp = new SAXParser();
+    	sp.parseDocument();
     }
 
 }
