@@ -157,51 +157,141 @@ public class DocumentContainer
 	
 
 
-	/**
-	 * @return the note
-	 */
-	public TagNode getNote() {
-		return note;
+	public void detectAddress()
+	{
+		address.detectAttribute();
 	}
 
 
-	/**
-	 * @param note the note to set
-	 */
-	public void setNote(String note) {
-		this.note.set(note);
+	public void detectAuthor()
+	{
+		authors.detectAttribute();
 	}
 
 
-	/**
-	 * @return the month
-	 */
-	public TagNode getMonth() {
-		return month;
+	public void detectBooktitle()
+	{
+		booktitle.detectAttribute();
 	}
 
 
-	/**
-	 * @param month the month to set
-	 */
-	public void setMonth(String month) {
-		this.month .set(month);
+	public void detectCdrom()
+	{
+		cdrom.detectAttribute();
 	}
 
 
-	/**
-	 * @return the school
-	 */
-	public TagNode getSchool() {
-		return school;
+	public void detectChapter()
+	{
+		chapter.detectAttribute();
 	}
 
 
-	/**
-	 * @param school the school to set
-	 */
-	public void setSchool(String school) {
-		this.school.set(school);
+	public void detectCitation()
+	{
+		citations.detectAttribute();
+	}
+
+
+	public void detectCrossref()
+	{
+		crossrefs.detectAttribute();
+	}
+
+
+	public void detectEditor()
+	{
+		editor.detectAttribute();
+	}
+
+
+	public void detectEe()
+	{
+		ee.detectAttribute();
+	}
+
+
+	public void detectGenre()
+	{
+		genre.detectAttribute();
+	}
+
+
+	public void detectIsbn()
+	{
+		isbn.detectAttribute();
+	}
+
+
+	public void detectJournal()
+	{
+		journal.detectAttribute();
+	}
+
+	public void detectMonth()
+	{
+		month.detectAttribute();
+	}
+
+
+	public void detectNote()
+	{
+		note.detectAttribute();
+	}
+
+	public void detectNumber()
+	{
+		number.detectAttribute();
+	}
+
+
+
+
+	public void detectPages()
+	{
+		pages.detectAttribute();
+	}
+
+
+	public void detectPublisher()
+	{
+		publisher.detectAttribute();
+	}
+
+
+	public void detectSchool()
+	{
+		school.detectAttribute();
+	}
+
+
+	public void detectSeries()
+	{
+		series.detectAttribute();
+	}
+
+
+	public void detectTitle()
+	{
+		title.detectAttribute();
+	}
+
+
+	public void detectUrl()
+	{
+		url.detectAttribute();
+	}
+
+
+	public void detectVolume()
+	{
+		volume.detectAttribute();
+	}
+
+
+	public void detectYear()
+	{
+		year.detectAttribute();
 	}
 
 
@@ -214,154 +304,18 @@ public class DocumentContainer
 
 
 	/**
-	 * @param address the address to set
+	 * @return the authors
 	 */
-	public void setAddress(String address) {
-		this.address.set(address);
+	public NodeCollection getAuthors() {
+		return authors;
 	}
 
 
 	/**
-	 * @return the chapter
+	 * @return the booktitle
 	 */
-	public TagNode getChapter() {
-		return chapter;
-	}
-
-
-	/**
-	 * @param chapter the chapter to set
-	 */
-	public void setChapter(String chapter) {
-		this.chapter.set(chapter);;
-	}
-
-
-	/**
-	 * @return the title
-	 */
-	public TagNode getTitle() {
-		return title;
-	}
-
-
-	/**
-	 * @param title the title to set
-	 */
-	public void setTitle(String title) {
-		this.title.set(title);
-	}
-
-	/**
-	 * @return the genre
-	 */
-	public TagNode getGenre() {
-		return genre;
-	}
-
-
-	/**
-	 * @param genre the genre to set
-	 */
-	public void setGenre(String genre) {
-		this.genre.set(genre);
-	}
-
-	/**
-	 * @return the pages
-	 */
-	public TagNode getPages() {
-		return pages;
-	}
-
-
-
-
-	/**
-	 * @param pages the pages to set
-	 */
-	public void setPages(String pages) {
-		this.pages.set(pages);
-	}
-
-
-	/**
-	 * @return the year
-	 */
-	public TagNode getYear() {
-		return year;
-	}
-
-
-	/**
-	 * @param year the year to set
-	 */
-	public void setYear(String year) {
-		this.year.set(year);
-	}
-
-
-	/**
-	 * @return the volume
-	 */
-	public TagNode getVolume() {
-		return volume;
-	}
-
-
-	/**
-	 * @param volume the volume to set
-	 */
-	public void setVolume(String volume) {
-		this.volume.set(volume);
-	}
-
-
-	/**
-	 * @return the number
-	 */
-	public TagNode getNumber() {
-		return number;
-	}
-
-
-	/**
-	 * @param number the number to set
-	 */
-	public void setNumber(String number) {
-		this.number.set(number);
-	}
-
-
-	/**
-	 * @return the url
-	 */
-	public TagNode getUrl() {
-		return url;
-	}
-
-
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(String url) {
-		this.url.set(url);
-	}
-
-
-	/**
-	 * @return the ee
-	 */
-	public TagNode getEe() {
-		return ee;
-	}
-
-
-	/**
-	 * @param ee the ee to set
-	 */
-	public void setEe(String ee) {
-		this.ee.set(ee);
+	public TagNode getBooktitle() {
+		return booktitle;
 	}
 
 
@@ -374,106 +328,10 @@ public class DocumentContainer
 
 
 	/**
-	 * @param cdrom the cdrom to set
+	 * @return the chapter
 	 */
-	public void setCdrom(String cdrom) {
-		this.cdrom.set(cdrom);
-	}
-
-
-	/**
-	 * @return the isbn
-	 */
-	public TagNode getIsbn() {
-		return isbn;
-	}
-
-
-	/**
-	 * @param isbn the isbn to set
-	 */
-	public void setIsbn(String isbn) {
-		this.isbn.set(isbn);
-	}
-
-
-	/**
-	 * @return the series
-	 */
-	public TagNode getSeries() {
-		return series;
-	}
-
-
-	/**
-	 * @param series the series to set
-	 */
-	public void setSeries(String series) {
-		this.series.set(series);
-	}
-
-
-	/**
-	 * @return the editor
-	 */
-	public TagNode getEditor() {
-		return editor;
-	}
-
-
-	/**
-	 * @param editor the editor to set
-	 */
-	public void setEditor(String editor) {
-		this.editor.set(editor);
-	}
-	
-	
-	/**
-	 * @return the booktitle
-	 */
-	public TagNode getBooktitle() {
-		return booktitle;
-	}
-
-
-	/**
-	 * @param booktitle the booktitle to set
-	 */
-	public void setBooktitle(TagNode booktitle) {
-		this.booktitle = booktitle;
-	}
-
-
-	/**
-	 * @return the journal
-	 */
-	public TagNode getJournal() {
-		return journal;
-	}
-
-
-	/**
-	 * @param journal the journal to set
-	 */
-	public void setJournal(String journal) {
-		this.journal.set(journal);
-	}
-
-
-	/**
-	 * @return the authors
-	 */
-	public NodeCollection getAuthors() {
-		return authors;
-	}
-
-
-	/**
-	 * @param authors the authors to set
-	 */
-	public void setAuthor(String author) {
-		this.authors.set(author);
+	public TagNode getChapter() {
+		return chapter;
 	}
 
 
@@ -486,14 +344,6 @@ public class DocumentContainer
 
 
 	/**
-	 * @param citations the citations to set
-	 */
-	public void setCitation(String citation) {
-		this.citations.set(citation);
-	}
-
-
-	/**
 	 * @return the crossrefs
 	 */
 	public NodeCollection getCrossrefs() {
@@ -502,10 +352,74 @@ public class DocumentContainer
 
 
 	/**
-	 * @param crossrefs the crossrefs to set
+	 * @return the editor
 	 */
-	public void setCrossref(String crossref) {
-		this.crossrefs.set(crossref);
+	public TagNode getEditor() {
+		return editor;
+	}
+
+
+	/**
+	 * @return the ee
+	 */
+	public TagNode getEe() {
+		return ee;
+	}
+
+
+	/**
+	 * @return the genre
+	 */
+	public TagNode getGenre() {
+		return genre;
+	}
+
+
+	/**
+	 * @return the isbn
+	 */
+	public TagNode getIsbn() {
+		return isbn;
+	}
+	
+	
+	/**
+	 * @return the journal
+	 */
+	public TagNode getJournal() {
+		return journal;
+	}
+
+
+	/**
+	 * @return the month
+	 */
+	public TagNode getMonth() {
+		return month;
+	}
+
+
+	/**
+	 * @return the note
+	 */
+	public TagNode getNote() {
+		return note;
+	}
+
+
+	/**
+	 * @return the number
+	 */
+	public TagNode getNumber() {
+		return number;
+	}
+
+
+	/**
+	 * @return the pages
+	 */
+	public TagNode getPages() {
+		return pages;
 	}
 
 
@@ -515,109 +429,293 @@ public class DocumentContainer
 	public TagNode getPublisher() {
 		return publisher;
 	}
+
+
+	/**
+	 * @return the school
+	 */
+	public TagNode getSchool() {
+		return school;
+	}
+
+
+	/**
+	 * @return the series
+	 */
+	public TagNode getSeries() {
+		return series;
+	}
+
+
+	/**
+	 * @return the title
+	 */
+	public TagNode getTitle() {
+		return title;
+	}
+
+
+	/**
+	 * @return the url
+	 */
+	public TagNode getUrl() {
+		return url;
+	}
+
+
+	/**
+	 * @return the volume
+	 */
+	public TagNode getVolume() {
+		return volume;
+	}
+	/**
+	 * @return the year
+	 */
+	public TagNode getYear() {
+		return year;
+	}
+	
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address.set(address);
+	}
+	/**
+	 * @param authors the authors to set
+	 */
+	public void setAuthor(String author) {
+		this.authors.set(author);
+	}
+	/**
+	 * @param booktitle the booktitle to set
+	 */
+	public void setBooktitle(String booktitle) {
+		this.booktitle.set(booktitle);
+	}
+	/**
+	 * @param cdrom the cdrom to set
+	 */
+	public void setCdrom(String cdrom) {
+		this.cdrom.set(cdrom);
+	}
+	/**
+	 * @param chapter the chapter to set
+	 */
+	public void setChapter(String chapter) {
+		this.chapter.set(chapter);
+	}
+	/**
+	 * @param citations the citations to set
+	 */
+	public void setCitation(String citation) {
+		this.citations.set(citation);
+	}
+	/**
+	 * @param crossrefs the crossrefs to set
+	 */
+	public void setCrossref(String crossref) {
+		this.crossrefs.set(crossref);
+	}
+	/**
+	 * @param editor the editor to set
+	 */
+	public void setEditor(String editor) {
+		this.editor.set(editor);
+	}
+	/**
+	 * @param ee the ee to set
+	 */
+	public void setEe(String ee) {
+		this.ee.set(ee);
+	}
+	/**
+	 * @param genre the genre to set
+	 */
+	public void setGenre(String genre) {
+		this.genre.set(genre);
+	}
+	/**
+	 * @param isbn the isbn to set
+	 */
+	public void setIsbn(String isbn) {
+		this.isbn.set(isbn);
+	}
+	/**
+	 * @param journal the journal to set
+	 */
+	public void setJournal(String journal) {
+		this.journal.set(journal);
+	}
+	/**
+	 * @param month the month to set
+	 */
+	public void setMonth(String month) {
+		this.month.set(month);
+	}
+	/**
+	 * @param note the note to set
+	 */
+	public void setNote(String note) {
+		this.note.set(note);
+	}
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(String number) {
+		this.number.set(number);
+	}
+	/**
+	 * @param pages the pages to set
+	 */
+	public void setPages(String pages) {
+		this.pages.set(pages);
+	}
 	/**
 	 * @param publisher the publisher to set
 	 */
 	public void setPublisher(String publisher) {
 		this.publisher.set(publisher);
 	}
-	
-	public void detectEe()
-	{
-		ee.detectAttribute();
+	/**
+	 * @param school the school to set
+	 */
+	public void setSchool(String school) {
+		this.school.set(school);
 	}
-	public void detectUrl()
-	{
-		url.detectAttribute();
+	/**
+	 * @param series the series to set
+	 */
+	public void setSeries(String series) {
+		this.series.set(series);
 	}
-	public void detectIsbn()
-	{
-		isbn.detectAttribute();
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title.set(title);
 	}
-	public void detectYear()
-	{
-		year.detectAttribute();
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url.set(url);
 	}
-	public void detectGenre()
-	{
-		genre.detectAttribute();
+	/**
+	 * @param volume the volume to set
+	 */
+	public void setVolume(String volume) {
+		this.volume.set(volume);
 	}
-	public void detectTitle()
-	{
-		title.detectAttribute();
-	}
-	public void detectPages()
-	{
-		pages.detectAttribute();
-	}
-	public void detectCdrom()
-	{
-		cdrom.detectAttribute();
-	}
-	public void detectVolume()
-	{
-		volume.detectAttribute();
-	}
-	public void detectNumber()
-	{
-		number.detectAttribute();
-	}
-	public void detectSeries()
-	{
-		series.detectAttribute();
-	}
-	public void detectEditor()
-	{
-		editor.detectAttribute();
-	}
-	public void detectAddress()
-	{
-		address.detectAttribute();
-	}
-	public void detectMonth()
-	{
-		month.detectAttribute();
-	}
-	public void detectNote()
-	{
-		note.detectAttribute();
-	}
-	public void detectSchool()
-	{
-		school.detectAttribute();
-	}
-	public void detectChapter()
-	{
-		chapter.detectAttribute();
-	}
-	public void detectPublisher()
-	{
-		publisher.detectAttribute();
-	}
-	public void detectBooktitle()
-	{
-		booktitle.detectAttribute();
-	}
-	public void detectCitation()
-	{
-		citations.detectAttribute();
-	}
-	public void detectCrossref()
-	{
-		crossrefs.detectAttribute();
-	}
-	public void detectAuthor()
-	{
-		authors.detectAttribute();
-	}
-	public void detectJournal()
-	{
-		journal.detectAttribute();
+	/**
+	 * @param year the year to set
+	 */
+	public void setYear(String year) {
+		this.year.set(year);
 	}
 	
 	public String toString()
 	{
 		String document = new String();
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		if (this.getAddress().contentSet())
+		{
+			document+="Address:"+this.getAddress().getContent()+"\n";
+		}
+		if (this.getAuthors().contentSet())
+		{
+			document+="Authors"+this.getGenre().getContent()+"\n";
+		}
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		if (this.getGenre().contentSet())
+		{
+			document+="Genre:"+this.getGenre().getContent()+"\n";
+		}
+		
+		
 		
 		
 		return document;

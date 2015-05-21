@@ -59,6 +59,12 @@ public class NodeCollection {
 		collection.add(new Node());
 	}
 	
+	public boolean contentSet()
+	{
+		if (collection.size()>0)	{return collection.get(0).contentSet();}
+		return false;
+	}
+	
 	public ArrayList<String> getContent()
 	{
 		ArrayList<String> content = new ArrayList<String>();
