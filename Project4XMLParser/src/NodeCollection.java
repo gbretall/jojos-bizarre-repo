@@ -48,9 +48,9 @@ public class NodeCollection {
 	}
 	
 	public void detectAttribute()		{this.attributeDetected = true;}
-
-	public boolean attributeDetected()	{return attributeDetected;}
 	public void finishAttribute()		{this.attributeDetected = false;}
+	public boolean attributeDetected()	{return attributeDetected;}
+	
 	
 	public void set(String content)		{this.collection.get(offset).set(content);}
 	

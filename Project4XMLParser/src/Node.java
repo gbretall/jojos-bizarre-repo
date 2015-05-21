@@ -35,7 +35,7 @@ public class Node {
 	
 	public String getContent()
 	{
-		return content.toString();
+		return (content==null? "":content.toString());
 	}
 	
 	protected void clear()
