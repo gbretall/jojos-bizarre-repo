@@ -509,6 +509,19 @@ public class DocumentContainer
 	}
 
 
+	/**
+	 * @return the publisher
+	 */
+	public TagNode getPublisher() {
+		return publisher;
+	}
+	/**
+	 * @param publisher the publisher to set
+	 */
+	public void setPublisher(String publisher) {
+		this.publisher.set(publisher);
+	}
+	
 	public void detectEe()
 	{
 		ee.detectAttribute();
@@ -602,5 +615,11 @@ public class DocumentContainer
 		journal.detectAttribute();
 	}
 	
-	
+	public String toString()
+	{
+		String document = new String();
+		
+		
+		return document;
+	}
 }
