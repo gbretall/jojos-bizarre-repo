@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="resources/external/jquery/jquery.js"></script>
+	<script src="resources/jquery-ui.min.js"></script>
+	
+	<script type="text/javascript" src="resources/searchAutocomplete.js"></script>
    	
    	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -13,7 +18,11 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="topbarcss.css">
+	<link rel= "stylesheet" type="text/css" href="index.css" >
+    <link rel = "stylesheet" type="text/css" href="resources/jquery-ui.css">
+	
+	<link rel="stylesheet" type="text/css" href="topbarcss.css">
+	
     <title>M.L.G. Videos</title>
 </head>
 <body>
@@ -42,6 +51,16 @@
 		<form action="adminLoginPage" id = "admin-login" method ="get">
       		<button type="submit">Admin Login</button>
       	</form>
+      	
+      	<div id ='form-quick-search'>
+			<form action='SingleMoviePage' method='get'>
+				<input id='movie' id ='quick-search-input' type = 'movie' name = 'movieID'
+				 class='ui-widget ui-widget-content ui-corner-all' required='' placeholder='Search...'>
+				<button class='btn btn-primary ' id='quick-search-button'
+					type='submit'>search</button>
+			</form>
+		</div>
+      	
 	</div>
 
 	<div class="container">

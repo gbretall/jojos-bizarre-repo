@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCSW34RJKwYCYvrOm2R3ynwtUlkHWiv_0"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/common.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/util.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/20/8/stats.js"></script>
-    <script type="text/javascript" src = "logIn.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="resources/external/jquery/jquery.js"></script>
+	<script src="resources/jquery-ui.min.js"></script>
+	
+	<script type="text/javascript" src="resources/searchAutocomplete.js"></script>
+   	
+   	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-    <link rel="stylesheet" type="text/css" href="topbarcss.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<link rel= "stylesheet" type="text/css" href="index.css" >
+    <link rel = "stylesheet" type="text/css" href="resources/jquery-ui.css">
+	
+	<link rel="stylesheet" type="text/css" href="topbarcss.css">
+	
     <title>M.L.G. Videos</title>
-</head>
-<body>
+</head><body>
 	<div id='header'>
 		M.L.G.Videos
 		<form class='form' id='main-button' action='MainPage.html'
@@ -42,6 +52,17 @@
 			<input name='logout' type='hidden' value='true'>
 			<button class='btn' type='submit'>Logout</button>
 		</form>
+		
+		
+      	<div id ='form-quick-search'>
+			<form action='SingleMoviePage' method='get'>
+				<input id='movie' id ='quick-search-input' type = 'movie' name = 'movieID'
+				 class='ui-widget ui-widget-content ui-corner-all' required='' placeholder='Search...'>
+				<button class='btn btn-primary ' id='quick-search-button'
+					type='submit'>search</button>
+			</form>
+		</div>
+		
 	</div>
 	<p><b>MAIN PAGE</b></p>
 	<div class = 'main' >
