@@ -3,16 +3,17 @@
  
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
 import org.xml.sax.helpers.DefaultHandler;
  
 public class SAXParser extends DefaultHandler 
@@ -280,41 +281,113 @@ public class SAXParser extends DefaultHandler
     			if(qName.equalsIgnoreCase("article"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("inproceedings"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("proceedings"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("book"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("incollection"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("phdthesis"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("mastersthesis"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("www"))
     			{
     				System.out.println(currentDocument.toString());
+    				try {
+						runQueries();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				currentDocument.clear();
     			}
     			else if(qName.equalsIgnoreCase("author"))
@@ -407,7 +480,27 @@ public class SAXParser extends DefaultHandler
     			}
         
     }
-    
+
+    public void runQueries() throws SQLException, NamingException
+    {
+    	String SQL = "";
+    	SQLGenerator sqlgen = new SQLGenerator(currentDocument);
+    	SQLHandler myHandler = new SQLHandler();
+    	sqlgen.limitStringLength();
+    	SQL = sqlgen.insert_genre_tbl();
+    	myHandler.execute(SQL);
+    	SQL = sqlgen.insert_people_tbl();
+    	myHandler.execute(SQL);
+    	SQL = sqlgen.insert_publisher_tbl();
+    	myHandler.execute(SQL);
+    	SQL = sqlgen.insert_booktitle_tbl();
+    	myHandler.execute(SQL);
+    	SQL = sqlgen.insert_tbl_dblp_document();
+    	myHandler.execute(SQL);
+    	SQL = sqlgen.insert_author_document_mapping();
+    	myHandler.execute(SQL);
+    	myHandler.close();
+    }
     public static void main(String[] args)
     {
     	SAXParser sp = new SAXParser();
