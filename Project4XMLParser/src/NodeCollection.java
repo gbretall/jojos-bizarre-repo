@@ -82,8 +82,16 @@ public class NodeCollection {
 		
 		for (Node n : collection)
 		{
-			value+=n.getContent()+" ";
+			value+=n.getContent()+", ";
 		}
 		return value;
+	}
+	
+	public void limitContentLength(int limit)
+	{
+		for(Node n: collection)
+		{
+			if(n.getContent().length() > limit)		{n.set(n.getContent().substring(0,limit));}
+		}
 	}
 }
