@@ -62,6 +62,9 @@ public class SQLHandler {
 	private Connection getConnection() throws SQLException, NamingException {
 		Context initCtx = new InitialContext();
 		
+		if (initCtx == null)
+			System.out.println("initCtx is NULL");
+
 		Context envCtx = (Context) initCtx.lookup("java:comp/env");
 		if (envCtx == null)
 			System.out.println("envCtx is NULL");
