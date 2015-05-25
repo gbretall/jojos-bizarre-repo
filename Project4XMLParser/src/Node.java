@@ -18,7 +18,8 @@ public class Node {
 	
 	public Node copy()
 	{
-		return new Node(this.content);
+		if (this.content!=null)	{return new Node(this.content);}
+		else					{return new Node();}
 	}
 	
 	public boolean contentSet()
