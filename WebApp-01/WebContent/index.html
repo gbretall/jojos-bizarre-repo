@@ -52,14 +52,17 @@
       		<button type="submit">Admin Login</button>
       	</form>
       	
-      	<div id ='form-quick-search'>
-			<form action='SingleMoviePage' method='get'>
-				<input id='movie' id ='quick-search-input' type = 'movie' name = 'movieID'
-				 class='ui-widget ui-widget-content ui-corner-all' required='' placeholder='Search...'>
-				<button class='btn btn-primary ' id='quick-search-button'
-					type='submit'>search</button>
-			</form>
-		</div>
+	<div id ="form-quick-search">
+		<form action='SingleMoviePage' method='get'>
+			<input id="movie" type = "movie"
+			 class="ui-widget ui-widget-content ui-corner-all" required='' placeholder='Search...'>
+			<input type="hidden" id = "hidden-movie-id" name = "movieID" value="">
+			<button class='btn btn-primary ' id='quick-search-button'
+				type='submit'>search</button>
+		</form>
+	</div>
+
+
       	
 	</div>
 

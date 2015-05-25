@@ -59,13 +59,17 @@ public class AddTopBar {
 				+ "<input name = 'logout' type='hidden' value ='true'>"
 				+ "<button class = 'btn' type = 'submit'>Logout</button>"
 				+ "</form>"
+
 				+ "<div id ='form-quick-search'>"
-				+ "	<form action='SingleMoviePage' method='get'>"
-				+ "<input id='movie' id ='quick-search-input' type = 'movie' name = 'movieID'"
+				+ "<form action='SingleMoviePage' method='get'>"
+				+ "<input id='movie' type = 'movie'"
 				+ "class='ui-widget ui-widget-content ui-corner-all' required='' placeholder='Search...'>"
+				+ "<input type='hidden' id = 'hidden-movie-id' name = 'movieID' value=''>"
 				+ "<button class='btn btn-primary ' id='quick-search-button'"
-				+ "type='submit'>search</button>" + "</form>" + "</div>"
-				+ "</div>";
+				+ "type='submit'>search</button>" 
+				+ "</form>"
+				+ "</div>"
+				+"</div>";
 		return topOfPage;
 	}
 
