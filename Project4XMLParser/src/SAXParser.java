@@ -322,7 +322,7 @@ public class SAXParser extends DefaultHandler
     			}
     			else if(qName.equalsIgnoreCase("book"))
     			{
-    				System.out.println(currentDocument.toString());
+    				//System.out.println(currentDocument.toString());
     				try {
 						runQueries();
 					} catch (SQLException e) {
@@ -484,21 +484,40 @@ public class SAXParser extends DefaultHandler
     public void runQueries() throws SQLException, NamingException
     {
     	String SQL = "";
+    	//System.out.println(currentDocument.toString());
     	SQLGenerator sqlgen = new SQLGenerator(currentDocument);
     	SQLHandler myHandler = new SQLHandler();
     	sqlgen.limitStringLength();
-    	SQL = sqlgen.insert_genre_tbl();
-    	myHandler.execute(SQL);
-    	SQL = sqlgen.insert_people_tbl();
-    	myHandler.execute(SQL);
-    	SQL = sqlgen.insert_publisher_tbl();
-    	myHandler.execute(SQL);
-    	SQL = sqlgen.insert_booktitle_tbl();
-    	myHandler.execute(SQL);
+    	if(currentDocument.getGenre().contentSet())
+    	{
+	    	SQL = sqlgen.insert_genre_tbl();
+	    	//System.out.println("This is the insert genre" + SQL);
+	    	myHandler.execute(SQL);
+    	}
+    	if(currentDocument.getAuthors().contentSet() || currentDocument.getEditor().contentSet())
+    	{
+	    	SQL = sqlgen.insert_people_tbl();
+	    	//System.out.println(SQL);
+	    	myHandler.execute(SQL);
+    	}
+    	if(currentDocument.getPublisher().contentSet())
+    	{
+	    	SQL = sqlgen.insert_publisher_tbl();
+	    	myHandler.execute(SQL);
+    	}
+    	if(currentDocument.getBooktitle().contentSet())
+    	{
+	    	SQL = sqlgen.insert_booktitle_tbl();
+	    	myHandler.execute(SQL);
+    	}
     	SQL = sqlgen.insert_tbl_dblp_document();
+    	System.out.println("This is the tbl_dblp_document query: " + SQL);
     	myHandler.execute(SQL);
-    	SQL = sqlgen.insert_author_document_mapping();
-    	myHandler.execute(SQL);
+    	if(currentDocument.getAuthors().contentSet())
+    	{
+    		SQL = sqlgen.insert_author_document_mapping();
+    		myHandler.execute(SQL);
+    	}
     	myHandler.close();
     }
     public static void main(String[] args)

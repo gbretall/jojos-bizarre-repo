@@ -34,9 +34,19 @@ public class Node {
 		this.content.append(content);
 	}
 	
+	public void replace(String content)
+	{
+		this.content = new StringBuilder(content);
+	}
+	
 	public String getContent()
 	{
 		return (content==null? "":content.toString());
+	}
+	
+	public String toString()
+	{
+		return getContent();
 	}
 	
 	protected void clear()

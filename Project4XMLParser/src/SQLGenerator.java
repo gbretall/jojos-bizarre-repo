@@ -16,7 +16,7 @@ public class SQLGenerator {
 	
 	public SQLGenerator(DocumentContainer doc)
 	{
-		this.document = new DocumentContainer(doc);
+		this.document = doc;
 	}
 	
 	//Inserts editors and authors into the people table so long as 
@@ -24,17 +24,17 @@ public class SQLGenerator {
 	public String insert_people_tbl() throws SQLException, NamingException
 	{
 		String SQL = "";
-		if(document.getAuthors().attributeDetected())
+		if(document.getAuthors().contentSet())
 		{
-			SQL += "CALL insert_person("
+			SQL += "CALL insert_person('"
 					+ document.getAuthors().toString()
-					+ "); ";
+					+ "'); ";
 		}
-		if(document.getEditor().attributeDetected())
+		if(document.getEditor().contentSet())
 		{
-			SQL += "CALL insert_person("
+			SQL += "CALL insert_person('"
 					+ document.getEditor().toString()
-					+ "); ";
+					+ "'); ";
 		}
 		return SQL;
 	}
@@ -42,11 +42,11 @@ public class SQLGenerator {
 	public String insert_publisher_tbl() throws SQLException, NamingException
 	{
 		String SQL = "";
-		if(document.getPublisher().attributeDetected())
+		if(document.getPublisher().contentSet())
 		{
-			SQL += "CALL insert_publisher("
+			SQL += "CALL insert_publisher('"
 					+ document.getPublisher().toString()
-					+ "); ";
+					+ "'); ";
 		}
 		return SQL;
 	}
@@ -54,11 +54,11 @@ public class SQLGenerator {
 	public String insert_genre_tbl() throws SQLException, NamingException
 	{
 		String SQL = "";
-		if(document.getGenre().attributeDetected())
+		if(document.getGenre().contentSet())
 		{
-			SQL += "CALL insert_genre("
+			SQL += "CALL insert_genre('"
 					+ document.getGenre().toString()
-					+ "); ";
+					+ "'); ";
 		}
 		return SQL;
 	}
@@ -66,11 +66,11 @@ public class SQLGenerator {
 	public String insert_booktitle_tbl() throws SQLException, NamingException
 	{
 		String SQL = "";
-		if(document.getBooktitle().attributeDetected())
+		if(document.getBooktitle().contentSet())
 		{
-			SQL += "CALL insert_booktitle("
+			SQL += "CALL insert_booktitle('"
 					+ document.getBooktitle().toString()
-					+ "); ";
+					+ "'); ";
 		}
 		return SQL;
 	}
@@ -83,7 +83,7 @@ public class SQLGenerator {
 		//Creates the beginning of the insert statement including the columns to be inserted into.
 		boolean isFirstItem = true;
 		String SQL = "INSERT INTO moviedb.tbl_dblp_document (";
-		if(document.getEditor().attributeDetected())
+		if(document.getEditor().contentSet())
     	{
 			if(isFirstItem)
 			{
@@ -95,7 +95,7 @@ public class SQLGenerator {
 			}
 			SQL += "editor_id";
     	}
-    	if(document.getTitle().attributeDetected())
+    	if(document.getTitle().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -107,7 +107,7 @@ public class SQLGenerator {
 			}
 			SQL += "title";
     	}
-    	if(document.getGenre().attributeDetected())
+    	if(document.getGenre().contentSet())
     	{
     		if(isFirstItem)
     			isFirstItem = false;
@@ -118,7 +118,7 @@ public class SQLGenerator {
     		SQL += "genre_id";
     		
     	}
-    	if(document.getBooktitle().attributeDetected())
+    	if(document.getBooktitle().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -130,7 +130,7 @@ public class SQLGenerator {
 			}
 			SQL += "booktitle_id";
     	}
-    	if(document.getPages().attributeDetected())
+    	if(document.getPages().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -143,7 +143,7 @@ public class SQLGenerator {
 			SQL += "start_page, end_page";
     	}
     	
-    	if(document.getYear().attributeDetected())
+    	if(document.getYear().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -155,7 +155,7 @@ public class SQLGenerator {
 			}
 			SQL += "year";
     	}
-    	if(document.getVolume().attributeDetected())
+    	if(document.getVolume().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -167,7 +167,7 @@ public class SQLGenerator {
 			}
 			SQL += "volume";
     	}
-    	if(document.getNumber().attributeDetected())
+    	if(document.getNumber().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -179,7 +179,7 @@ public class SQLGenerator {
 			}
 			SQL += "number";
     	}
-    	if(document.getUrl().attributeDetected())
+    	if(document.getUrl().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -191,7 +191,7 @@ public class SQLGenerator {
 			}
 			SQL += "url";
     	}
-    	if(document.getEe().attributeDetected())
+    	if(document.getEe().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -203,7 +203,7 @@ public class SQLGenerator {
 			}
 			SQL += "ee";
     	}
-    	if(document.getCdrom().attributeDetected())
+    	if(document.getCdrom().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -215,7 +215,7 @@ public class SQLGenerator {
 			}
 			SQL += "cdrom";
     	}
-    	if(document.getCitations().attributeDetected())
+    	if(document.getCitations().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -227,7 +227,7 @@ public class SQLGenerator {
 			}
 			SQL += "cite";
     	}
-    	if(document.getPublisher().attributeDetected())
+    	if(document.getPublisher().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -237,9 +237,9 @@ public class SQLGenerator {
 			{
 				SQL += ", ";
 			}
-			SQL += "publisher";
+			SQL += "publisher_id";
     	}
-    	if(document.getCrossrefs().attributeDetected())
+    	if(document.getCrossrefs().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -251,7 +251,7 @@ public class SQLGenerator {
 			}
 			SQL += "crossref";
     	}
-    	if(document.getIsbn().attributeDetected())
+    	if(document.getIsbn().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -263,7 +263,7 @@ public class SQLGenerator {
 			}
 			SQL += "isbn";
     	}
-    	if(document.getSeries().attributeDetected())
+    	if(document.getSeries().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -281,7 +281,7 @@ public class SQLGenerator {
 		
 		//Appends the values that are to be added into the tbl_dblp_document 
 		isFirstItem = true;
-		if(document.getEditor().attributeDetected())
+		if(document.getEditor().contentSet())
     	{
 			if(isFirstItem)
 			{
@@ -293,19 +293,20 @@ public class SQLGenerator {
 			}
 			SQL += get_id(document.getEditor().toString(), "editor");
     	}
-    	if(document.getTitle().attributeDetected())
+    	if(document.getTitle().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-			SQL += document.getTitle().toString();
+			SQL += document.getTitle().toString()+"'";
     	}
-    	if(document.getGenre().attributeDetected())
+    	if(document.getGenre().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -317,7 +318,7 @@ public class SQLGenerator {
 			}
 			SQL += get_id(document.getGenre().toString(), "genre");
     	}
-    	if(document.getBooktitle().attributeDetected())
+    	if(document.getBooktitle().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -329,7 +330,7 @@ public class SQLGenerator {
 			}
 			SQL += get_id(document.getBooktitle().toString(), "booktitle");
     	}
-    	if(document.getPages().attributeDetected())
+    	if(document.getPages().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -342,7 +343,7 @@ public class SQLGenerator {
 			String[] startEndPages = document.getPages().toString().split("-");
 			SQL += startEndPages[0] + ", "  + startEndPages[1];
     	}
-    	if(document.getYear().attributeDetected())
+    	if(document.getYear().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -354,7 +355,7 @@ public class SQLGenerator {
 			}
 			SQL += document.getYear().toString();
     	}
-    	if(document.getVolume().attributeDetected())
+    	if(document.getVolume().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -366,7 +367,7 @@ public class SQLGenerator {
 			}
     		SQL += document.getVolume().toString();
     	}
-    	if(document.getNumber().attributeDetected())
+    	if(document.getNumber().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -378,55 +379,59 @@ public class SQLGenerator {
 			}
     		SQL += document.getNumber().toString();
     	}
-    	if(document.getUrl().attributeDetected())
+    	if(document.getUrl().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-    		SQL += document.getUrl().toString();
+    		SQL += document.getUrl().toString()+"'";
     	}
-    	if(document.getEe().attributeDetected())
+    	if(document.getEe().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-    		SQL += document.getEe().toString();
+    		SQL += document.getEe().toString()+"'";
     	}
-    	if(document.getCdrom().attributeDetected())
+    	if(document.getCdrom().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-    		SQL += document.getCdrom().toString();
+    		SQL += document.getCdrom().toString()+"'";
     	}
-    	if(document.getCitations().attributeDetected())
+    	if(document.getCitations().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-			SQL += document.getCitations().toString();
+			SQL += document.getCitations().toString()+"'";
     	}
-    	if(document.getPublisher().attributeDetected())
+    	if(document.getPublisher().contentSet())
     	{
     		if(isFirstItem)
 			{
@@ -436,43 +441,46 @@ public class SQLGenerator {
 			{
 				SQL += ", ";
 			}
-    		SQL += document.getPublisher().toString();
+    		SQL += get_id(document.getPublisher().toString(),"publisher");
     	}
-    	if(document.getCrossrefs().attributeDetected())
+    	if(document.getCrossrefs().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-			SQL += document.getCrossrefs().toString();
+			SQL += document.getCrossrefs().toString()+"'";
     	}
-    	if(document.getIsbn().attributeDetected())
+    	if(document.getIsbn().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-    		SQL += document.getIsbn().toString();
+    		SQL += document.getIsbn().toString()+"'";
     	}
-    	if(document.getSeries().attributeDetected())
+    	if(document.getSeries().contentSet())
     	{
     		if(isFirstItem)
 			{
 				isFirstItem = false;
+				SQL += "'";
 			}
 			else
 			{
-				SQL += ", ";
+				SQL += ", '";
 			}
-    		SQL += document.getSeries().toString();
+    		SQL += document.getSeries().toString()+"'";
     	}
 		SQL += ");";
 		return SQL;
@@ -483,16 +491,16 @@ public class SQLGenerator {
 	public String insert_author_document_mapping() throws SQLException, NamingException
 	{
 		String SQL = "";
-		if(document.getAuthors().attributeDetected())
+		if(document.getAuthors().contentSet())
 		{
 			String[] authors = document.getAuthors().toString().split(",");
 			for(String author: authors)
 			{
-				SQL += "INSERT INTO moviedb.tbl_author_document_mapping (doc_id, author_id) VALUES("
+				SQL += "INSERT INTO moviedb.tbl_author_document_mapping (doc_id, author_id) VALUES('"
 						+ get_id(document.getTitle().toString(), "document")
-						+ ", "
+						+ "', '"
 						+ get_id(author, "author")
-						+"); ";
+						+"'); ";
 			}
 		}
 		return SQL;
@@ -502,79 +510,79 @@ public class SQLGenerator {
 	//limitations as stated in the database schema
 	public void limitStringLength()
 	{
-		if(document.getAuthors().attributeDetected())
+		if(document.getAuthors().contentSet())
     	{
     		document.getAuthors().limitContentLength(61);
     	}
-    	if(document.getEditor().attributeDetected())
+    	if(document.getEditor().contentSet())
     	{
     		if(document.getEditor().getContent().length() > 61)
     		{
-    			document.getEditor().set(document.getEditor().getContent().substring(0, 61));
+    			document.getEditor().replace(document.getEditor().getContent().substring(0, 61));
     		}
     	}
-    	if(document.getTitle().attributeDetected())
+    	if(document.getTitle().contentSet())
     	{
     		if(document.getTitle().getContent().length() > 300)
     		{
-    			document.getTitle().set(document.getTitle().getContent().substring(0, 300));
+    			document.getTitle().replace(document.getTitle().getContent().substring(0, 300));
     		}
     	}
-    	if(document.getBooktitle().attributeDetected())
+    	if(document.getBooktitle().contentSet())
     	{
     		if(document.getBooktitle().getContent().length() > 300)
     		{
-    			document.getBooktitle().set(document.getBooktitle().getContent().substring(0, 300));
+    			document.getBooktitle().replace(document.getBooktitle().getContent().substring(0, 300));
     		}
     	}
-    	if(document.getUrl().attributeDetected())
+    	if(document.getUrl().contentSet())
     	{
     		if(document.getUrl().getContent().length() > 200)
     		{
-    			document.getUrl().set(document.getUrl().getContent().substring(0, 200));
+    			document.getUrl().replace(document.getUrl().getContent().substring(0, 200));
     		}
     	}
-    	if(document.getEe().attributeDetected())
+    	if(document.getEe().contentSet())
     	{
     		if(document.getEe().getContent().length() > 200)
     		{
-    			document.getEe().set(document.getEe().getContent().substring(0, 200));
+    			document.getEe().replace(document.getEe().getContent().substring(0, 200));
     		}
     	}
-    	if(document.getCdrom().attributeDetected())
+    	if(document.getCdrom().contentSet())
     	{
     		if(document.getCdrom().getContent().length() > 75)
     		{
-    			document.getCdrom().set(document.getCdrom().getContent().substring(0, 75));
+    			document.getCdrom().replace(document.getCdrom().getContent().substring(0, 75));
     		}
     	}
-    	if(document.getCitations().attributeDetected())
+    	if(document.getCitations().contentSet())
     	{
     		document.getCitations().limitContentLength(75);
     	}
-    	if(document.getPublisher().attributeDetected())
+    	if(document.getPublisher().contentSet())
     	{
     		if(document.getPublisher().getContent().length() > 300)
     		{
-    			document.getPublisher().set(document.getPublisher().getContent().substring(0,300));
+    			document.getPublisher().replace(document.getPublisher().getContent().substring(0,300));
     		}
     	}
-    	if(document.getCrossrefs().attributeDetected())
+    	if(document.getCrossrefs().contentSet())
     	{
     		document.getCrossrefs().limitContentLength(75);
     	}
-    	if(document.getIsbn().attributeDetected())
+    	if(document.getIsbn().contentSet())
     	{
     		if(document.getIsbn().getContent().length() > 21)
     		{
-    			document.getIsbn().set(document.getIsbn().getContent().substring(0, 21));
+    			document.getIsbn().replace(document.getIsbn().getContent().substring(0, 21));
     		}
     	}
-    	if(document.getSeries().attributeDetected())
+    	if(document.getSeries().contentSet())
     	{
     		if(document.getSeries().getContent().length() > 100)
     		{
-    			document.getSeries().set(document.getSeries().getContent().substring(0, 100));
+    			document.getSeries().replace(document.getSeries().getContent().substring(0, 100));
     		}
     	}
 
@@ -628,7 +636,7 @@ public class SQLGenerator {
 		{
 			SQL += "title = ";
 		}
-		SQL += reference_name + " LIMIT 1;";
+		SQL += "'" + reference_name + "' LIMIT 1;";
 		//Runs the query and returns the result from it
 		ResultSet rs = id_selector.query(SQL);
 		String result_id = "";
