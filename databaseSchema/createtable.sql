@@ -14,7 +14,7 @@ CREATE TABLE tbl_people (
   id   INTEGER  NOT NULL AUTO_INCREMENT,
   name         VARCHAR(61) CHARACTER SET utf8,
   PRIMARY KEY (id)
-);
+);	
 
 DROP TABLE IF EXISTS tbl_booktitle CASCADE;
 CREATE TABLE tbl_booktitle  (
@@ -61,3 +61,5 @@ CREATE TABLE tbl_author_document_mapping (
     author_id     INTEGER REFERENCES tbl_people(id) ,
   PRIMARY KEY (id)
 );
+
+create USER 'xmlparser' 

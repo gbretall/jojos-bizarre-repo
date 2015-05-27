@@ -6,10 +6,8 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.Properties;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
+
 
 import java.sql.Statement;
 

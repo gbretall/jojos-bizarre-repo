@@ -82,7 +82,7 @@ public class SQLGenerator {
 	{
 		//Creates the beginning of the insert statement including the columns to be inserted into.
 		boolean isFirstItem = true;
-		String SQL = "INSERT INTO moviedb.tbl_dblp_document (";
+		String SQL = "INSERT INTO bookdb.tbl_dblp_document (";
 		if(document.getEditor().contentSet())
     	{
 			if(isFirstItem)
@@ -496,7 +496,7 @@ public class SQLGenerator {
 			String[] authors = document.getAuthors().toString().split(",");
 			for(String author: authors)
 			{
-				SQL += "INSERT INTO moviedb.tbl_author_document_mapping (doc_id, author_id) VALUES('"
+				SQL += "INSERT INTO bookdb.tbl_author_document_mapping (doc_id, author_id) VALUES('"
 						+ get_id(document.getTitle().toString(), "document")
 						+ "', '"
 						+ get_id(author, "author")
@@ -616,7 +616,7 @@ public class SQLGenerator {
 			table_name = "tbl_dblp_document";
 		}
 		//We start to write the actual query for the id
-		String SQL = "SELECT id FROM moviedb."
+		String SQL = "SELECT id FROM bookdb."
 				+ table_name
 				+ " WHERE ";
 		//This gets what the where condition to find the id on will be
