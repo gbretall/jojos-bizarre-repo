@@ -1,6 +1,5 @@
 public class Node {
 	private StringBuilder content;
-
 	public Node()
 	{
 		this.content = null;
@@ -26,12 +25,12 @@ public class Node {
 	{
 		return (content!=null);
 	}
-	
+	 
 	public void set(String content)
 	{
 		if (this.content==null)	{this.content = new StringBuilder();}
 		
-		this.content.append(content);
+		this.content.append(content.replaceAll("['|\"]", ""));
 	}
 	
 	public void replace(String content)
