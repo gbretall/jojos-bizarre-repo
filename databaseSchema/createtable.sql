@@ -1,3 +1,7 @@
+Drop database if exists bookdb;
+create database bookdb;
+use bookdb;
+
 DROP TABLE IF EXISTS tbl_genres CASCADE;
 CREATE TABLE tbl_genres (
   id  INTEGER  NOT NULL AUTO_INCREMENT,

@@ -35,7 +35,7 @@ public class SQLHandler {
 	 * The name of the database we are testing with (this default is installed
 	 * with MySQL)
 	 */
-	private final String dbName = "moviedb";
+	private final String dbName = "bookdb";
 	
 	private Properties connectionProps = new Properties();
 
